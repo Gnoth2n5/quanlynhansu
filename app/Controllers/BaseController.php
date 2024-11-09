@@ -20,4 +20,5 @@ class BaseController{
         $blade->setPath($viewDir, $storageDir);
         echo $blade->run($viewFile, $data);
     }
+    // xin chao
 }
