@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use eftec\bladeone\BladeOne;
 
-class BaseController{
+abstract class BaseController{
 
     /**
     * Render một view Blade.
@@ -15,7 +15,7 @@ class BaseController{
     protected function render($viewFile, $data = [])
     {
         $viewDir = __DIR__ . "/../../src/views";
-        $storageDir = __DIR__ . "/../../storage";
+        $storageDir = __DIR__ . "/../../storage/cache";
         $blade = new BladeOne(null, null, BladeOne::MODE_DEBUG);
         $blade->setPath($viewDir, $storageDir);
         echo $blade->run($viewFile, $data);
