@@ -30,7 +30,10 @@ class MakeValidation extends Command
         $stub = $this->getStub();
         $stub = str_replace('{{validationName}}', $name, $stub);
 
-        file_put_contents($path, $stub);
+        if(!file_put_contents($path, $stub)){
+            $output->writeln("<error>Failed to create validation {$name}!</error>");
+            return Command::FAILURE;
+        }
 
         $output->writeln("<info>Validation {$name} created successfully.</info>");
         return Command::SUCCESS;

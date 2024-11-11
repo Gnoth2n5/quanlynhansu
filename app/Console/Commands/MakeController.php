@@ -30,7 +30,10 @@ class MakeController extends Command
         $stub = $this->getStub();
         $stub = str_replace('{{controllerName}}', $name, $stub);
 
-        file_put_contents($path, $stub);
+        if (!file_put_contents($path, $stub)) {
+            $output->writeln("<error>Failed to create controller {$name}.</error>");
+            return Command::FAILURE;
+        }
 
         $output->writeln("<info>Controller {$name} created successfully.</info>");
         return Command::SUCCESS;

@@ -31,7 +31,10 @@ class MakeModel extends Command
         $stub = $this->getStub();
         $stub = str_replace('{{modelName}}', $name, $stub);
 
-        file_put_contents($path, $stub);
+        if (!file_put_contents($path, $stub)) {
+            $output->writeln("<error>Failed to create model {$name}.</error>");
+            return Command::FAILURE;
+        }
 
         $output->writeln("<info>Model {$name} created successfully.</info>");
         return Command::SUCCESS;

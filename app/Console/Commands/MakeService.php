@@ -30,7 +30,10 @@ class MakeService extends Command
         $stub = $this->getStub();
         $stub = str_replace('{{serviceName}}', $name, $stub);
 
-        file_put_contents($path, $stub);
+        if (!file_put_contents($path, $stub)) {
+            $output->writeln("<error>Failed to create service {$name}.</error>");
+            return Command::FAILURE;
+        }
 
         $output->writeln("<info>Service {$name} created successfully.</info>");
         return Command::SUCCESS;
