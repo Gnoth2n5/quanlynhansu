@@ -1,3 +1,4 @@
 composer.lock
 public/uploads/*
 storage/*
+vendor/*
