@@ -7,33 +7,32 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
-class MakeModel extends Command
+class MakeController extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('make:model')
-            ->setDescription('Create a new Eloquent model')
-            ->addArgument('name', InputArgument::REQUIRED, 'The name of the model');
+            ->setName('make:controller')
+            ->setDescription('Create a new controller')
+            ->addArgument('name', InputArgument::REQUIRED, 'The name of the controller');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
-        $path = __DIR__ . '/../../Models/' . $name . '.php';
+        $path = __DIR__ . '/../../Controllers/' . $name . '.php';
 
         if (file_exists($path)) {
-            $output->writeln("<error>Model {$name} already exists!</error>");
+            $output->writeln("<error>Controller {$name} already exists!</error>");
             return Command::FAILURE;
         }
 
         $stub = $this->getStub();
-        $stub = str_replace('{{modelName}}', $name, $stub);
+        $stub = str_replace('{{controllerName}}', $name, $stub);
 
         file_put_contents($path, $stub);
 
-        $output->writeln("<info>Model {$name} created successfully.</info>");
+        $output->writeln("<info>Controller {$name} created successfully.</info>");
         return Command::SUCCESS;
     }
 
@@ -42,11 +41,9 @@ class MakeModel extends Command
         return <<<EOT
 <?php
 
-namespace App\Models;
+namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Model;
-
-class {{modelName}} extends Model
+class {{controllerName}} extends Controller
 {
     //
 }

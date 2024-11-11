@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use eftec\bladeone\BladeOne;
 
-abstract class BaseController{
+abstract class Controller{
 
     /**
     * Render một view Blade.

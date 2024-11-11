@@ -1,9 +1,9 @@
 <?php
+
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
 
-class HomeController extends BaseController{
+class HomeController extends Controller{
     public function home(){
 
         $this->render('welcome');
