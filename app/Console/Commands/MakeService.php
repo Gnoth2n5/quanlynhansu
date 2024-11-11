@@ -7,32 +7,32 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeController extends Command
+class MakeService extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('make:controller')
-            ->setDescription('Create a new controller')
-            ->addArgument('name', InputArgument::REQUIRED, 'The name of the controller');
+            ->setName('make:service')
+            ->setDescription('Create a new service')
+            ->addArgument('name', InputArgument::REQUIRED, 'The name of the service');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
-        $path = __DIR__ . '/../../Controllers/' . $name . '.php';
+        $path = __DIR__ . '/../../Services/' . $name . '.php';
 
         if (file_exists($path)) {
-            $output->writeln("<error>Controller {$name} already exists!</error>");
+            $output->writeln("<error>Service {$name} already exists!</error>");
             return Command::FAILURE;
         }
 
         $stub = $this->getStub();
-        $stub = str_replace('{{controllerName}}', $name, $stub);
+        $stub = str_replace('{{serviceName}}', $name, $stub);
 
         file_put_contents($path, $stub);
 
-        $output->writeln("<info>Controller {$name} created successfully.</info>");
+        $output->writeln("<info>Service {$name} created successfully.</info>");
         return Command::SUCCESS;
     }
 
@@ -41,9 +41,9 @@ class MakeController extends Command
         return <<<EOT
 <?php
 
-namespace App\Controllers;
+namespace App\Services;
 
-class {{controllerName}} extends Controller
+class {{serviceName}} extends Service
 {
     //
 }
