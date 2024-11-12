@@ -21,7 +21,7 @@ class MakeTable extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $name = $input->getArgument('name');
-        
+
         // set timezone
         date_default_timezone_set('Asia/Ho_Chi_Minh');
 
@@ -52,13 +52,25 @@ class MakeTable extends Command
     {
         return <<<EOT
 <?php
-
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Blueprint;
 
-Capsule::schema()->create('{{tableName}}', function (\$table) {
-    \$table->increments('id');
-    \$table->timestamps();
-});
+return new class {
+    public function up()
+    {
+        if(!Capsule::schema()->hasTable('{{tableName}}')){
+            Capsule::schema()->create('{{tableName}}', function (Blueprint \$table) {
+                \$table->id();
+                \$table->timestamps();
+            });
+        }
+    }
+    
+    public function down()
+    {
+        Capsule::schema()->dropIfExists('{{tableName}}');
+    }
+};
         
 EOT;
     }
