@@ -3,3 +3,5 @@ public/uploads/*
 storage/cache/*
 vendor/*
 .env
+node_modules/*
+package-lock.json

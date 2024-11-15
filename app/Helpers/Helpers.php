@@ -16,3 +16,8 @@ function set_timezone()
 {
     date_default_timezone_set($_ENV['TIMEZONE'] ?: 'UTC');
 }
+
+function asset($path) {
+    global $baseUrl;
+    return $baseUrl . ltrim($path, '/');
+}

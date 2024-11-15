@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class Test extends Service
+class ToastService extends Service
 {
     //
 }
