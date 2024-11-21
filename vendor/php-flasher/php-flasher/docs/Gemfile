@@ -1,0 +1,15 @@
+source 'https://rubygems.org'
+
+gem 'jekyll'
+gem 'csv'
+gem 'bigdecimal'
+gem 'base64'
+gem 'kramdown-parser-gfm'
+
+group :jekyll_plugins do
+  gem 'jekyll-sitemap'
+  gem 'jekyll-redirect-from'
+  gem 'jekyll-seo-tag'
+end
+
+gem "webrick"
