@@ -1,2 +1,4 @@
 touch public/uploads/.gitkeep
 touch storage/cache/.gitkeep
+touch storage/logs/.gitkeep
+
