@@ -14,4 +14,19 @@ class AuthController extends Controller
     {
         return $this->render('authentication.signup');
     }
+
+    public function login()
+    {
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        $user = User::where('email', $email)->first();
+
+        if ($user && password_verify($password, $user->password)) {
+            $_SESSION['user'] = $user;
+            return header('Location: /');
+        }
+
+        return header('Location: /login');
+    }
 }
