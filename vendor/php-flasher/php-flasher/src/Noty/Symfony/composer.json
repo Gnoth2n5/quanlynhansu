@@ -1,0 +1,43 @@
+{
+    "name": "php-flasher/flasher-noty-symfony",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "homepage": "https://php-flasher.io",
+    "description": "Bring Noty.js flash notifications to Symfony projects using PHPFlasher. Leverage Noty.js within Symfony to elevate user notifications.",
+    "keywords": [
+        "symfony",
+        "noty.js",
+        "flash-notifications",
+        "phpflasher",
+        "user-feedback",
+        "open-source"
+    ],
+    "support": {
+        "issues": "https://github.com/php-flasher/php-flasher/issues",
+        "source": "https://github.com/php-flasher/php-flasher"
+    },
+    "authors": [
+        {
+            "name": "Younes ENNAJI",
+            "email": "younes.ennaji.pro@gmail.com",
+            "homepage": "https://www.linkedin.com/in/younes--ennaji/",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=8.2",
+        "php-flasher/flasher-noty": "^2.0.1",
+        "php-flasher/flasher-symfony": "^2.0.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Flasher\\Noty\\Symfony\\": ""
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}

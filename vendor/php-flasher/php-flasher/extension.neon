@@ -1,0 +1,2 @@
+includes:
+    - src/Laravel/extension.neon
