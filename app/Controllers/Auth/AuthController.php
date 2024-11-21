@@ -29,4 +29,15 @@ class AuthController extends Controller
 
         return header('Location: /login');
     }
+
+    public function register()
+    {
+        $user = new User();
+        $user->name = $_POST['name'];
+        $user->email = $_POST['email'];
+        $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $user->save();
+
+        return header('Location: /login');
+    }
 }
