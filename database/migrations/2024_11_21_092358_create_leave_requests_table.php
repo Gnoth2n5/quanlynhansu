@@ -8,11 +8,11 @@ return new class {
         if(!Capsule::schema()->hasTable('leave_requests')){
             Capsule::schema()->create('leave_requests', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedInteger('user_id');
+                $table->unsignedBigInteger('user_id');
                 $table->dateTime('start_date');
                 $table->dateTime('end_date');
                 $table->text('reason');
-                $table->unsignedInteger('approved_by');
+                $table->unsignedBigInteger('approved_by');
                 $table->enum('status',['pending', 'approved', 'rejected']);
                 
 

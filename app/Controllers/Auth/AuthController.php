@@ -3,6 +3,8 @@
 namespace App\Controllers\Auth;
 use App\Controllers\Controller;
 use App\Models\User;
+use App\Helpers\Redirect;
+
 
 class AuthController extends Controller
 {
@@ -20,25 +22,47 @@ class AuthController extends Controller
     {
         $email = $_POST['email'];
         $password = $_POST['password'];
-
+        
         $user = User::where('email', $email)->first();
 
         if ($user && password_verify($password, $user->password)) {
             $_SESSION['user'] = $user;
-            return header('Location: /');
+            Redirect::to('/dashboard')
+                ->message('Login successfully', 'success')
+                ->send();
         }
 
-        return header('Location: /login');
+        Redirect::to('/')
+            ->message('Tài khoản hoặc mật khẩu không chính xác', 'danger')
+            ->send();
     }
 
     public function register()
     {
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+
+        if(!$username || !$email || !$password) {
+            echo 'All fields are required';
+        }
+
         $user = new User();
-        $user->name = $_POST['name'];
-        $user->email = $_POST['email'];
-        $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $user->username = $username;
+        $user->email = $email;
+        $user->password = password_hash($password, PASSWORD_ARGON2ID);
         $user->save();
 
-        return header('Location: /login');
+        Redirect::to('/')
+            ->message('Register successfully', 'success')
+            ->send();
+    }
+
+    public function logout()
+    {
+        session_destroy();
+        Redirect::to('/')
+            ->message('Logout successfully', 'success')
+            ->send();
     }
 }

@@ -12,23 +12,22 @@
 
 <body>
     <div class="container-scroller">
+        <div class=""></div>
         {{-- header --}}
         <header>
-            @include('partials.header')
+            @include('partials.header.navbar')
         </header>
-        {{-- sidebar --}}
-        <aside>
-            @include('partials.sidebar')
-        </aside>
-        {{-- main content --}}
-        <div class="main-panel">
-            <div class="content-wrapper">
-                @yield('content')
+        <div class="container-fluid page-body-wrapper">
+            {{-- sidebar --}}
+            <aside>
+                @include('partials.sidebar.sidebar')
+            </aside>
+            {{-- main content --}}
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    @yield('content')
+                </div>
             </div>
-            {{-- footer --}}
-            <footer>
-                @include('partials.footer')
-            </footer>
         </div>
     </div>
 

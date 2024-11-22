@@ -1,5 +1,5 @@
 <?php
-
+namespace App\Helpers;
 class Redirect
 {
     protected $url;

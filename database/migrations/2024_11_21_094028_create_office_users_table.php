@@ -8,8 +8,8 @@ return new class {
         if(!Capsule::schema()->hasTable('office_users')){
             Capsule::schema()->create('office_users', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedInteger('office_id');
-                $table->unsignedInteger('user_id');
+                $table->unsignedBigInteger('office_id');
+                $table->unsignedBigInteger('user_id');
 
           $table->foreign('office_id')
                 ->references('id')

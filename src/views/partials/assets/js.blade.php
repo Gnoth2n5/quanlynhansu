@@ -24,19 +24,20 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.js"></script>
 
 <script>
-    // Lấy tham số 'message' và 'type' từ URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const message = urlParams.get('msg');
-    const type = urlParams.get('status');
-
-    // Kiểm tra và hiển thị thông báo nếu có
-    if (message && type) {
-        toastr[type](message); // toastr.success, toastr.error, etc.
-
-        // Reset URL sau khi hiển thị thông báo
+    document.addEventListener('DOMContentLoaded', function() {
+     // Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('msg');
+        const type = urlParams.get('status');
+        // Kiểm tra và hiển thị thông báo
+        if (message && type && typeof toastr[type] === 'function') {
+            toastr[type](decodeURIComponent(message)); // toastr.success/toastr.error
+        }
+        // Reset URL
         history.replaceState(null, '', window.location.pathname);
-    }
+    });
 </script>
+
 
 <script>
     const SweetAlert = (msg, status, {
@@ -45,7 +46,7 @@
         time = null,
         url = ''
     } = {}) => {
-      
+
         const swalConfig = {
             icon: status,
             title: msg,
@@ -58,7 +59,7 @@
         };
 
         Swal.fire(swalConfig).then((result) => {
-            
+
             if (result.isConfirmed && url) {
                 window.location.href = url;
             }

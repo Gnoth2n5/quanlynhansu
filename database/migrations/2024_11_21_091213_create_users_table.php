@@ -13,7 +13,7 @@ return new class {
                 $table->string('full_name');
                 $table->string('email');
                 $table->string('phone');
-                $table->unsignedInteger('role_id');
+                $table->unsignedBigInteger('role_id');
                 $table->enum('status',['active', 'inactive']);
                 $table->string('UID');                
                 $table->timestamps();

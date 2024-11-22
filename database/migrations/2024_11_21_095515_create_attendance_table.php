@@ -8,7 +8,7 @@ return new class {
         if(!Capsule::schema()->hasTable('attendance')){
             Capsule::schema()->create('attendance', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedInteger('user_id');
+                $table->unsignedBigInteger('user_id');
                 $table->dateTime('check_in');
                 $table->dateTime('check_out');
                 $table->enum('check_in_status', ['on_time', 'late', 'absent']);

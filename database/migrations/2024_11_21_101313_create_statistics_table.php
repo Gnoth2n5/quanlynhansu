@@ -8,7 +8,7 @@ return new class {
         if(!Capsule::schema()->hasTable('statistics')){
             Capsule::schema()->create('statistics', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedInteger('user_id');
+                $table->unsignedBigInteger('user_id');
                 $table->unsignedInteger('attendance_days');
                 $table->unsignedInteger('late_days');
                 $table->unsignedInteger('absent_days');

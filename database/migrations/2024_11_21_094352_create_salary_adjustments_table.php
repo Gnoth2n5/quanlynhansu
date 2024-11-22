@@ -8,8 +8,8 @@ return new class {
         if(!Capsule::schema()->hasTable('salary_adjustments')){
             Capsule::schema()->create('salary_adjustments', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedInteger('salary_id');
-                $table->unsignedInteger('user_id');
+                $table->unsignedBigInteger('salary_id');
+                $table->unsignedBigInteger('user_id');
                 $table->enum('type',['bonus','deduction','raise']);
                 $table->decimal('amount');
                 $table->string('description');
