@@ -1,17 +1,37 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
-// require_once __DIR__ . '/../config/app.php';
+require_once __DIR__ . '/../config/app.php';
 
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
 use App\Controllers\HomeController;
+use App\Controllers\Auth\AuthController;
 
 $url = $_GET['url'] ?? '/';
 
 try {
     $router = new RouteCollector();
 
-    $router->get('/', [HomeController::class, 'home']);
+    $router->get('/', [AuthController::class, 'loginView']);
+    $router->get('/signup', [AuthController::class, 'registerView']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $dispatcher = new Dispatcher($router->getData());
     $response = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $url);

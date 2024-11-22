@@ -6,6 +6,12 @@ use eftec\bladeone\BladeOne;
 
 abstract class Controller{
 
+    protected $url;
+
+    public function __construct()
+    {
+        $this->url = $_ENV['APP_URL'];
+    }
     /**
     * Render một view Blade.
     *

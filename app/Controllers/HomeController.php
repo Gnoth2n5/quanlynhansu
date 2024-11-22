@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
-class HomeController extends Controller{
-    public function home(){
-        $this->render('authentication.signin');
+class HomeController extends Controller
+{
+    public function home()
+    {
+        $this->render('pages.authentication.signin');
     }
 }

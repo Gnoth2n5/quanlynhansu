@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Controllers\Auth;
+use App\Controllers\Controller;
 use App\Models\User;
 
 class AuthController extends Controller
 {
     public function loginView()
     {
-        return $this->render('authentication.signin');
+        return $this->render('pages.authentication.signin');
     }
 
     public function registerView()
     {
-        return $this->render('authentication.signup');
+        return $this->render('pages.authentication.signup');
     }
 
     public function login()

@@ -34,5 +34,6 @@
             "name": "Pham Minh Thong"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
