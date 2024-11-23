@@ -8,8 +8,8 @@ class OfficeController extends Controller
 {
     public function index()
     {
-       $offices=Offices::all ();
-       $data= $offices->map(function($offices){
+       $offices = Offices::all ();
+       $data = $offices->map(function($offices){
         return[
             'id'=>$offices->id,
             'name'=>$offices->name,

@@ -9,7 +9,7 @@
 * Làm những bước sau để chạy dự án ở public:
     1. Mở CMD hoặc Terminal -> nhập ipconfig -> Enter
     2. Tìm IPv4 Address -> copy
-    3. Truy cập file composer.json và sửa script phần xxx.xx.xx.xxx thành địa chỉ IP của bạn
+    3. Truy cập file composer.json và sửa script phần xxx.xx.xx.xxx thành địa chỉ IP của bạn<br>
     "public": "php -S xxx.xx.xx.xxx:8000 routes/web.php -t public"
 
 * Lệnh public chỉ có thời gian chờ là 300s (5 phút), sau đó sẽ tự dừng lệnh

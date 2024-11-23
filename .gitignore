@@ -1,3 +1,8 @@
-composer.lock
-public/uploads/*
-storage/*
+/public/uploads/*
+/storage/cache/*
+/vendor/*
+.env
+
+!/public/uploads/.gitkeep
+!/storage/cache/.gitkeep
+!/vendor/.gitkeep

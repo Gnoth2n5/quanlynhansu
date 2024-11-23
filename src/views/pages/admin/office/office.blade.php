@@ -1,12 +1,10 @@
 <?php
 
-
-
 $columns = [
     'id' => 'ID',
     'name' => 'Tên',
     'location' => 'Vị trí',
-   
+ 
 ];
 ?>
 
