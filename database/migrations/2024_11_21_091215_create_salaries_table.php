@@ -9,10 +9,10 @@ return new class {
             Capsule::schema()->create('salaries', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('user_id');
-                $table->decimal('base_salary');
-                $table->decimal('total_salary');
-                $table->decimal('total_deductions');
-                $table->decimal('net_salary');
+                $table->decimal('base_salary', 10, 2);
+                $table->decimal('total_salary', 10, 2);
+                $table->decimal('total_deductions', 10, 2);
+                $table->decimal('net_salary', 10, 2);
                 $table->date('pay_date');
                 
           $table->foreign('user_id')

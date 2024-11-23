@@ -11,7 +11,7 @@ return new class {
                 $table->unsignedBigInteger('salary_id');
                 $table->unsignedBigInteger('user_id');
                 $table->enum('type',['bonus','deduction','raise']);
-                $table->decimal('amount');
+                $table->decimal('amount', 10, 2);
                 $table->string('description');
                 $table->date('adjustment_date');
                 
