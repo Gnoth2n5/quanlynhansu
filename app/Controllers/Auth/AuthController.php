@@ -2,7 +2,7 @@
 
 namespace App\Controllers\Auth;
 use App\Controllers\Controller;
-use App\Models\User;
+use App\Models\Users;
 use App\Helpers\Redirect;
 
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
         $email = $_POST['email'];
         $password = $_POST['password'];
         
-        $user = User::where('email', $email)->first();
+        $user = Users::where('email', $email)->first();
 
         if ($user && password_verify($password, $user->password)) {
             $_SESSION['user'] = $user;
@@ -47,7 +47,8 @@ class AuthController extends Controller
             echo 'All fields are required';
         }
 
-        $user = new User();
+        $user = new Users();
+
         $user->username = $username;
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_ARGON2ID);

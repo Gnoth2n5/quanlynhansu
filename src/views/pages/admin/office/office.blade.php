@@ -1,38 +1,10 @@
 <?php
 
-// Dữ liệu phòng
-$data = [
-    [
-        'room_id' => '101',
-        'room_name' => 'Deluxe Room',
-        'status' => 'Available',
-        'department_manager' => 'Admin',
-    ],
-    [
-        'room_id' => '102',
-        'room_name' => 'Standard Room',
-        'status' => 'Occupied',
-        'department_manager' => 'Admin',
-    ],
-    [
-        'room_id' => '103',
-        'room_name' => 'Suite Room',
-        'status' => 'Available',
-        'department_manager' => 'Admin',
-    ],
-    [
-        'room_id' => '104',
-        'room_name' => 'Economy Room',
-        'status' => 'Under Maintenance',
-        'department_manager' => 'Admin',
-    ],
-];
-
 $columns = [
-    'room_id' => 'ID',
-    'room_name' => 'Tên',
-    'status' => 'Trạng thái',
-    'department_manager' => 'Trưởng phòng',
+    'id' => 'ID',
+    'name' => 'Tên',
+    'location' => 'Vị trí',
+ 
 ];
 ?>
 
