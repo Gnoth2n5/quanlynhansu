@@ -52,6 +52,7 @@ class AuthController extends Controller
         $user->username = $username;
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_ARGON2ID);
+        $user->role_id = 3;
         $user->save();
 
         Redirect::to('/')
