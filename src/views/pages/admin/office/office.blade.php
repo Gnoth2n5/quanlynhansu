@@ -4,7 +4,6 @@ $columns = [
     'id' => 'ID',
     'name' => 'Tên',
     'location' => 'Vị trí',
- 
 ];
 ?>
 
@@ -17,8 +16,16 @@ $columns = [
         <div class="card">
             <div class="card-body">
                 <h3>Quản lý phòng ban</h3>
+
                 @component('components.table.table_normal', ['columns' => $columns, 'data' => $data])
                 @endcomponent
+
+                @component('components.pagination.pagination', [
+                    'currentPage' => $currentPage,
+                    'totalPages' => $totalPages,
+                ])
+                @endcomponent
+
             </div>
         </div>
     </div>

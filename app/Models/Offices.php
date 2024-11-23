@@ -16,6 +16,7 @@ class Offices extends Model
     ];
 
     protected $hidden = [];
+    
     public function users(): BelongsTo
     {
         return $this->belongsTo(Users::class);

@@ -25,16 +25,15 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-     // Lấy tham số từ URL
+        // Lấy tham số từ URL
         const urlParams = new URLSearchParams(window.location.search);
         const message = urlParams.get('msg');
         const type = urlParams.get('status');
         // Kiểm tra và hiển thị thông báo
         if (message && type && typeof toastr[type] === 'function') {
             toastr[type](decodeURIComponent(message)); // toastr.success/toastr.error
+            history.replaceState(null, '', window.location.pathname);
         }
-        // Reset URL
-        history.replaceState(null, '', window.location.pathname);
     });
 </script>
 

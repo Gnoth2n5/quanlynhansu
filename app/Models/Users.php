@@ -22,7 +22,9 @@ class Users extends Model
         'UID',
     ];
 
-    protected $hidden = [];
+    protected $hidden = [
+        'password',
+    ];
     public function role(): BelongsTo
     {
         return $this->belongsTo(Roles::class);

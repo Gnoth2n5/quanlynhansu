@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
     <!-- plugins:css -->
     @include('partials.assets.css')
+    @yield('style')
 </head>
 
 <body>
@@ -33,4 +34,7 @@
 
     <!-- plugins:js -->
     @include('partials.assets.js')
+
+    @yield('script')
+
 </body>

@@ -1,22 +1,23 @@
 <?php
-
 namespace App\Controllers\Admin;
+
 use App\Models\Offices;
 use App\Controllers\Controller;
+use App\Services\PaginationService;
 
 class OfficeController extends Controller
 {
     public function index()
     {
-       $offices = Offices::all ();
-       $data = $offices->map(function($offices){
-        return[
-            'id'=>$offices->id,
-            'name'=>$offices->name,
-            'location'=>$offices->location,
+        $perPage = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
-        ];
-       });
-        $this->render('pages.admin.office.office',compact('data'));
+        $pagination = PaginationService::paginate(Offices::query(), $perPage, $page);
+
+        return $this->render('pages.admin.office.office', [
+            'data' => $pagination['data'],
+            'totalPages' => $pagination['totalPages'],
+            'currentPage' => $pagination['currentPage'],
+        ]);
     }
 }
