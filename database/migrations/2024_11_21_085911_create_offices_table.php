@@ -10,7 +10,8 @@ return new class {
                 $table->id();
                 $table->string('name');
                 $table->string('location');
-                $table->timestamps();
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE  CURRENT_TIMESTAMP'));
             });
         }
     }

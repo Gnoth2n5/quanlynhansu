@@ -11,7 +11,8 @@ return new class {
                 $table->string('setting_key');
                 $table->text('setting_value');
                 $table->text('description');
-                $table->timestamps();
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             });
         }
     }

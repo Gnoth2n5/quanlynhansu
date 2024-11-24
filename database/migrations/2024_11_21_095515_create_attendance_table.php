@@ -13,12 +13,13 @@ return new class {
                 $table->dateTime('check_out');
                 $table->enum('check_in_status', ['on_time', 'late', 'absent']);
                 $table->enum('check_out_status', ['on_time', 'early_exit']);
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
-          $table->foreign('user_id')
+                $table->foreign('user_id')
                 ->references('id')
                 ->on('users')  
                 ->onDelete('cascade');
-                $table->timestamps();
             });
         }
     }

@@ -12,7 +12,8 @@ return new class {
                 $table->time('start_time');
                 $table->time('end_time');
                 $table->tinyInteger('is_overtime');
-                $table->timestamps();
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             });
         }
     }

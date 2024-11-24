@@ -31,9 +31,15 @@ class Migrate extends Command
             $helper = $this->getHelper('question');
             $question = new ConfirmationQuestion("Would you like to create the database '$databaseName'? (yes/no) ", false);
 
-            if (!$helper->ask($input, $output, $question)) {
-                $output->writeln("<info>Migration aborted.</info>");
-                return Command::SUCCESS;
+            // Ensure the helper is an instance of QuestionHelper
+            if ($helper instanceof \Symfony\Component\Console\Helper\QuestionHelper) {
+                if (!$helper->ask($input, $output, $question)) {
+                    $output->writeln("<info>Migration aborted.</info>");
+                    return Command::SUCCESS;
+                }
+            } else {
+                $output->writeln("<error>Unable to ask the question. Helper is not a QuestionHelper instance.</error>");
+                return Command::FAILURE;
             }
 
             // Create the database

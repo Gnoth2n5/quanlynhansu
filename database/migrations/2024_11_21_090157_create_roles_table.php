@@ -9,7 +9,8 @@ return new class {
             Capsule::schema()->create('roles', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
-                $table->timestamps();
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             });
         }
     }
