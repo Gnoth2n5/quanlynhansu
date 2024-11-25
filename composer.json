@@ -3,8 +3,8 @@
     "description": "Web application for managing employee timekeeping",
     "type": "project",
     "scripts": {
-        "serve": "php -S localhost:1234 routes/web.php",
-        "public": "php -S xxx.xx.xx.xxx:8000 routes/web.php -t public"
+        "serve": "php -S localhost:1234 public/index.php",
+        "public": "php -S 172.16.46.212:8000 routes/web.php -t public"
     },
     "require": {
         "phroute/phroute": "^2.2",

@@ -25,15 +25,27 @@ class AuthController extends Controller
         
         $user = Users::where('email', $email)->first();
 
+        \start_session();
+
         if ($user && password_verify($password, $user->password)) {
             $_SESSION['user'] = $user;
-            Redirect::to('/dashboard')
-                ->message('Login successfully', 'success')
-                ->send();
+            $_SESSION['role'] = $user->role->name;
+            
+            if($user->role->name == 'admin') {
+                Redirect::to('/admin/dashboard')
+                    ->message('Đăng nhập thành công!', 'success')
+                    ->send();
+            }
+            if($user->role->name == 'user' || $user->role->name == 'manager') {
+                Redirect::to('/user/dashboard')
+                    ->message('Đăng nhập thành công!', 'success')
+                    ->send();
+            }
+            
         }
 
         Redirect::to('/')
-            ->message('Tài khoản hoặc mật khẩu không chính xác', 'danger')
+            ->message('Tài khoản hoặc mật khẩu không chính xác!', 'danger')
             ->send();
     }
 
@@ -56,7 +68,7 @@ class AuthController extends Controller
         $user->save();
 
         Redirect::to('/')
-            ->message('Register successfully', 'success')
+            ->message('Đăng kí thành công', 'success')
             ->send();
     }
 
@@ -64,7 +76,7 @@ class AuthController extends Controller
     {
         session_destroy();
         Redirect::to('/')
-            ->message('Logout successfully', 'success')
+            ->message('Đăng xuất thành công!', 'success')
             ->send();
     }
 }

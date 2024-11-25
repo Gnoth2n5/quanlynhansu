@@ -20,8 +20,12 @@
         </header>
         <div class="container-fluid page-body-wrapper">
             {{-- sidebar --}}
-            <aside>
-                @include('partials.sidebar.sidebar')
+            <aside class="left-sidebar">
+                @if ($_SESSION['role'] == 'admin')
+                    @include('partials.sidebar.sidebar')
+                @else
+                    @include('partials.sidebar.sidebarTwo')
+                @endif
             </aside>
             {{-- main content --}}
             <div class="main-panel">

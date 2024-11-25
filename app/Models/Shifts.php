@@ -18,6 +18,7 @@ class Shifts extends Model
     ];
 
     protected $hidden = [];
+    
     public function userShift(): HasMany
     {
         return $this->hasMany(UserShift::class);

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Users extends Model
 {
@@ -41,9 +42,9 @@ class Users extends Model
     {
         return $this->hasMany(Salaryadjustments::class);
     }
-    public function user_shift()
+    public function userShift(): HasOne
     {
-        return $this->hasMany(UserShift::class);
+        return $this->hasOne(UserShift::class);
     }
     public function leave_requests(): HasMany
     {

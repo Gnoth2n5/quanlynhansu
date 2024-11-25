@@ -4,12 +4,13 @@ require_once __DIR__ . '/../config/app.php';
 
 use Phroute\Phroute\RouteCollector;
 use Phroute\Phroute\Dispatcher;
-use App\Controllers\Admin\DashboardController;
+use App\Controllers\DashboardController;
 use App\Controllers\Admin\OfficeController;
 use App\Controllers\Admin\UserController;
 use App\Controllers\Admin\LeaveController;
 use App\Controllers\Admin\SalaryController;
 use App\Controllers\Auth\AuthController;
+use App\Controllers\AttendanceController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -23,26 +24,27 @@ try {
     $router->post('/register', [AuthController::class, 'register']);
     $router->get('/logout', [AuthController::class, 'logout']);
 
-    $router->get('/dashboard', [DashboardController::class, 'dashboard']);
+    $router->get('/admin/dashboard', [DashboardController::class, 'dashboardAdmin']);
 
     // Office Management
-    $router->get('/office-management', [OfficeController::class, 'index']);
+    $router->get('/admin/office-management', [OfficeController::class, 'index']);
 
 
     // User Management
-    $router->get('/user-management', [UserController::class, 'index']);
+    $router->get('/admin/user-management', [UserController::class, 'index']);
 
 
 
     // Leave Management
-    $router->get('/leave-management', [LeaveController::class, 'index']);
+    $router->get('/admin/leave-management', [LeaveController::class, 'index']);
 
 
     // Salary Management
-    $router->get('/salary-management', [SalaryController::class, 'index']);
+    $router->get('/admin/salary-management', [SalaryController::class, 'index']);
 
-
-
+    
+    $router->get('/user/dashboard', [DashboardController::class, 'dashboardUser']);
+    $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
 
 
 

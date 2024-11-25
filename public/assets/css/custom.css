@@ -1,0 +1,33 @@
+/* Avatar kích thước đầy đủ */
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+.small-avatar {
+  width: 40px;
+  height: 40px;
+  transition: all 0.3s ease;
+  object-fit: cover;
+}
+
+
+/* Tên người dùng hiển thị đầy đủ */
+.profile-name {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+/* Khi sidebar thu nhỏ (ẩn tên) */
+body.sidebar-icon-only .profile-name {
+  display: none; /* Ẩn tên */
+}
+
+/* .left-sidebar{
+  position: fixed;
+} */

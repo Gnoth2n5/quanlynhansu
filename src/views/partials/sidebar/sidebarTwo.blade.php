@@ -3,31 +3,31 @@ $sidebarItems = [
     [
         'label' => 'Dashboard',
         'icon' => 'icon-grid menu-icon',
-        'url' => '/admin/dashboard',
+        'url' => '/dashboard',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Phòng',
         'icon' => 'icon-layout menu-icon',
-        'url' => '/admin/office-management',
+        'url' => '/office-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Người dùng',
         'icon' => 'icon-columns menu-icon',
-        'url' => '/admin/user-management',
+        'url' => '/user-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Đơn từ',
         'icon' => 'icon-bar-graph menu-icon',
-        'url' => '/admin/leave-management',
+        'url' => '/leave-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Lương',
         'icon' => 'icon-grid-2 menu-icon',
-        'url' => '/admin/salary-management',
+        'url' => '/salary-management',
         'subMenu' => [],
     ],
     [
@@ -67,11 +67,10 @@ $sidebarItems = [
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="text-center mb-4 profile-section mt-4">
         <!-- Avatar -->
-        <img src="/assets/images/faces/face1.jpg" 
-             class="img-fluid border profile-avatar" 
-             alt="User Avatar">
+        <img src="{{ isset($_SESSION['user']['avatar']) ? '/uploads/avatar/' . $_SESSION['user']['avatar'] : '/assets/images/faces/face1.jpg' }}"
+            class="img-fluid border profile-avatar" alt="User Avatar">
         <!-- Tên người dùng -->
-        <h5 class="mt-2 profile-name">{{$_SESSION['user']['full_name']}}</h5>
+        <h5 class="mt-2 profile-name">{{ $_SESSION['user']['full_name'] }}</h5>
     </div>
     <ul class="nav">
         @foreach ($sidebarItems as $item)

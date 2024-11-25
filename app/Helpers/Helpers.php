@@ -21,3 +21,10 @@ function asset($path) {
     global $baseUrl;
     return $baseUrl . ltrim($path, '/');
 }
+
+function start_session()
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+}

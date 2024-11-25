@@ -74,12 +74,26 @@
     }
 
     $('[data-toggle="minimize"]').on("click", function() {
+      const body = $('body');
+      const avatar = $('.profile-avatar');
+      const name = $('.profile-name');
+    
       if ((body.hasClass('sidebar-toggle-display')) || (body.hasClass('sidebar-absolute'))) {
         body.toggleClass('sidebar-hidden');
       } else {
         body.toggleClass('sidebar-icon-only');
+    
+        // Xử lý avatar và tên khi sidebar thu nhỏ
+        if (body.hasClass('sidebar-icon-only')) {
+          avatar.addClass('small-avatar'); // Thu nhỏ avatar
+          name.hide(); // Ẩn tên
+        } else {
+          avatar.removeClass('small-avatar'); // Phục hồi kích thước avatar
+          name.show(); // Hiển thị tên
+        }
       }
     });
+    
 
     //checkbox and radios
     $(".form-check label,.form-radio label").append('<i class="input-helper"></i>');
