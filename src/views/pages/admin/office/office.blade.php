@@ -6,8 +6,7 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-
-                <a href="" class="btn btn-primary btn-sm">Thêm phòng</a>
+                <a href="{{ $_ENV['APP_URL'] }}/admin/create-office" class="btn btn-primary btn-sm">Thêm phòng</a>
 
                 <table class="table">
                     <thead>

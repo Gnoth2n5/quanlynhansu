@@ -30,7 +30,10 @@ try {
     // Office Management
     $router->get('/admin/office-management', [OfficeController::class, 'index']);
     $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
-
+    $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
+    // 3 thành phần url controller function 
+    $router->get('/admin/create-office', [OfficeController::class, 'create']);
+    $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
 
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
@@ -52,7 +55,7 @@ try {
     // $router->get('/user/check-out', [AttendanceController::class, 'checkOut']);
     $router->get('/user/profile', [ProfileController::class, 'profile']);
     $router->get('/user/update-profile', [ProfileController::class, 'updateProfile']);
-
+    
 
 
 

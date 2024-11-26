@@ -37,5 +37,19 @@ class OfficeController extends Controller
         Redirect::to('/admin/office-management')
                 ->message('Xóa phòng ban thành công', 'success')
                 ->send();
+
+                
     }
-}
+    public function create(){
+       $this->render('pages.admin.office.create_office');
+    }
+    
+    public function edit($id){
+        $office = Offices::find($id);
+        if (!$office) {
+            Redirect::to('/admin/office-management')
+                    ->message('Lỗi không tìm thấy phòng ban','error')
+                    ->send();
+        }
+        $this->render('pages.admin.office.edit_office', ['office'=>$office]);
+    }
