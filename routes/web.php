@@ -33,8 +33,11 @@ try {
     // 3 thành phần url controller function 
     $router->get('/admin/create-office', [OfficeController::class, 'create']);
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
+<<<<<<< Updated upstream
     $router->post('/admin/store-office', [OfficeController::class, 'store']);
     $router->post('/admin/update-office', [OfficeController::class, 'update']);
+=======
+>>>>>>> Stashed changes
 
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
@@ -45,7 +48,7 @@ try {
     // Leave Management
     $router->get('/admin/leave-management', [LeaveController::class, 'index']);
 
-
+f3
     // Salary Management
     $router->get('/admin/salary-management', [SalaryController::class, 'index']);
 
