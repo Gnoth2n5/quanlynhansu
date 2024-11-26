@@ -30,7 +30,6 @@ try {
     // Office Management
     $router->get('/admin/office-management', [OfficeController::class, 'index']);
     $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
-    $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
     // 3 thành phần url controller function 
     $router->get('/admin/create-office', [OfficeController::class, 'create']);
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
