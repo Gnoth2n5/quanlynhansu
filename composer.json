@@ -14,7 +14,8 @@
         "rakit/validation": "^1.4",
         "symfony/console": "^7.1",
         "laravel/serializable-closure": "^2.0",
-        "fakerphp/faker": "^1.24"
+        "fakerphp/faker": "^1.24",
+        "voku/portable-ascii": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1",
@@ -27,6 +28,9 @@
         },
         "files": [
             "app/Helpers/Helpers.php"
+        ],
+        "classmap": [
+            "src/views/"
         ]
     },
     "authors": [

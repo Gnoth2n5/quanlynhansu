@@ -10,9 +10,9 @@ return new class {
                 $table->id();
                 $table->unsignedBigInteger('user_id');
                 $table->dateTime('check_in');
-                $table->dateTime('check_out');
+                $table->dateTime('check_out')->nullable();
                 $table->enum('check_in_status', ['on_time', 'late', 'absent']);
-                $table->enum('check_out_status', ['on_time', 'early_exit']);
+                $table->enum('check_out_status', ['on_time', 'early_exit'])->nullable();
                 $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 

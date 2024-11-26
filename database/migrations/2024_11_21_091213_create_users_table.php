@@ -13,9 +13,10 @@ return new class {
                 $table->string('full_name');
                 $table->string('address')->nullable();
                 $table->date('birthday');
+                $table->enum('gender', ['male', 'female', 'other']);
                 $table->string('avatar')->nullable();
                 $table->string('email');
-                $table->string('phone');
+                $table->string('phone')->nullable();
                 $table->unsignedBigInteger('role_id');
                 $table->enum('status',['active', 'inactive']);
                 $table->string('UID');                

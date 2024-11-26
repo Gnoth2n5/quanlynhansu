@@ -18,7 +18,8 @@
             </div>
         </div>
     </div>
-    <div class="card border-primary">
+
+    <div class="card border-primary mb-3">
         <div class="card-body d-flex justify-content-between align-items-center">
             @if (!$isAttended)
                 <div class="d-flex justify-content-between align-items-center w-100">
@@ -26,7 +27,7 @@
                         <i class="fas fa-exclamation-triangle"></i> Bạn chưa chấm công hôm nay.
                         <strong>Vui lòng chấm công để ghi nhận thời gian làm việc của bạn.</strong>
                     </h4>
-                    <a href="{{$_ENV['APP_URL']}}/user/check-in" class="btn btn-success">
+                    <a href="{{ $_ENV['APP_URL'] }}/user/check-in" class="btn btn-success">
                         <i class="fas fa-sign-in-alt"></i> Check In
                     </a>
                 </div>
@@ -42,4 +43,29 @@
             @endif
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4 stretch-card transparent">
+            @component('components.datastats.datastats', [
+                'cardClass' => 'card-light-danger',
+                'title' => 'Tổng số ngày đã chấm công',
+                'value' => $atteMonth,
+                'percentage' => '0%',
+                'period' => '30 ngày',
+            ])
+            @endcomponent
+        </div>
+        <div class="col-md-6 mb-4 stretch-card transparent">
+            @component('components.datastats.datastats', [
+                'cardClass' => 'card-tale',
+                'title' => 'Số ngày chấm công muộn',
+                'value' => $atteLate,
+                'percentage' => '0%',
+                'period' => '30 ngày',
+            ])
+            @endcomponent
+        </div>
+    </div>
+
+
 @endsection

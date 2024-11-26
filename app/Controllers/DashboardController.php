@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Controllers\Controller;
 use App\Services\AttendanceService;
+use App\Models\Attendance;
 
 class DashboardController extends Controller
 {
@@ -11,7 +12,7 @@ class DashboardController extends Controller
     {
         $this->attenSv = new AttendanceService();
     }
-    
+
     public function dashboardAdmin()
     {
         $this->render('pages.admin.dashboard');
@@ -20,11 +21,23 @@ class DashboardController extends Controller
     public function dashboardUser()
     {
         \start_session();
-        
-        $isAttended = $this->attenSv->hasCheckIn($_SESSION['user']->id);
+
+        $userId = $_SESSION['user']->id;
+
+        $isAttended = $this->attenSv->hasCheckIn($userId);
 
         // \dd($isAttended);
 
-        $this->render('pages.client.dashboard', ['isAttended' => !$isAttended]);
+
+        $atteMonth = Attendance::where('user_id', $userId)
+            ->whereMonth('created_at', date('m'))
+            ->count();
+
+        $atteLate = Attendance::where('user_id', $userId)
+            ->where('check_in_status', 'late')
+            ->whereMonth('created_at', date('m'))
+            ->count();
+
+        $this->render('pages.client.dashboard', ['isAttended' => $isAttended, 'atteMonth' => $atteMonth, 'atteLate' => $atteLate]);
     }
 }

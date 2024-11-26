@@ -54,8 +54,22 @@ class AuthController extends Controller
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $fullname = $_POST['full_name'];
+        $birthday = $_POST['birthday'];
+        $gender = $_POST['gender'];
 
-        if(!$username || !$email || !$password) {
+        $data = [
+            'username' => $username,
+            'email' => $email,
+            'password' => $password,
+            'full_name' => $fullname,
+            'birthday' => $birthday,
+            'gender' => $gender
+        ];
+
+        // \dd($data);
+
+        if(!$username || !$email || !$password || !$fullname || !$birthday || !$gender) {
             echo 'All fields are required';
         }
 
@@ -64,7 +78,11 @@ class AuthController extends Controller
         $user->username = $username;
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_ARGON2ID);
-        $user->role_id = 3;
+        $user->role_id = 1;
+        $user->full_name = $fullname;
+        $user->birthday = $birthday;
+        $user->gender = $gender;
+        $user->UID = createUID($fullname, $birthday);
         $user->save();
 
         Redirect::to('/')

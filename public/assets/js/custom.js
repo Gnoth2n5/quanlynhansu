@@ -23,18 +23,18 @@ if (currentHour < 12) {
 }
 
 
-// Hàm cập nhật đồng hồ thời gian thực
-function updateClock() {
-    const clockElement = document.getElementById('time-badge');
-    const currentTime = new Date();
-    const hours = String(currentTime.getHours()).padStart(2, '0');
-    const minutes = String(currentTime.getMinutes()).padStart(2, '0');
-    const seconds = String(currentTime.getSeconds()).padStart(2, '0');
-    clockElement.textContent = `${hours}:${minutes}:${seconds}`;
-}
+// // Hàm cập nhật đồng hồ thời gian thực
+// function updateClock() {
+//     const clockElement = document.getElementById('time-badge');
+//     const currentTime = new Date();
+//     const hours = String(currentTime.getHours()).padStart(2, '0');
+//     const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+//     const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+//     clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+// }
 
-// Cập nhật đồng hồ mỗi giây
-setInterval(updateClock, 1000);
+// // Cập nhật đồng hồ mỗi giây
+// setInterval(updateClock, 1000);
 
-// Gọi hàm cập nhật đồng hồ ngay khi trang được tải
-updateClock();
+// // Gọi hàm cập nhật đồng hồ ngay khi trang được tải
+// updateClock();

@@ -11,6 +11,7 @@ use App\Controllers\Admin\LeaveController;
 use App\Controllers\Admin\SalaryController;
 use App\Controllers\Auth\AuthController;
 use App\Controllers\AttendanceController;
+use App\Controllers\ProfileController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -43,8 +44,12 @@ try {
     $router->get('/admin/salary-management', [SalaryController::class, 'index']);
 
     
+
+    
     $router->get('/user/dashboard', [DashboardController::class, 'dashboardUser']);
     $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
+    // $router->get('/user/check-out', [AttendanceController::class, 'checkOut']);
+    $router->get('/user/profile', [ProfileController::class, 'profile']);
 
 
 

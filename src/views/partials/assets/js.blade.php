@@ -28,14 +28,35 @@
     document.addEventListener('DOMContentLoaded', function() {
         // Lấy tham số từ URL
         const urlParams = new URLSearchParams(window.location.search);
-        const message = urlParams.get('msg');
+        let message = urlParams.get('msg');
         const type = urlParams.get('status');
+
         // Kiểm tra và hiển thị thông báo
         if (message && type && typeof toastr[type] === 'function') {
-            toastr[type](decodeURIComponent(message)); // toastr.success/toastr.error
+            // Thay thế dấu cộng bằng khoảng trắng và giải mã
+            message = decodeURIComponent(message.replace(/\+/g, ' '));
+            toastr[type](message); // toastr.success/toastr.error
             history.replaceState(null, '', window.location.pathname);
         }
     });
+</script>
+
+<script>
+    // Hàm cập nhật đồng hồ thời gian thực
+    function updateClock() {
+        const clockElement = document.getElementById('time-badge');
+        const currentTime = new Date();
+        const hours = String(currentTime.getHours()).padStart(2, '0');
+        const minutes = String(currentTime.getMinutes()).padStart(2, '0');
+        const seconds = String(currentTime.getSeconds()).padStart(2, '0');
+        clockElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+
+    // Cập nhật đồng hồ mỗi giây
+    setInterval(updateClock, 1000);
+
+    // Gọi hàm cập nhật đồng hồ ngay khi trang được tải
+    updateClock();
 </script>
 
 

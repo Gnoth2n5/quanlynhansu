@@ -36,7 +36,7 @@ class AttendanceService extends Service
         $gracePeriodEnd = $shiftTime + ($gracePeriod * 60);
             
         // Kiểm tra xem check-in có muộn không
-        return $checkInTime <= $gracePeriodEnd && $checkInTime <= $shiftEndTime;
+        return !($checkInTime <= $gracePeriodEnd && $checkInTime <= $shiftEndTime);
     }
 
     // public function isEarly($checkOut, $shift, $gracePeriod = 15): bool
