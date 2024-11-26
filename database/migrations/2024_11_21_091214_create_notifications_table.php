@@ -12,14 +12,15 @@ return new class {
                 $table->text('title');
                 $table->text('message');
                 $table->unsignedBigInteger('office_id');
-                $table->timestamps();
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
-          $table->foreign('user_id')
+            $table->foreign('user_id')
                 ->references('id')
                 ->on('users')  
                 ->onDelete('cascade');
                 
-          $table->foreign('office_id')
+            $table->foreign('office_id')
                 ->references('id')
                 ->on('offices')  
                 ->onDelete('cascade');

@@ -2,40 +2,32 @@
     <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
         <a class="navbar-brand brand-logo mr-5" href="index.html"><img src="/assets/images/logo.svg" class="mr-2"
                 alt="logo" /></a>
-        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/assets/images/logo-mini.svg" alt="logo" /></a>
+        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="/assets/images/logo-mini.svg"
+                alt="logo" /></a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="icon-menu"></span>
         </button>
         <ul class="navbar-nav mr-lg-2">
-            <li class="nav-item nav-search d-none d-lg-block">
-                <div class="input-group">
-                    <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
-                        <span class="input-group-text" id="search">
-                            <i class="icon-search"></i>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now"
-                        aria-label="search" aria-describedby="search">
-                </div>
+            <li class="nav-item nav-search d-none d-lg-block badge bg-primary">
+                <i class="fa-regular fa-clock" style="color: white"></i>
+                <span class="text-light" id="time-badge">
+                    00:00:00
+                </span>
             </li>
         </ul>
         <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-                <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
-                    <img src="/assets/images/faces/face28.jpg" alt="profile" />
+            <li class="nav-item">
+                <button class="btn btn-outline-info btn-icon-text btn-sm ">
+                    <i class="fa-regular fa-bell fa-lg btn-icon-append mr-2"></i>
+                    0
+                </button>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-primary btn-sm" href="<?= $_ENV['APP_URL'] ?>/logout">
+                    Đăng xuất
                 </a>
-                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                    <a class="dropdown-item">
-                        <i class="ti-settings text-primary"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item" href="<?=$_ENV['APP_URL']?>/logout">
-                        <i class="ti-power-off text-primary"></i>
-                        Logout
-                    </a>
-                </div>
             </li>
         </ul>
         <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"

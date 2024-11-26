@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Users extends Model
 {
@@ -16,13 +17,18 @@ class Users extends Model
         'password',
         'full_name',
         'email',
+        'avatar',
+        'birthday',
+        'gender',
         'phone',
         'role_id',
         'status',
         'UID',
     ];
 
-    protected $hidden = [];
+    protected $hidden = [
+        'password',
+    ];
     public function role(): BelongsTo
     {
         return $this->belongsTo(Roles::class);
@@ -39,9 +45,9 @@ class Users extends Model
     {
         return $this->hasMany(Salaryadjustments::class);
     }
-    public function user_shift()
+    public function userShift(): HasOne
     {
-        return $this->hasMany(UserShift::class);
+        return $this->hasOne(UserShift::class);
     }
     public function leave_requests(): HasMany
     {

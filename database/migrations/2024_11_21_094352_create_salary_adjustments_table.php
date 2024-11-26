@@ -14,15 +14,15 @@ return new class {
                 $table->decimal('amount', 10, 2);
                 $table->string('description');
                 $table->date('adjustment_date');
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
                 
-          $table->foreign('salary_id')
+                $table->foreign('salary_id')
                 ->references('id')
                 ->on('salaries')  
                 ->onDelete('cascade');
-                $table->timestamps();
                 
-
-          $table->foreign('user_id')
+                $table->foreign('user_id')
                 ->references('id')
                 ->on('users')  
                 ->onDelete('cascade');

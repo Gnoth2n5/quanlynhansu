@@ -1,36 +1,94 @@
-<?php
-
-
-$data = [
-    ['id' => 1, 'name' => 'John Doe', 'email' => 'john.doe@example.com', 'role' => 'Admin', 'status' => 'Active'],
-    ['id' => 2, 'name' => 'Jane Smith', 'email' => 'jane.smith@example.com', 'role' => 'Employee', 'status' => 'Inactive'],
-    ['id' => 3, 'name' => 'Samuel Green', 'email' => 'samuel.green@example.com', 'role' => 'Manager', 'status' => 'Active'],
-    ['id' => 4, 'name' => 'Alice Brown', 'email' => 'alice.brown@example.com', 'role' => 'Employee', 'status' => 'Active'],
-    ['id' => 5, 'name' => 'David White', 'email' => 'david.white@example.com', 'role' => 'Employee', 'status' => 'Inactive'],
-];
-
-
-$columns= [
-    'id' => 'ID',
-    'name' => 'Name',
-    'email' => 'Email',
-    'role' => 'Role',
-    'status' => 'Status',
-];
-?>
-
 @extends('layouts.defaultLayout')
 
 @section('title', 'Quản lý Người dùng')
+
+@php
+    $i = 1;
+@endphp
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h3>Quản lý Người dùng</h3>
-                @component('components.table.table_normal', ['columns' => $columns, 'data' => $data])
+                
+                <div class="d-flex justify-content-between">
+                    <h3>Quản lý Người dùng</h3>
+                    <a href="#" class="btn btn-primary">Thêm mới</a>
+                </div>
+
+                <div class="table-responsive mb-2">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Họ tên</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($data as $user)
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $user->username }}</td>
+                                    <td>{{ $user->full_name }}</td>
+                                    <td>
+                                        <span
+                                            class="badge 
+                                            @if ($user->role->name == 'admin') badge-danger
+                                            @elseif($user->role->name == 'user')
+                                                badge-primary
+                                            @elseif($user->role->name == 'manage')
+                                                badge-warning
+                                            @else
+                                                badge-secondary @endif
+                                            text-uppercase">
+                                            {{ $user->role->name ?? 'Unknown' }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span
+                                            class="badge 
+                                            @if ($user->status == 'active') badge-success
+                                            @elseif($user->status == 'inactive')
+                                                badge-danger
+                                            @else
+                                                badge-secondary @endif
+                                            text-uppercase">
+                                            {{ $user->status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="" class="btn btn-info">Xem</a>
+                                        <a href="" class="btn btn-primary">Sửa</a>
+                                        <a href="#" class="btn btn-danger" onclick="check(event)">Xoá</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+
+                @component('components.pagination.pagination', [
+                    'currentPage' => $currentPage,
+                    'totalPages' => $totalPages,
+                ])
                 @endcomponent
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    <script>
+        function check(event) {
+            event.preventDefault();
+            SweetAlert('Bạn có chắc chắn muốn xóa người dùng này?', 'warning', {
+                confirmBtn: true,
+                cancelBtn: true,
+            });
+        }
+    </script>
 @endsection

@@ -10,16 +10,17 @@ return new class {
                 $table->id();
                 $table->unsignedBigInteger('office_id');
                 $table->unsignedBigInteger('user_id');
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
-          $table->foreign('office_id')
+                $table->foreign('office_id')
                 ->references('id')
                 ->on('offices')  
                 ->onDelete('cascade');
-          $table->foreign('user_id')
+                $table->foreign('user_id')
                 ->references('id')
                 ->on('users')  
                 ->onDelete('cascade');
-                $table->timestamps();
             });
         }
     }

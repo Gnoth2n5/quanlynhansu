@@ -3,31 +3,31 @@ $sidebarItems = [
     [
         'label' => 'Dashboard',
         'icon' => 'icon-grid menu-icon',
-        'url' => '/dashboard',
+        'url' => '/admin/dashboard',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Phòng',
         'icon' => 'icon-layout menu-icon',
-        'url' => '/office-management',
+        'url' => '/admin/office-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Người dùng',
         'icon' => 'icon-columns menu-icon',
-        'url' => '/user-management',
+        'url' => '/admin/user-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Đơn từ',
         'icon' => 'icon-bar-graph menu-icon',
-        'url' => '/leave-management',
+        'url' => '/admin/leave-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Quản lý Lương',
         'icon' => 'icon-grid-2 menu-icon',
-        'url' => '/salary-management',
+        'url' => '/admin/salary-management',
         'subMenu' => [],
     ],
     [
@@ -65,6 +65,14 @@ $sidebarItems = [
 ?>
 
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <div class="text-center mb-4 profile-section mt-4">
+        <!-- Avatar -->
+        <img src="/assets/images/faces/face1.jpg" 
+             class="img-fluid border profile-avatar" 
+             alt="User Avatar">
+        <!-- Tên người dùng -->
+        <h5 class="mt-2 profile-name">{{$_SESSION['user']['full_name']}}</h5>
+    </div>
     <ul class="nav">
         @foreach ($sidebarItems as $item)
             <li class="nav-item">

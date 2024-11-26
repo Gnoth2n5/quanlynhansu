@@ -14,13 +14,14 @@ return new class {
                 $table->decimal('total_deductions', 10, 2);
                 $table->decimal('net_salary', 10, 2);
                 $table->date('pay_date');
+                $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
                 
-          $table->foreign('user_id')
+                $table->foreign('user_id')
                 ->references('id')
                 ->on('users')  
                 ->onDelete('cascade');
-                $table->timestamps();
-            });
+                });
         }
     }
     

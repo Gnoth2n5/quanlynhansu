@@ -1,4 +1,6 @@
 <?php
+use voku\helper\ASCII;
+
 function dd($data)
 {
     echo '<pre>';
@@ -20,4 +22,34 @@ function set_timezone()
 function asset($path) {
     global $baseUrl;
     return $baseUrl . ltrim($path, '/');
+}
+
+function start_session()
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+}
+
+function createUID($full_name, $dob)
+{
+    // xoá dấu
+    $fullName = ASCII::to_ascii($full_name);
+    
+    // tách họ và tên và lưu vào mảng
+    $nameParts = explode(' ', $fullName);
+    
+    // lấy tên chính
+    $lastName = array_pop($nameParts);
+
+    $initials = '';
+    foreach ($nameParts as $part) {
+        $initials .= substr($part, 0, 1); // Lấy ký tự đầu
+    }
+
+    // chuyển ngày sinh thành chuỗi
+    $dobParts = date('dmY', strtotime($dob));
+    
+    // trả về mã nhân viên VD: nguyenvh20031990
+    return strtolower($lastName . $initials .  $dobParts);
 }
