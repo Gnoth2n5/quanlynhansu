@@ -50,6 +50,7 @@ try {
     $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
     // $router->get('/user/check-out', [AttendanceController::class, 'checkOut']);
     $router->get('/user/profile', [ProfileController::class, 'profile']);
+    $router->get('/user/update-profile', [ProfileController::class, 'updateProfile']);
 
 
 

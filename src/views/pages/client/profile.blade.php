@@ -36,40 +36,40 @@
         <div class="col-lg-8">
             <div class="card">
                 <div class="card-body">
-                    <form>
+                    <form enctype="multipart/form-data" method="POST">
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">UID</label>
                             <div class="col-lg-9">
-                                <input class="form-control" disabled type="text" value="{{ $_SESSION['user']->UID }}">
+                                <input class="form-control" disabled name="UID" type="text" value="{{ $_SESSION['user']->UID }}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Họ và Tên</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value="{{ $_SESSION['user']->full_name }}">
+                                <input class="form-control" name="fullname" type="text" value="{{ $_SESSION['user']->full_name }}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Email</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="email" value="{{ $_SESSION['user']->email }}">
+                                <input class="form-control" name="email" type="email" value="{{ $_SESSION['user']->email }}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Avatar</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="file">
+                                <input class="form-control" name="avatar" type="file">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Address</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value="{{ $_SESSION['user']['address'] ?? '' }}"
+                                <input class="form-control" name="address" type="text" value="{{ $_SESSION['user']['address'] ?? '' }}"
                                     placeholder="Địa chỉ...">
                             </div>
                         </div>
@@ -77,21 +77,21 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Username</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value="{{ $_SESSION['user']->username }}">
+                                <input class="form-control" name="username" type="text" value="{{ $_SESSION['user']->username }}">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Mật khẩu hiện tại</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="password">
+                                <input class="form-control" name="oldpassword" type="password">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Mật khẩu mới</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="password" value="">
+                                <input class="form-control" name="newpassword" type="password" value="">
                             </div>
                         </div>
 
