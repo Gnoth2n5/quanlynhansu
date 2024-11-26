@@ -8,4 +8,9 @@ class ProfileController extends Controller
     {
         return $this->render('pages.client.profile');
     }
+
+    public function updateProfile()
+    {
+        return $this->render('pages.client.profile');
+    }
 }
