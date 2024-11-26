@@ -34,7 +34,20 @@ try {
     // 3 thành phần url controller function 
     $router->get('/admin/create-office', [OfficeController::class, 'create']);
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
+<<<<<<< Updated upstream
+=======
+    $router->post('/admin/store-office', [OfficeController::class, 'store']);
+    $router->post('/admin/update-office', [OfficeController::class, 'update']);
+    
+   
+    $router->get('/admin/create-shift', [ShiftController::class, 'create']);
+    $router->post('/admin/store-shift', [ShiftController::class, 'store']);
+    $router->get('/admin/edit-shift/{id}', [ShiftController::class, 'edit']);
+    $router->post('/admin/update-shift', [ShiftController::class, 'update']);
+    $router->get('/admin/delete-shift/{id}', [ShiftController::class, 'delete']);
+>>>>>>> Stashed changes
 
+    
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
 
