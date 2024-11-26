@@ -19,9 +19,10 @@
 <script src="/assets/js/Chart.roundedBarCharts.js"></script>
 <!-- End custom js for this page-->
 {{-- Nhúng JavaScript của Toastr --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.js"></script>
+ 
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
