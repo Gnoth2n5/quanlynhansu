@@ -12,6 +12,7 @@ use App\Controllers\Admin\SalaryController;
 use App\Controllers\Auth\AuthController;
 use App\Controllers\AttendanceController;
 use App\Controllers\ProfileController;
+use App\Controllers\Admin\ShiftController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -46,6 +47,8 @@ try {
     $router->get('/admin/leave-management', [LeaveController::class, 'index']);
     // Salary Management
     $router->get('/admin/salary-management', [SalaryController::class, 'index']);
+    // Shift Management
+    $router->get('/admin/shift-management', [ShiftController::class, 'index']);
 
     
 

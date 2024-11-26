@@ -25,6 +25,12 @@ $sidebarItems = [
         'subMenu' => [],
     ],
     [
+        'label' => 'Quản lý Ca làm việc',
+        'icon' => 'fa-regular fa-envelope menu-icon',
+        'url' => '/admin/shift-management',
+        'subMenu' => [],
+    ],
+    [
         'label' => 'Quản lý Lương',
         'icon' => 'fa-solid fa-coins menu-icon',
         'url' => '/admin/salary-management',
