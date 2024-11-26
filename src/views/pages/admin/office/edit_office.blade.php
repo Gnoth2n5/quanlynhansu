@@ -8,14 +8,9 @@
             <div class="card-body">
 
                 <div class="container mt-5">
-<<<<<<< Updated upstream
-                    <h2 class="text-center">Sửa Phòng Mới</h2>
-                    <form action="" method="POST" class="mt-4">
-=======
                     <h2 class="text-center">Sửa Phòng</h2>
                     <form id="editOfficeForm" action="{{$_ENV['APP_URL']}}/admin/update-office" method="POST" class="mt-4">
-                        @csrf <!-- Nếu sử dụng CSRF bảo vệ, thêm token -->
->>>>>>> Stashed changes
+
                         <input type="hidden" name="id" value="{{$office->id}}">
                         <div class="mb-3">
                             <label for="roomName" class="form-label">Tên phòng</label>
@@ -28,11 +23,8 @@
                         </div>
                       
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
-<<<<<<< Updated upstream
-=======
                         <input type="reset" class="btn btn-secondary" value="Khôi phục lại">
                         <a href="{{$_ENV['APP_URL']}}/admin/office-management" class="btn btn-info">Quay lại</a>
->>>>>>> Stashed changes
                     </form>
                 
 
@@ -40,10 +32,6 @@
         </div>
     </div>
 @endsection
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 @section('script')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -99,8 +87,4 @@
             });
         });
     </script>
-<<<<<<< Updated upstream
 @endsection
-=======
-@endsection
->>>>>>> Stashed changes

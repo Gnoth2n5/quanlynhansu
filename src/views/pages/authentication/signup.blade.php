@@ -33,13 +33,7 @@
                         placeholder="Ngày tháng năm sinh">
                 </div>
             </div>
-        <div class="form-group">
-            <input type="text" name="username" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">
         </div>
-        <div class="form-group">
-            <input type="email" name="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
-        </div>
-
         <!-- Trường giới tính -->
         <div class="form-group">
             <select name="gender" class="form-control form-control-lg text-primary">

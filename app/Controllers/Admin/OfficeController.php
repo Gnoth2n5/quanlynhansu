@@ -12,8 +12,8 @@ class OfficeController extends Controller
     {
         $perPage = 10;
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-
-        $pagination = PaginationService::paginate(Offices::query(), $perPage, $page);
+        
+        $pagination = PaginationService::paginate(Offices::query()->orderBy('updated_at', 'desc'), $perPage, $page);
 
         return $this->render('pages.admin.office.office', [
             'data' => $pagination['data'],
@@ -53,3 +53,67 @@ class OfficeController extends Controller
         }
         $this->render('pages.admin.office.edit_office', ['office'=>$office]);
     }
+
+    public function store(){
+        $name = $_POST['roomName'];
+        $location = $_POST['location'];
+
+        if (empty($name) || empty($location)) {
+            Redirect::to('/admin/create-office')
+                    ->message('Vui lòng nhập đầy đủ thông tin', 'error')
+                    ->send();
+        }
+
+        $office = Offices::where('name', $name)->first();
+        
+        if ($office) {
+            Redirect::to('/admin/create-office')
+                    ->message('Phòng ban đã tồn tại', 'error')
+                    ->send();
+        }
+
+        $result = Offices::create([
+            'name' => $name,
+            'location' => $location,
+        ]);
+
+        if (!$result) {
+            Redirect::to('/admin/create-office')
+                    ->message('Lỗi khi thêm phòng ban', 'error')
+                    ->send();
+        }
+
+        Redirect::to('/admin/office-management')
+                ->message('Thêm phòng ban thành công', 'success')
+                ->send();
+    }
+
+
+    public function update(){
+        $id = $_POST['id'];
+        $name = $_POST['roomName'];
+        $location = $_POST['location'];
+
+        if (empty($name) || empty($location)) {
+            Redirect::to('/admin/edit-office/' . $id)
+                    ->message('Vui lòng nhập đầy đủ thông tin', 'error')
+                    ->send();
+        }
+
+        $office = Offices::find($id);
+
+        if (!$office) {
+            Redirect::to('/admin/office-management')
+                    ->message('Lỗi không tìm thấy phòng ban', 'error')
+                    ->send();
+        }
+
+        $office->name = $name;
+        $office->location = $location;
+        $office->save();
+        
+        Redirect::to('/admin/office-management')
+                ->message('Cập nhật phòng ban thành công', 'success')
+                ->send();
+    }
+}

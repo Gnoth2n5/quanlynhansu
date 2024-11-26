@@ -5,11 +5,8 @@
 @section('content')
     <h4>Hello! let's get started</h4>
     <h6 class="font-weight-light">Đăng nhập để tiếp tục.</h6>
-<<<<<<< Updated upstream
+    
     <form class="pt-3" id="loginForm" method="POST" action="<?= $_ENV['APP_URL'] ?>/login">
-=======
-    <form class="pt-3" method="POST" action="<?= $_ENV['APP_URL'] ?>/login" id="loginForm">
->>>>>>> Stashed changes
         <div class="form-group">
             <input type="email" name="email" class="form-control form-control-lg rounded" id="exampleInputEmail1"
                 placeholder="Nhập email đăng nhập...">
@@ -28,6 +25,7 @@
     </form>
 @endsection
 
+
 @section('script')
     <script>
         const form = document.querySelector('#loginForm');
@@ -35,7 +33,7 @@
         const password = document.querySelector("input[name='password']");
 
         form.addEventListener("submit", function(event) {
-<<<<<<< Updated upstream
+
             event.preventDefault();
 
             let isValid = true;
@@ -43,7 +41,7 @@
 
             document.querySelectorAll(".error-message").forEach(el => el.remove());
 
-=======
+
             event.preventDefault(); // Ngăn chặn hành vi mặc định của form
             let isValid = true;
             let errors = [];
@@ -52,39 +50,25 @@
             document.querySelectorAll(".error-message").forEach(el => el.remove());
 
             // Kiểm tra email
->>>>>>> Stashed changes
+
             if (!/\S+@\S+\.\S+/.test(email.value.trim())) {
                 isValid = false;
                 errors.push({
                     field: email,
-<<<<<<< Updated upstream
                     message: "Email không hợp lệ. Vui lòng nhập email đúng định dạng."
                 });
             }
-
-=======
-                    message: "Email không hợp lệ. Vui lòng nhập email hợp lệ."
-                });
-            }
-
+            
             // Kiểm tra mật khẩu
->>>>>>> Stashed changes
             if (password.value.trim() === "" || password.value.length < 6) {
                 isValid = false;
                 errors.push({
                     field: password,
-<<<<<<< Updated upstream
-                    message: "Mật khẩu phải nhập chính xác."
-                });
-            }
-
-=======
                     message: "Mật khẩu phải chứa ít nhất 6 ký tự."
                 });
             }
 
             // Hiển thị lỗi nếu không hợp lệ
->>>>>>> Stashed changes
             if (!isValid) {
                 errors.forEach(error => {
                     const errorEl = document.createElement('div');
@@ -92,17 +76,8 @@
                     errorEl.textContent = error.message;
                     error.field.parentElement.appendChild(errorEl);
                 });
-<<<<<<< Updated upstream
 
-                return;
-            }
-
-=======
-                return;
-            }
-
-            // Nếu hợp lệ, submit form
->>>>>>> Stashed changes
+            // Nếu hợp lệ, gửi form
             form.submit();
         });
     </script>
