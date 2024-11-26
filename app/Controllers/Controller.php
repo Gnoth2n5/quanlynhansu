@@ -26,5 +26,10 @@ abstract class Controller{
         $blade->setPath($viewDir, $storageDir);
         echo $blade->run($viewFile, $data);
     }
-    // xin chao
+    
+    protected function json($data)
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 }

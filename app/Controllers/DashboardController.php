@@ -4,6 +4,10 @@ namespace App\Controllers;
 use App\Controllers\Controller;
 use App\Services\AttendanceService;
 use App\Models\Attendance;
+use App\Models\LeaveRequests;
+use App\Models\Notifications;
+use App\Models\Users;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -15,7 +19,38 @@ class DashboardController extends Controller
 
     public function dashboardAdmin()
     {
-        $this->render('pages.admin.dashboard');
+        $totalUser = Users::count();
+
+        $totalCheckInLate = Attendance::where('check_in_status', 'late')
+                                    ->whereMonth('created_at', Carbon::now()->month)
+                                    ->whereYear('created_at', Carbon::now()->year)                    
+                                    ->count();
+
+        $totalNotify = Notifications::whereMonth('created_at', Carbon::now()->month)
+                                    ->whereYear('created_at', Carbon::now()->year)
+                                    ->count();
+
+        $totalLeaveRequest = LeaveRequests::where('status', 'pending')
+                                    ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+                                    ->count();
+        $totalCheckIn = Attendance::whereMonth('created_at', Carbon::now()->month)
+                                    ->whereYear('created_at', Carbon::now()->year)
+                                    ->count();
+                                    
+        $totalCheckInOnTime = Attendance::where('check_in_status', 'on_time')
+                                    ->whereMonth('created_at', Carbon::now()->month)
+                                    ->whereYear('created_at', Carbon::now()->year)
+                                    ->count();
+                                    
+        
+        $this->render('pages.admin.dashboard', [
+            'totalUser' => $totalUser,
+            'totalCheckIn' => $totalCheckIn,
+            'totalCheckInLate' => $totalCheckInLate,
+            'totalCheckInOnTime' => $totalCheckInOnTime,
+            'totalNotify' => $totalNotify,
+            'totalLeaveRequest' => $totalLeaveRequest
+        ]);
     }
 
     public function dashboardUser()

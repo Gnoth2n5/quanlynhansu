@@ -39,7 +39,7 @@ $sidebarItems = [
     [
         'label' => 'Quản lý thông báo',
         'icon' => 'fa-regular fa-bell menu-icon',
-        'url' => '#icons',
+        'url' => '/admin/notify-management',
         'subMenu' => [],
     ],
     [

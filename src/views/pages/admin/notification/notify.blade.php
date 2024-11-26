@@ -24,11 +24,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $office)
+                        @foreach ($data as $notify)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $office->name }}</td>
-                                <td>{{ $office->location }}</td>
+                                <td>{{ $notify->name }}</td>
+                                <td>{{ $notify->location }}</td>
                                 <td>
                                     <a href=""
                                         class="btn btn-primary btn-sm">Sửa</a>

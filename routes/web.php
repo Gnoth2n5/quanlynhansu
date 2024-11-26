@@ -13,6 +13,8 @@ use App\Controllers\Auth\AuthController;
 use App\Controllers\AttendanceController;
 use App\Controllers\ProfileController;
 use App\Controllers\Admin\ShiftController;
+use App\Controllers\Admin\NotifyController;
+use App\Controllers\ChartController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -25,8 +27,10 @@ try {
     $router->post('/login', [AuthController::class, 'login']);
     $router->post('/register', [AuthController::class, 'register']);
     $router->get('/logout', [AuthController::class, 'logout']);
-
+    
+    // Dashboard Admin
     $router->get('/admin/dashboard', [DashboardController::class, 'dashboardAdmin']);
+    $router->get('/admin/atten-chart', [ChartController::class, 'attenChart']);
 
     // Office Management
     $router->get('/admin/office-management', [OfficeController::class, 'index']);
@@ -51,7 +55,8 @@ try {
     $router->get('/admin/shift-management', [ShiftController::class, 'index']);
 
     
-
+    // Notify Management
+    $router->get('/admin/notify-management', [NotifyController::class, 'index']);
     
     $router->get('/user/dashboard', [DashboardController::class, 'dashboardUser']);
     $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
