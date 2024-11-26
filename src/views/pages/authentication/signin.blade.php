@@ -5,7 +5,8 @@
 @section('content')
     <h4>Hello! let's get started</h4>
     <h6 class="font-weight-light">Đăng nhập để tiếp tục.</h6>
-    <form class="pt-3" method="POST" action="<?= $_ENV['APP_URL'] ?>/login">
+    
+    <form class="pt-3" id="loginForm" method="POST" action="<?= $_ENV['APP_URL'] ?>/login">
         <div class="form-group">
             <input type="email" name="email" class="form-control form-control-lg rounded" id="exampleInputEmail1"
                 placeholder="Nhập email đăng nhập...">
@@ -23,39 +24,51 @@
         </div>
     </form>
 @endsection
+
+
 @section('script')
     <script>
-        const form = document.querySelector('#createOfficeForm');
-        const roomName = document.querySelector("input[name='roomName']");
-        const location = document.querySelector("input[name='location']");
+        const form = document.querySelector('#loginForm');
+        const email = document.querySelector("input[name='email']");
+        const password = document.querySelector("input[name='password']");
 
         form.addEventListener("submit", function(event) {
-            event.preventDefault(); // Ngăn chặn gửi form nếu chưa hợp lệ
+
+            event.preventDefault();
+
             let isValid = true;
             let errors = [];
 
-            // Xóa các thông báo lỗi trước đó
             document.querySelectorAll(".error-message").forEach(el => el.remove());
 
-            // Kiểm tra tên phòng
-            if (roomName.value.trim() === "" || roomName.value.length < 3) {
+
+            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+            let isValid = true;
+            let errors = [];
+
+            // Xóa thông báo lỗi trước đó
+            document.querySelectorAll(".error-message").forEach(el => el.remove());
+
+            // Kiểm tra email
+
+            if (!/\S+@\S+\.\S+/.test(email.value.trim())) {
                 isValid = false;
                 errors.push({
-                    field: roomName,
-                    message: "Tên phòng không được để trống và phải chứa ít nhất 3 ký tự."
+                    field: email,
+                    message: "Email không hợp lệ. Vui lòng nhập email đúng định dạng."
+                });
+            }
+            
+            // Kiểm tra mật khẩu
+            if (password.value.trim() === "" || password.value.length < 6) {
+                isValid = false;
+                errors.push({
+                    field: password,
+                    message: "Mật khẩu phải chứa ít nhất 6 ký tự."
                 });
             }
 
-            // Kiểm tra vị trí
-            if (location.value.trim() === "" || location.value.length < 3) {
-                isValid = false;
-                errors.push({
-                    field: location,
-                    message: "Vị trí không được để trống và phải chứa ít nhất 3 ký tự."
-                });
-            }
-
-            // Nếu có lỗi, hiển thị lỗi và không gửi form
+            // Hiển thị lỗi nếu không hợp lệ
             if (!isValid) {
                 errors.forEach(error => {
                     const errorEl = document.createElement('div');
@@ -63,8 +76,6 @@
                     errorEl.textContent = error.message;
                     error.field.parentElement.appendChild(errorEl);
                 });
-                return;
-            }
 
             // Nếu hợp lệ, gửi form
             form.submit();
