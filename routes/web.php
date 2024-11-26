@@ -40,7 +40,18 @@ try {
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
     $router->post('/admin/store-office', [OfficeController::class, 'store']);
     $router->post('/admin/update-office', [OfficeController::class, 'update']);
+    
+  
+    // Shift Management
+    $router->get('/admin/shift-management', [ShiftController::class, 'index']);
+    $router->get('/admin/create-shift', [ShiftController::class, 'create']);
+    $router->post('/admin/store-shift', [ShiftController::class, 'store']);
+    $router->get('/admin/edit-shift/{id}', [ShiftController::class, 'edit']);
+    $router->post('/admin/update-shift', [ShiftController::class, 'update']);
+    $router->get('/admin/delete-shift/{id}', [ShiftController::class, 'delete']);
 
+
+    
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
     $router->get('/admin/user-detail/{uid}-{id}', [UserController::class, 'show']);
