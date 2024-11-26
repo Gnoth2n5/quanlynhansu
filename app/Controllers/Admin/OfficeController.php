@@ -3,6 +3,7 @@ namespace App\Controllers\Admin;
 
 use App\Models\Offices;
 use App\Controllers\Controller;
+use App\Helpers\Redirect;
 use App\Services\PaginationService;
 
 class OfficeController extends Controller
@@ -19,5 +20,22 @@ class OfficeController extends Controller
             'totalPages' => $pagination['totalPages'],
             'currentPage' => $pagination['currentPage'],
         ]);
+    }
+
+    public function delete($id)
+    {
+        $office = Offices::find($id);
+
+        if (!$office) {
+            Redirect::to('/admin/office-management')
+                    ->message('Phòng ban không tồn tại', 'error')
+                    ->send();
+        }
+
+        $office->delete();
+
+        Redirect::to('/admin/office-management')
+                ->message('Xóa phòng ban thành công', 'success')
+                ->send();
     }
 }

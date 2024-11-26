@@ -29,6 +29,7 @@ try {
 
     // Office Management
     $router->get('/admin/office-management', [OfficeController::class, 'index']);
+    $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
 
 
     // User Management

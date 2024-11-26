@@ -61,12 +61,21 @@
 
 
 <script>
-    const SweetAlert = (msg, status, {
+    const SweetAlert = (event, msg, status, {
         confirmBtn = true,
         cancelBtn = false,
         time = null,
-        url = ''
+        url = '',
+        element = null
     } = {}) => {
+
+        if (event) {
+            event.preventDefault();
+        }
+
+        if (element && element.tagName === 'A' && element.href) {
+            url = element.href;
+        }
 
         const swalConfig = {
             icon: status,
@@ -80,7 +89,6 @@
         };
 
         Swal.fire(swalConfig).then((result) => {
-
             if (result.isConfirmed && url) {
                 window.location.href = url;
             }
