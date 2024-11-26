@@ -12,8 +12,8 @@ class OfficeController extends Controller
     {
         $perPage = 10;
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
-
-        $pagination = PaginationService::paginate(Offices::query(), $perPage, $page);
+        
+        $pagination = PaginationService::paginate(Offices::query()->orderBy('updated_at', 'desc'), $perPage, $page);
 
         return $this->render('pages.admin.office.office', [
             'data' => $pagination['data'],

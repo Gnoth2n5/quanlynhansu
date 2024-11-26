@@ -13,7 +13,7 @@
                 
                 <div class="d-flex justify-content-between">
                     <h3>Quản lý Người dùng</h3>
-                    <a href="#" class="btn btn-primary">Thêm mới</a>
+                    <a href="#" class="btn btn-primary btn-sm">Thêm mới</a>
                 </div>
 
                 <div class="table-responsive mb-2">
@@ -61,9 +61,9 @@
                                         </span>
                                     </td>
                                     <td>
-                                        <a href="" class="btn btn-info">Xem</a>
-                                        <a href="" class="btn btn-primary">Sửa</a>
-                                        <a href="#" class="btn btn-danger" onclick="check(event)">Xoá</a>
+                                        <a href="" class="btn btn-info btn-sm">Xem</a>
+                                        <a href="" class="btn btn-primary btn-sm">Sửa</a>
+                                        <a href="#" class="btn btn-danger btn-sm" onclick="check(event)">Xoá</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -6,7 +6,13 @@
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <a href="{{ $_ENV['APP_URL'] }}/admin/create-office" class="btn btn-primary btn-sm">Thêm phòng</a>
+
+                <div class="d-flex justify-content-between">
+                    <h3>Quản lý Phòng ban</h3>
+                    <a href="{{ $_ENV['APP_URL'] }}/admin/create-office" class="btn btn-primary btn-sm">Thêm phòng</a>
+                </div>
+
+                @php $i = 1 @endphp
 
                 <table class="table">
                     <thead>
@@ -20,12 +26,14 @@
                     <tbody>
                         @foreach ($data as $office)
                             <tr>
-                                <td>{{ $office->id }}</td>
+                                <td>{{ $i++ }}</td>
                                 <td>{{ $office->name }}</td>
                                 <td>{{ $office->location }}</td>
                                 <td>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-office/{{$office->id}}" class="btn btn-primary btn-sm">Sửa</a>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/delete-office/{{$office->id}}" class="btn btn-danger btn-sm"
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-office/{{ $office->id }}"
+                                        class="btn btn-primary btn-sm">Sửa</a>
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/delete-office/{{ $office->id }}"
+                                        class="btn btn-danger btn-sm"
                                         onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
                                 </td>
                             </tr>

@@ -12,7 +12,7 @@ class UserController extends Controller
         $perPage = 10;
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
-        $pagination = PaginationService::paginate(Users::query(), $perPage, $page);
+        $pagination = PaginationService::paginate(Users::query()->orderBy('updated_at', 'desc'), $perPage, $page);
 
         $this->render('pages.admin.user.user', [
             'data' => $pagination['data'],
