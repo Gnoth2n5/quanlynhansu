@@ -4,7 +4,8 @@ namespace App\Controllers\Auth;
 use App\Controllers\Controller;
 use App\Models\Users;
 use App\Helpers\Redirect;
-
+use App\Models\Shifts;
+use App\Models\UserShift;
 
 class AuthController extends Controller
 {
@@ -58,19 +59,12 @@ class AuthController extends Controller
         $birthday = $_POST['birthday'];
         $gender = $_POST['gender'];
 
-        $data = [
-            'username' => $username,
-            'email' => $email,
-            'password' => $password,
-            'full_name' => $fullname,
-            'birthday' => $birthday,
-            'gender' => $gender
-        ];
-
         // \dd($data);
 
         if(!$username || !$email || !$password || !$fullname || !$birthday || !$gender) {
-            echo 'All fields are required';
+            Redirect::to('/signup')
+                ->message('Vui lòng nhập đầy đủ thông tin', 'danger')
+                ->send();
         }
 
         $user = new Users();
@@ -84,6 +78,21 @@ class AuthController extends Controller
         $user->gender = $gender;
         $user->UID = createUID($fullname, $birthday);
         $user->save();
+
+        // lấy ca làm việc sáng làm mặc định
+        $shift_morning = Shifts::where('shift_name', 'Sáng')->first();
+
+        $userShift = UserShift::create([
+            'user_id' => $user->id,
+            'shift_id' => $shift_morning->id
+        ]);
+
+        if(!$userShift) {
+            Redirect::to('/')
+                ->message('Đăng kí thất bại! Không thể phân ca', 'danger')
+                ->send();
+        }
+        
 
         Redirect::to('/')
             ->message('Đăng kí thành công', 'success')

@@ -33,9 +33,12 @@ try {
     // 3 thành phần url controller function 
     $router->get('/admin/create-office', [OfficeController::class, 'create']);
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
+    $router->post('/admin/store-office', [OfficeController::class, 'store']);
+    $router->post('/admin/update-office', [OfficeController::class, 'update']);
 
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
+    $router->get('/admin/user-detail/{uid}-{id}', [UserController::class, 'show']);
 
 
 

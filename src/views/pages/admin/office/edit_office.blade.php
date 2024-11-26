@@ -8,7 +8,7 @@
             <div class="card-body">
 
                 <div class="container mt-5">
-                    <h2 class="text-center">Sửa Phòng Mới</h2>
+                    <h2 class="text-center">Sửa Phòng</h2>
                     <form action="" method="POST" class="mt-4">
                         <input type="hidden" name="id" value="{{$office->id}}">
                         <div class="mb-3">
@@ -22,6 +22,8 @@
                         </div>
                       
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
+                        <input type="reset" class="btn btn-secondary" value="Khôi phục lại">
+                        <a href="{{$_ENV['APP_URL']}}/admin/office-management" class="btn btn-info">Quay lại</a>
                     </form>
                 
 
