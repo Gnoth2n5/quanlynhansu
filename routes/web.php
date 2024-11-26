@@ -12,6 +12,7 @@ use App\Controllers\Admin\SalaryController;
 use App\Controllers\Auth\AuthController;
 use App\Controllers\AttendanceController;
 use App\Controllers\ProfileController;
+use App\Controllers\Admin\ShiftController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -30,35 +31,35 @@ try {
     // Office Management
     $router->get('/admin/office-management', [OfficeController::class, 'index']);
     $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
-    $router->get('/admin/delete-office/{id}', [OfficeController::class, 'delete']);
     // 3 thành phần url controller function 
     $router->get('/admin/create-office', [OfficeController::class, 'create']);
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
-<<<<<<< Updated upstream
-=======
     $router->post('/admin/store-office', [OfficeController::class, 'store']);
     $router->post('/admin/update-office', [OfficeController::class, 'update']);
     
-   
+  
+    // Shift Management
+    $router->get('/admin/shift-management', [ShiftController::class, 'index']);
     $router->get('/admin/create-shift', [ShiftController::class, 'create']);
     $router->post('/admin/store-shift', [ShiftController::class, 'store']);
     $router->get('/admin/edit-shift/{id}', [ShiftController::class, 'edit']);
     $router->post('/admin/update-shift', [ShiftController::class, 'update']);
     $router->get('/admin/delete-shift/{id}', [ShiftController::class, 'delete']);
->>>>>>> Stashed changes
+
 
     
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
+    $router->get('/admin/user-detail/{uid}-{id}', [UserController::class, 'show']);
 
 
 
     // Leave Management
     $router->get('/admin/leave-management', [LeaveController::class, 'index']);
-
-
     // Salary Management
     $router->get('/admin/salary-management', [SalaryController::class, 'index']);
+    // Shift Management
+    $router->get('/admin/shift-management', [ShiftController::class, 'index']);
 
     
 

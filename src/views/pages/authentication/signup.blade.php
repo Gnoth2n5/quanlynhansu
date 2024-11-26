@@ -22,7 +22,7 @@
             <!-- Cột thứ hai -->
             <div class="col-md-6">
                 <div class="form-group">
-                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Password">
+                    <input type="password" name="password" class="form-control form-control-lg" placeholder="Mật khẩu">
                 </div>
                 <div class="form-group">
                     <input type="password" name="confirm_password" class="form-control form-control-lg"
@@ -34,7 +34,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Trường giới tính -->
         <div class="form-group">
             <select name="gender" class="form-control form-control-lg text-primary">
@@ -63,4 +62,92 @@
         </div>
     </form>
 
+@endsection
+
+@section('script')
+    <script>
+        const form = document.querySelector('form');
+        const username = document.querySelector("input[name='username']");
+        const email = document.querySelector("input[name='email']");
+        const password = document.querySelector("input[name='password']");
+        const fullName = document.querySelector("input[name='full_name']");
+        const confirmPassword = document.querySelector("input[name='confirm_password']");
+        const birthday = document.querySelector("input[name='birthday']");
+        const gender = document.querySelector("select[name='gender']");
+        const termsCheckbox = document.querySelector("input[type='checkbox']")
+        form.addEventListener("submit", function(event) {
+            event.preventDefault();
+            let isValid = true;
+            let errors = [];
+
+            document.querySelectorAll(".error-message").forEach(el => el.remove());
+
+            if (username.value.trim() === "" || username.value.length < 4 || username.value.length > 20) {
+                isValid = false;
+                errors.push({
+                    field: username,
+                    message: "Username phải từ 4 đến 20 ký tự."
+                });
+            }
+
+            if (!/\S+@\S+\.\S+/.test(email.value.trim())) {
+                isValid = false;
+                errors.push({
+                    field: email,
+                    message: "Email không hợp lệ."
+                });
+            }
+            if (fullName.value.trim() === "" || fullName.value.length < 2) {
+                isValid = false;
+                errors.push({
+                    field: fullName,
+                    message: "Họ và tên phải chứa ít nhất 2 ký tự."
+                });
+            }
+
+            if (password.value.length < 6) {
+                isValid = false;
+                errors.push({
+                    field: password,
+                    message: "Password phải ít nhất 6 ký tự."
+                });
+            }
+
+            if (confirmPassword.value !== password.value|| confirmPassword.value =="") {
+                isValid = false;
+                errors.push({
+                    field: confirmPassword,
+                    message: "Mật khẩu xác nhận không khớp."
+                });
+            }
+
+            if (!birthday.value) {
+                isValid = false;
+                errors.push({
+                    field: birthday,
+                    message: "Bạn phải nhập ngày sinh."
+                });
+            }
+
+            if (!termsCheckbox.checked) {
+                isValid = false;
+                errors.push({
+                    field: termsCheckbox,
+                    message: "Bạn phải đồng ý với các điều khoản."
+                });
+            }
+
+            if (!isValid) {
+                errors.forEach(error => {
+                    const errorEl = document.createElement('div');
+                    errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                    errorEl.textContent = error.message;
+                    error.field.parentElement.appendChild(errorEl);
+                });
+                return;
+            }
+
+            form.submit();
+        });
+    </script>
 @endsection
