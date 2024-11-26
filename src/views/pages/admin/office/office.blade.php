@@ -7,6 +7,8 @@
         <div class="card">
             <div class="card-body">
 
+                <a href="" class="btn btn-primary btn-sm">Thêm phòng</a>
+
                 <table class="table">
                     <thead>
                         <tr>
