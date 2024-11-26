@@ -32,6 +32,7 @@
     </div>
 
     @include('partials.assets.js')
+    @yield('script')
     {{-- Nhúng JavaScript của Toastr --}}
 </body>
 
