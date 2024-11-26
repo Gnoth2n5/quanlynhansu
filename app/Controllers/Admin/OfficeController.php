@@ -3,6 +3,7 @@ namespace App\Controllers\Admin;
 
 use App\Models\Offices;
 use App\Controllers\Controller;
+use App\Helpers\Redirect;
 use App\Services\PaginationService;
 
 class OfficeController extends Controller
@@ -20,8 +21,6 @@ class OfficeController extends Controller
             'currentPage' => $pagination['currentPage'],
         ]);
     }
-<<<<<<< Updated upstream
-=======
 
     public function delete($id)
     {
@@ -38,6 +37,7 @@ class OfficeController extends Controller
         Redirect::to('/admin/office-management')
                 ->message('Xóa phòng ban thành công', 'success')
                 ->send();
+
                 
     }
     public function create(){
@@ -53,5 +53,3 @@ class OfficeController extends Controller
         }
         $this->render('pages.admin.office.edit_office', ['office'=>$office]);
     }
->>>>>>> Stashed changes
-}
