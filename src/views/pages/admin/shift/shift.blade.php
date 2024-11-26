@@ -9,7 +9,7 @@
 
                 <div class="d-flex justify-content-between">
                     <h3>Quản lý Ca Làm Việc</h3>
-                    <a href="" class="btn btn-primary btn-sm">Thêm Ca</a>
+                    <a href="{{ $_ENV['APP_URL'] }}/admin/create-shift" class="btn btn-primary btn-sm">Thêm Ca</a>
                 </div>
 
                 @php $i = 1 @endphp
@@ -34,11 +34,12 @@
                                 <td>{{ $shift->end_time }}</td>
                                 <td>{{ $shift->is_overtime }}</td>
                                 <td>
-                                    <a href=""
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-shift/{{ $shift->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
-                                    <a href=""
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/delete-shift/{{ $shift->id }}"
                                         class="btn btn-danger btn-sm"
-                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
+                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true}
+                                    </a>
                                 </td>
                             </tr>
                         @endforeach
