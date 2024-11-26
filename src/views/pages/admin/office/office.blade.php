@@ -17,8 +17,39 @@ $columns = [
             <div class="card-body">
                 <h3>Quản lý phòng ban</h3>
 
+<<<<<<< Updated upstream
                 @component('components.table.table_normal', ['columns' => $columns, 'data' => $data])
                 @endcomponent
+=======
+                <a href="{{ $_ENV['APP_URL'] }}/admin/create-office" class="btn btn-primary btn-sm">Thêm phòng</a>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên phòng</th>
+                            <th>Vị trí</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $office)
+                            <tr>
+                                <td>{{ $office->id }}</td>
+                                <td>{{ $office->name }}</td>
+                                <td>{{ $office->location }}</td>
+                                <td>
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-office/{{ $office->id }}"
+                                        class="btn btn-primary btn-sm">Sửa</a>
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/delete-office/{{ $office->id }}"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+>>>>>>> Stashed changes
 
                 @component('components.pagination.pagination', [
                     'currentPage' => $currentPage,
