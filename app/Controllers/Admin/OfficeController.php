@@ -53,3 +53,4 @@ class OfficeController extends Controller
         }
         $this->render('pages.admin.office.edit_office', ['office'=>$office]);
     }
+}
