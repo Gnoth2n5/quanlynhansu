@@ -25,11 +25,6 @@
                             <label for="endTime" class="form-label">Giờ kết thúc</label>
                             <input type="time" class="form-control" id="endTime" name="endTime" required>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="notes" class="form-label">Ghi chú</label>
-                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Thêm ghi chú (nếu có)"></textarea>
-                        </div>
                       
                         <button type="submit" class="btn btn-primary">Tạo ca</button>
                         <a href="{{$_ENV['APP_URL']}}/admin/shift-management" class="btn btn-secondary">Quay lại</a>

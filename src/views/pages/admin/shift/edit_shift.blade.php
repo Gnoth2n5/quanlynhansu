@@ -17,7 +17,7 @@
 
                         <div class="mb-3">
                             <label for="shiftName" class="form-label">Tên ca</label>
-                            <input type="text" class="form-control" value="{{$shift->name}}" id="shiftName" name="shiftName" placeholder="Nhập tên ca" required>
+                            <input type="text" class="form-control" value="{{$shift->shift_name}}" id="shiftName" name="shiftName" placeholder="Nhập tên ca" required>
                         </div>
                        
                         <div class="mb-3">
@@ -28,11 +28,6 @@
                         <div class="mb-3">
                             <label for="endTime" class="form-label">Giờ kết thúc</label>
                             <input type="time" class="form-control" value="{{$shift->end_time}}" id="endTime" name="endTime" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="notes" class="form-label">Ghi chú</label>
-                            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="Thêm ghi chú (nếu có)">{{$shift->notes}}</textarea>
                         </div>
                       
                         <button type="submit" class="btn btn-primary">Cập nhật</button>

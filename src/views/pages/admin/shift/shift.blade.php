@@ -38,8 +38,8 @@
                                         class="btn btn-primary btn-sm">Sửa</a>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/delete-shift/{{ $shift->id }}"
                                         class="btn btn-danger btn-sm"
-                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true}
-                                    </a>
+                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true}"
+                                    >Xoá</a>
                                 </td>
                             </tr>
                         @endforeach
