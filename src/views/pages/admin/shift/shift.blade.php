@@ -32,7 +32,7 @@
                                 <td>{{ $shift->shift_name }}</td>
                                 <td>{{ $shift->start_time }}</td>
                                 <td>{{ $shift->end_time }}</td>
-                                <td>{{ $shift->is_overtime }}</td>
+                                <td>{{ $shift->is_overtime == "0" ? "Không" : "Có" }}</td>
                                 <td>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/edit-shift/{{ $shift->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
@@ -56,3 +56,4 @@
         </div>
     </div>
 @endsection
+

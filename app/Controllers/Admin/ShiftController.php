@@ -63,7 +63,7 @@ class ShiftController extends Controller
         $shiftName = $_POST['shiftName'];
         $startTime = $_POST['startTime'];
         $endTime = $_POST['endTime'];
-        $isOvertime = isset($_POST['isOvertime']) ? 1 : 0;
+        $isOvertime = $_POST['isOvertime'] ?? 0;
 
         if (empty($shiftName) || empty($startTime) || empty($endTime)) {
             Redirect::to('/admin/create-shift')
@@ -103,7 +103,7 @@ class ShiftController extends Controller
         $shiftName = $_POST['shiftName'];
         $startTime = $_POST['startTime'];
         $endTime = $_POST['endTime'];
-        $isOvertime = isset($_POST['isOvertime']) ? 1 : 0;
+        $isOvertime = $_POST['isOvertime'] ?? 0;
 
         if (empty($shiftName) || empty($startTime) || empty($endTime)) {
             Redirect::to('/admin/edit-shift/' . $id)

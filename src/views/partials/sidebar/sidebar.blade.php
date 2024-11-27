@@ -26,7 +26,7 @@ $sidebarItems = [
     ],
     [
         'label' => 'Quản lý Ca làm việc',
-        'icon' => 'fa-regular fa-envelope menu-icon',
+        'icon' => 'fa-regular fa-clock menu-icon',
         'url' => '/admin/shift-management',
         'subMenu' => [],
     ],

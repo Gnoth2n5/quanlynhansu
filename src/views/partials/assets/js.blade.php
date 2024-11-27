@@ -60,6 +60,16 @@
     updateClock();
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr(".timepicker", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i", // Định dạng giờ: phút (24 giờ)
+            time_24hr: true // Hiển thị dạng 24 giờ
+        });
+    });
+</script>
 
 <script>
     const SweetAlert = (event, msg, status, {
