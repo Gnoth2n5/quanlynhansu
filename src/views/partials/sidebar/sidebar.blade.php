@@ -52,7 +52,10 @@ $sidebarItems = [
         'label' => 'Cài đặt',
         'icon' => 'fa-solid fa-gears menu-icon',
         'url' => '#auth',
-        'subMenu' => [],
+        'subMenu' => [
+            ['label' => 'Thông tin tài khoản', 'url' => '#'],
+            ['label' => 'Đổi mật khẩu', 'url' => '#'],
+        ],
     ],
     // [
     //     'label' => 'Error pages',
