@@ -34,15 +34,9 @@
 
         form.addEventListener("submit", function(event) {
 
+
             event.preventDefault();
-
-            let isValid = true;
-            let errors = [];
-
-            document.querySelectorAll(".error-message").forEach(el => el.remove());
-
-
-            event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+             // Ngăn chặn hành vi mặc định của form
             let isValid = true;
             let errors = [];
 
@@ -76,9 +70,10 @@
                     errorEl.textContent = error.message;
                     error.field.parentElement.appendChild(errorEl);
                 });
-
+            }
             // Nếu hợp lệ, gửi form
             form.submit();
+        
         });
     </script>
 @endsection
