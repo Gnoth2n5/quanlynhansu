@@ -50,7 +50,7 @@ class AttendanceService extends Service
     {
         return Attendance::where('user_id', $userId)
                         ->whereNotNull('check_in')
-                        ->whereDate('check_in', '!=', Carbon::today())
+                        ->whereDate('check_in', Carbon::today())
                         ->exists();
     }
 }

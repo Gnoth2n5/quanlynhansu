@@ -9,6 +9,7 @@ use App\Models\Shifts;
 use App\Services\AttendanceService;
 use App\Models\UserShift;
 use Carbon\Carbon;
+use App\Services\PaginationService;
 
 class AttendanceController extends Controller
 {
@@ -17,6 +18,20 @@ class AttendanceController extends Controller
     public function __construct()
     {
         $this->atteSv = new AttendanceService();
+    }
+
+    public function index()
+    {
+        $perPage = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+
+        $pagination = PaginationService::paginate(Attendance::where('user_id', $_SESSION['user']->id)->orderBy('updated_at', 'desc'), $perPage, $page);
+      
+        $this->render('pages.admin.shift.shift', [
+            'data' => $pagination['data'],
+            'totalPages' => $pagination['totalPages'],
+            'currentPage' => $pagination['currentPage'],
+        ]);
     }
 
     public function checkIn()
@@ -51,5 +66,6 @@ class AttendanceController extends Controller
                             ->send();
         }
     }
+
     
 }

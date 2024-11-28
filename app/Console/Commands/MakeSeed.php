@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 
-class MakeTable extends Command
+class MakeSeed extends Command
 {
     protected function configure()
     {

@@ -1,4 +1,5 @@
-const currentHour = new Date().getHours();
+document.addEventListener('DOMContentLoaded', function() {
+  const currentHour = new Date().getHours();
 const titleElement = document.getElementById("greeting-title");
 const messageElement = document.getElementById("greeting-message");
 const imgElement = document.getElementById("greeting-img");
@@ -21,7 +22,7 @@ if (currentHour < 12) {
   messageElement.textContent = "Chúc bạn một buổi tối thư giãn và an lành!";
   imgElement.src = "/assets/images/icon/half-moon.png"; // Thay thế bằng URL ảnh buổi tối
 }
-
+});
 
 // // Hàm cập nhật đồng hồ thời gian thực
 // function updateClock() {

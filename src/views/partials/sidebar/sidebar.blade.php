@@ -27,8 +27,11 @@ $sidebarItems = [
     [
         'label' => 'Quản lý Ca làm việc',
         'icon' => 'fa-regular fa-clock menu-icon',
-        'url' => '/admin/shift-management',
-        'subMenu' => [],
+        'url' => '#shift',
+        'subMenu' => [
+            ['label' => 'Bảng ca làm việc', 'url' => '/admin/shift-management'],
+            ['label' => 'Phân ca', 'url' => '/admin/shift-assign'],
+        ],
     ],
     [
         'label' => 'Quản lý Lương',
@@ -51,7 +54,7 @@ $sidebarItems = [
     [
         'label' => 'Cài đặt',
         'icon' => 'fa-solid fa-gears menu-icon',
-        'url' => '#auth',
+        'url' => '#setting',
         'subMenu' => [
             ['label' => 'Thông tin tài khoản', 'url' => '#'],
             ['label' => 'Đổi mật khẩu', 'url' => '#'],

@@ -23,7 +23,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.js"></script>
- 
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -31,7 +31,6 @@
         const urlParams = new URLSearchParams(window.location.search);
         let message = urlParams.get('msg');
         const type = urlParams.get('status');
-
         // Kiểm tra và hiển thị thông báo
         if (message && type && typeof toastr[type] === 'function') {
             // Thay thế dấu cộng bằng khoảng trắng và giải mã
@@ -57,7 +56,9 @@
     setInterval(updateClock, 1000);
 
     // Gọi hàm cập nhật đồng hồ ngay khi trang được tải
-    updateClock();
+    document.addEventListener('DOMContentLoaded', function() {
+        updateClock();
+    });
 </script>
 
 <script>

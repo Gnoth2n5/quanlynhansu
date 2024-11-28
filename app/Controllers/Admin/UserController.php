@@ -36,4 +36,40 @@ class UserController extends Controller
             'user' => $user
         ]);        
     }
+
+    public function block($uid, $id){
+        $user = Users::find($id);
+
+        if(!$user || $user->UID != $uid){
+
+            Redirect::to('/admin/user-management')
+                    ->message('Người dùng không tồn tại')
+                    ->send();
+        }
+
+        $user->status = 'inactive';
+        $user->save();
+
+        Redirect::to('/admin/user-management')
+                ->message('Khoá tài khoản thành công')
+                ->send();
+    }
+
+    public function unlock($uid, $id){
+        $user = Users::find($id);
+
+        if(!$user || $user->UID != $uid){
+
+            Redirect::to('/admin/user-management')
+                    ->message('Người dùng không tồn tại')
+                    ->send();
+        }
+
+        $user->status = 'active';
+        $user->save();
+
+        Redirect::to('/admin/user-management')
+                ->message('Mở khoá tài khoản thành công')
+                ->send();
+    }
 }

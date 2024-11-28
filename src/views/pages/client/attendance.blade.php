@@ -1,6 +1,6 @@
 @extends('layouts.defaultLayout')
 
-@section('title', 'Quản lý phòng ban')
+@section('title', 'Bảng chấm công')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
@@ -8,8 +8,7 @@
             <div class="card-body">
 
                 <div class="d-flex justify-content-between">
-                    <h3>Quản lý Phòng ban</h3>
-                    <a href="{{ $_ENV['APP_URL'] }}/admin/create-office" class="btn btn-primary btn-sm">Thêm phòng</a>
+                    <h3>Bảng chấm công</h3>
                 </div>
 
                 @php $i = 1 @endphp
@@ -18,24 +17,17 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Tên phòng</th>
+                            <th>Check in</th>
                             <th>Vị trí</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $office)
+                        @foreach ($data as $attendance)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $office->name }}</td>
-                                <td>{{ $office->location }}</td>
-                                <td>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-office/{{ $office->id }}"
-                                        class="btn btn-primary btn-sm">Sửa</a>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/delete-office/{{ $office->id }}"
-                                        class="btn btn-danger btn-sm"
-                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
-                                </td>
+                                <td>{{ $attendance->name }}</td>
+                                <td>{{ $attendance->location }}</td>
                             </tr>
                         @endforeach
                     </tbody>

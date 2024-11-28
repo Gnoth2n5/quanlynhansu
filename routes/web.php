@@ -44,6 +44,8 @@ try {
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
     $router->get('/admin/user-detail/{uid}-{id}', [UserController::class, 'show']);
+    $router->get('/admin/block-user/{uid}-{id}', [UserController::class, 'block']);
+    $router->get('/admin/unlock-user/{uid}-{id}', [UserController::class, 'unlock']);
 
 
 

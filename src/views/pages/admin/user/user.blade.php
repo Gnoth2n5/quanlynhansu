@@ -63,8 +63,16 @@
                                     <td>
                                         <a href="{{ $_ENV['APP_URL'] }}/admin/user-detail/{{ $user->UID }}-{{ $user->id }}"
                                             class="btn btn-info btn-sm">Xem</a>
-                                        <a href="{{ $_ENV['APP_URL'] }}/admin/lock-user/{{ $user->UID }}-{{ $user->id }}"
-                                            class="btn btn-danger btn-sm" onclick="check(event)">Khoá</a>
+                                        @if ($user->status == 'active')
+                                            <a href="{{ $_ENV['APP_URL'] }}/admin/block-user/{{ $user->UID }}-{{ $user->id }}"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="SweetAlert(event, 'Bạn có chắc muốn khoá người dùng này không?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Khoá</a>
+                                        @else
+                                            <a href="{{ $_ENV['APP_URL'] }}/admin/unlock-user/{{ $user->UID }}-{{ $user->id }}"
+                                                class="btn btn-success btn-sm"
+                                                onclick="SweetAlert(event, 'Bạn có chắc muốn mở khoá người dùng này không?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Mở
+                                                khoá</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -80,16 +88,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-    <script>
-        function check(event) {
-            event.preventDefault();
-            SweetAlert('Bạn có chắc chắn muốn khoá người dùng này?', 'warning', {
-                confirmBtn: true,
-                cancelBtn: true,
-            });
-        }
-    </script>
 @endsection
