@@ -20,6 +20,8 @@ class DatabaseSeeder
             UserShiftSeeder::class,
             OfficeUserSeeder::class,
             SalaryAdjustmentSeeder::class,
+            NotifyUser::class,
+            NotifyOffice::class,
         ]);
     }
 
