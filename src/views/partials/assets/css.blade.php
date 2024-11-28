@@ -1,5 +1,4 @@
 <link rel="stylesheet" href="/assets/vendors/feather/feather.css">
-<link rel="stylesheet" href="/assets/vendors/ti-icons/css/themify-icons.css">
 <link rel="stylesheet" href="/assets/vendors/css/vendor.bundle.base.css">
 <!-- endinject -->
 <!-- Plugin css for this page -->
@@ -24,6 +23,10 @@
 {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script> --}}
 <!-- Flatpickr CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
 <!-- Flatpickr JS -->
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+{{-- select2 --}}
+<link rel="stylesheet" href="/assets/vendors/select2/select2.min.css">
+<link rel="stylesheet" href="/assets/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+
+

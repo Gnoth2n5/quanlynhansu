@@ -7,7 +7,7 @@ $sidebarItems = [
         'subMenu' => [],
     ],
     [
-        'label' => 'Quản lý Phòng',
+        'label' => 'Quản lý Phòng ban',
         'icon' => 'icon-layout menu-icon',
         'url' => '/admin/office-management',
         'subMenu' => [],

@@ -48,7 +48,7 @@
 
     <div class="row h-25">
 
-        <div class="col-md-6 grid-margin stretch-card">
+        <div class="col-md-12 grid-margin stretch-card">
             @component('components.chart.chart_one', [
                 'totalCheckIn' => $totalCheckIn,
                 'checkInLate' => $totalCheckInLate,
@@ -56,11 +56,5 @@
             ])
             @endcomponent
         </div>
-        
-        <div class="col-md-6 grid-margin stretch-card">
-            @component('components.chart.chart_two')
-            @endcomponent
-        </div>
-
     </div>
 @endsection

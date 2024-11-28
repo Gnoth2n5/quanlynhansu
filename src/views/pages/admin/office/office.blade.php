@@ -20,6 +20,7 @@
                             <th>ID</th>
                             <th>Tên phòng</th>
                             <th>Vị trí</th>
+                            <th>Trưởng phòng</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -29,6 +30,13 @@
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $office->name }}</td>
                                 <td>{{ $office->location }}</td>
+                                <td>
+                                    @if ($office->manager->isNotEmpty())
+                                        {{ $office->manager->first()->full_name ?? 'Không có trưởng phòng' }}
+                                    @else
+                                        Không có trưởng phòng
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/edit-office/{{ $office->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>

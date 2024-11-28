@@ -2,6 +2,28 @@
 
 @section('title', 'Chỉnh sửa phòng ban')
 
+@section('style')
+    <style>
+        .select2-container {
+            z-index: 1050;
+            /* Đảm bảo dropdown hiển thị trên các thành phần khác */
+        }
+
+        .select2-container--default .select2-selection--single {
+            height: calc(2.25rem + 2px);
+            /* Điều chỉnh chiều cao khớp với Bootstrap input */
+            border: 1px solid #ced4da;
+            /* Giữ viền đồng bộ với input */
+            border-radius: 0.25rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: calc(0.8rem);
+            /* Căn giữa văn bản */
+        }
+    </style>
+@endsection
+
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
@@ -9,32 +31,44 @@
 
                 <div class="container mt-5">
                     <h2 class="text-center">Sửa Phòng</h2>
-                    <form id="editOfficeForm" action="{{$_ENV['APP_URL']}}/admin/update-office" method="POST" class="mt-4">
+                    <form id="editOfficeForm" action="{{ $_ENV['APP_URL'] }}/admin/update-office" method="POST" class="mt-4">
 
-                        <input type="hidden" name="id" value="{{$office->id}}">
+                        <input type="hidden" name="id" value="{{ $office->id }}">
                         <div class="mb-3">
                             <label for="roomName" class="form-label">Tên phòng</label>
-                            <input type="text" class="form-control" value="{{$office->name}}" id="roomName" name="roomName" placeholder="Nhập tên phòng" >
+                            <input type="text" class="form-control" value="{{ $office->name }}" id="roomName"
+                                name="roomName" placeholder="Nhập tên phòng">
                         </div>
-                       
+
                         <div class="mb-3">
                             <label for="location" class="form-label">Vị trí</label>
-                            <input type="text" class="form-control" value="{{$office->location}}" id="location" name="location" placeholder="Nhập vị trí" >
+                            <input type="text" class="form-control" value="{{ $office->location }}" id="location"
+                                name="location" placeholder="Nhập vị trí">
                         </div>
-                      
+
+                        <div class="mb-3 form-group">
+                            <label for="manager">Trưởng phòng</label>
+                            <select class="form-control select2-manager" id="manager" name="manager">
+                                <option value="{{ $manager->id ?? "0" }}" selected>
+                                    {{ $manager->full_name ?? 'Không có trưởng phòng' }}
+                                </option>
+                            </select>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
                         <input type="reset" class="btn btn-secondary" value="Khôi phục lại">
-                        <a href="{{$_ENV['APP_URL']}}/admin/office-management" class="btn btn-info">Quay lại</a>
+                        <a href="{{ $_ENV['APP_URL'] }}/admin/office-management" class="btn btn-info">Quay lại</a>
                     </form>
-                
 
+
+                </div>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
             const form = document.querySelector('#editOfficeForm');
             const roomName = document.querySelector("input[name='roomName']");
             const location = document.querySelector("input[name='location']");
@@ -58,25 +92,27 @@
             }
 
             // Kiểm tra khi mất focus (blur)
-            roomName.addEventListener('blur', function () {
+            roomName.addEventListener('blur', function() {
                 validateField(roomName, 3, "Tên phòng không được để trống và phải chứa ít nhất 3 ký tự.");
             });
 
-            location.addEventListener('blur', function () {
+            location.addEventListener('blur', function() {
                 validateField(location, 3, "Vị trí không được để trống và phải chứa ít nhất 3 ký tự.");
             });
 
             // Xử lý gửi form
-            form.addEventListener('submit', function (event) {
+            form.addEventListener('submit', function(event) {
                 event.preventDefault(); // Ngăn việc gửi form nếu không hợp lệ
 
                 let isValid = true;
                 // Kiểm tra lại tất cả các trường trước khi gửi
-                if (!validateField(roomName, 3, "Tên phòng không được để trống và phải chứa ít nhất 3 ký tự.")) {
+                if (!validateField(roomName, 3,
+                        "Tên phòng không được để trống và phải chứa ít nhất 3 ký tự.")) {
                     isValid = false;
                 }
 
-                if (!validateField(location, 3, "Vị trí không được để trống và phải chứa ít nhất 3 ký tự.")) {
+                if (!validateField(location, 3,
+                        "Vị trí không được để trống và phải chứa ít nhất 3 ký tự.")) {
                     isValid = false;
                 }
 
@@ -86,5 +122,48 @@
                 }
             });
         });
+    </script>
+    <script>
+        // $(document).ready(function () {
+        //     // select2
+        //     $('#manager').select2({
+        //         placeholder: 'Chọn trưởng phòng',
+        //         ajax: {
+        //             url: '/search-user-manager',
+        //             dataType: 'json',
+        //             delay: 250,
+        //             processResults: function (data) {
+        //                 return {
+        //                     results: data
+        //                 };
+        //             },
+        //             cache: true
+        //         }
+        //     });
+        // });
+
+        // if ($(".select2-manager").length) {
+        //     $(".select2-manager").select2({
+        //         ajax: {
+        //             url: "/search-user-manager",
+        //             type: "get",
+        //             dataType: "json",
+        //             // delay: 250,
+        //             processResults: function(data) {
+        //                 return {
+        //                     results: data,
+        //                 };
+        //             },
+        //             cache: true,
+        //         },
+        //         dropdownParent: $(".mb-3.form-group"),
+        //         placeholder: "Chọn Trưởng Phòng",
+        //         minimumInputLength: 1,
+        //     });
+        // }
+        // In your Javascript (external .js resource or <script> tag)
+        // $(document).ready(function() {
+        //     $('.js-example-basic-single').select2();
+        // });
     </script>
 @endsection

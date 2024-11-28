@@ -15,6 +15,7 @@ use App\Controllers\ProfileController;
 use App\Controllers\Admin\ShiftController;
 use App\Controllers\Admin\NotifyController;
 use App\Controllers\ChartController;
+use App\Controllers\SearchController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -79,12 +80,14 @@ try {
 
 
 
+    // search api
+    $router->get('/search-user-manager', [SearchController::class, 'search_user_manager']);
 
 
 
 
-
-
+    // Route test data
+    $router->get('/test', [SearchController::class, 'search_user_manager']);
 
 
     $dispatcher = new Dispatcher($router->getData());
