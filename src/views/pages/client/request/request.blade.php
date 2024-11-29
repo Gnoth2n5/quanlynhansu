@@ -1,13 +1,15 @@
 @extends('layouts.defaultLayout')
 
-@section('title', 'Quản lý Đơn từ')
+@section('title', 'Bảng Đơn từ')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
+
                 <div class="d-flex justify-content-between">
-                    <h3>Quản lý đơn từ</h3>
+                    <h3>Bảng Đơn từ</h3>
+                    <a href="{{ $_ENV['APP_URL'] }}/user/leave-request/create" class="btn btn-primary btn-sm">Tạo mới</a>
                 </div>
 
                 @php $i = 1 @endphp
@@ -16,7 +18,6 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Người gửi</th>
                             <th>Ngày bắt đầu</th>
                             <th>Ngày kết thúc</th>
                             <th>Trạng thái</th>
@@ -27,7 +28,6 @@
                         @foreach ($data as $request)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $request->users->full_name }}</td>
                                 <td>{{ $request->start_date }}</td>
                                 <td>{{ $request->end_date }}</td>
                                 <td>
@@ -40,16 +40,14 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-show/{{ $request->id }}"
-                                        class="btn btn-info btn-sm">Xem</a>
+                                    <a href="{{$_ENV['APP_URL']}}/user/leave-request/show/{{$request->id}}" class="btn btn-info btn-sm">Xem</a>
 
-                                    @if($request->status == 'pending')
-
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-request/approved/{{ $request->id }}"
-                                        class="btn btn-success btn-sm">Chấp nhận</a>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-request/rejected/{{ $request->id }}"
-                                        class="btn btn-danger btn-sm">Từ chối</a>
-
+                                    @if ($request->status == 'pending' && $request->created_at >= now()->subMinutes(30))
+                                        <a href="{{ $_ENV['APP_URL'] }}/user/leave-request/show/{{ $request->id }}"
+                                            class="btn btn-primary btn-sm">Sửa</a>
+                                        <a href="{{ $_ENV['APP_URL'] }}/user/leave-request/delete/{{ $request->id }}"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
                                     @endif
 
                                 </td>
@@ -63,6 +61,7 @@
                     'totalPages' => $totalPages,
                 ])
                 @endcomponent
+
             </div>
         </div>
     </div>

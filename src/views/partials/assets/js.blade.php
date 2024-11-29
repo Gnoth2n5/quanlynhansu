@@ -31,6 +31,24 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Cấu hình thông báo
+        toastr.options = {
+            "closeButton": true, // Hiển thị nút đóng
+            "debug": false, // Tắt chế độ debug
+            "newestOnTop": true, // Đặt thông báo mới nhất lên trên
+            "progressBar": true, // Hiển thị thanh tiến trình
+            "positionClass": "toast-top-right", // Vị trí thông báo
+            "preventDuplicates": true, // Ngăn chặn thông báo trùng lặp
+            "onclick": null, // Hành động khi click vào thông báo
+            "showDuration": "300", // Thời gian hiển thị hiệu ứng (ms)
+            "hideDuration": "1000", // Thời gian ẩn hiệu ứng (ms)
+            "timeOut": "3000", // Thời gian thông báo tự động ẩn (ms)
+            "extendedTimeOut": "1000", // Thời gian chờ sau khi hover (ms)
+            "showEasing": "swing", // Hiệu ứng khi hiển thị
+            "hideEasing": "linear", // Hiệu ứng khi ẩn
+            "showMethod": "fadeIn", // Phương thức hiển thị
+            "hideMethod": "fadeOut" // Phương thức ẩn
+        };
         // Lấy tham số từ URL
         const urlParams = new URLSearchParams(window.location.search);
         let message = urlParams.get('msg');

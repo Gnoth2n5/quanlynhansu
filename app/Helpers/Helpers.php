@@ -53,3 +53,7 @@ function createUID($full_name, $dob)
     // trả về mã nhân viên VD: nguyenvh20031990
     return strtolower($lastName . $initials .  $dobParts);
 }
+
+function now(){
+    return Carbon\Carbon::now();
+}

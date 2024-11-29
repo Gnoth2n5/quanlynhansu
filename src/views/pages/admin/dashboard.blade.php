@@ -37,7 +37,7 @@
         <div class="col-md-3 mb-4 stretch-card transparent">
             @component('components.datastats.datastats', [
                 'cardClass' => 'card-light-danger',
-                'title' => 'Tổng số đơn từ',
+                'title' => 'Tổng số đơn từ đang chờ xác nhận',
                 'value' => $totalLeaveRequest,
                 'percentage' => '00.00%',
                 'period' => '7 ngày',

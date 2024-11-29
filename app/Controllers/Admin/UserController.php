@@ -98,13 +98,10 @@ class UserController extends Controller
 
         $fullname = $_POST['fullname'];
         $email = $_POST['email'];
-
         $address = $_POST['address'];
         $phone = $_POST['phone'];
         $avatar = $_FILES['avatar'];
-
         $username = $_POST['username'];
-
         $status = $_POST['status'];
         $roleId = $_POST['role'];
         $officeId = $_POST['office'];
@@ -119,42 +116,47 @@ class UserController extends Controller
                 ->send();
         }
 
-        $result = $this->upload('avatar');
+        $avatarPath = $user->avatar; // Giữ ảnh cũ làm mặc định
+        if ($avatar && $avatar['error'] === UPLOAD_ERR_OK) {
+            $result = $this->upload('avatar');
 
-        if ($result || str_starts_with($result, 'image_')) {
-            try {
-                $user->update([
-                    'fullname' => $fullname,
-                    'email' => $email,
-                    'address' => $address,
-                    'phone' => $phone,
-                    'avatar' => $result,
-                    'username' => $username,
-                    'status' => $status,
-                    'role_id' => $roleId,
-                ]);
-
-                if (!($officeId == 0 || $officeId == null)) {
-                    OfficeUsers::updateOrCreate(
-                        ['user_id' => $id],
-                        ['office_id' => $officeId]
-                    );
-                }
-
-                DB::commit();
-
+            if ($result && str_starts_with($result, 'image_')) {
+                $avatarPath = $result; // Cập nhật ảnh mới
+            } else {
                 Redirect::to('/admin/user-management')
-                    ->message('Cập nhật thông tin người dùng thành công')
-                    ->send();
-            } catch (\Exception $e) {
-                DB::rollBack();
-                Redirect::to('/admin/user-management')
-                    ->message('Có lỗi xảy ra, vui lòng thử lại sau')
+                    ->message($result)
                     ->send();
             }
-        } else {
+        }
+
+        try {
+            $user->update([
+                'fullname' => $fullname,
+                'email' => $email,
+                'address' => $address,
+                'phone' => $phone,
+                'avatar' => $avatarPath, // Cập nhật ảnh (cũ hoặc mới)
+                'username' => $username,
+                'status' => $status,
+                'role_id' => $roleId,
+            ]);
+
+            if (!($officeId == 0 || $officeId == null)) {
+                OfficeUsers::updateOrCreate(
+                    ['user_id' => $id],
+                    ['office_id' => $officeId]
+                );
+            }
+
+            DB::commit();
+
             Redirect::to('/admin/user-management')
-                ->message($result)
+                ->message('Cập nhật thông tin người dùng thành công')
+                ->send();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Redirect::to('/admin/user-management')
+                ->message('Có lỗi xảy ra, vui lòng thử lại sau')
                 ->send();
         }
     }

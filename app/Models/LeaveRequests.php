@@ -19,9 +19,10 @@ class LeaveRequests extends Model
     ];
 
     protected $hidden = [];
+    
     public function users(): BelongsTo
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(Users::class, 'user_id', 'id');
     }
 
 }

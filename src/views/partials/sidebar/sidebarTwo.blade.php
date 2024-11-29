@@ -15,7 +15,7 @@ $sidebarItems = [
     [
         'label' => 'Đơn từ',
         'icon' => 'fa-regular fa-paper-plane menu-icon',
-        'url' => '#',
+        'url' => '/user/leave-request',
         'subMenu' => [],
     ],
     [

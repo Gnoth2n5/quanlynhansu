@@ -16,6 +16,7 @@ use App\Controllers\Admin\ShiftController;
 use App\Controllers\Admin\NotifyController;
 use App\Controllers\ChartController;
 use App\Controllers\SearchController;
+use App\Controllers\RequestController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -28,7 +29,7 @@ try {
     $router->post('/login', [AuthController::class, 'login']);
     $router->post('/register', [AuthController::class, 'register']);
     $router->get('/logout', [AuthController::class, 'logout']);
-    
+
     // Dashboard Admin
     $router->get('/admin/dashboard', [DashboardController::class, 'dashboardAdmin']);
     $router->get('/admin/atten-chart', [ChartController::class, 'attenChart']);
@@ -41,7 +42,7 @@ try {
     $router->get('/admin/edit-office/{id}', [OfficeController::class, 'edit']);
     $router->post('/admin/store-office', [OfficeController::class, 'store']);
     $router->post('/admin/update-office', [OfficeController::class, 'update']);
-    
+
     // User Management
     $router->get('/admin/user-management', [UserController::class, 'index']);
     $router->get('/admin/user-detail/{uid}-{id}', [UserController::class, 'show']);
@@ -53,6 +54,8 @@ try {
 
     // Leave Management
     $router->get('/admin/leave-management', [LeaveController::class, 'index']);
+    $router->get('/admin/leave-request/{type}/{id}', [LeaveController::class, 'confirm']);
+    $router->get('/admin/leave-show/{id}', [LeaveController::class, 'show']);
     // Salary Management
     $router->get('/admin/salary-management', [SalaryController::class, 'index']);
     // Shift Management
@@ -67,16 +70,22 @@ try {
     $router->get('/admin/shift-division/{id}', [ShiftController::class, 'show']);
     $router->post('/admin/assign-shift', [ShiftController::class, 'assign']);
 
-    
+
     // Notify Management
     $router->get('/admin/notify-management', [NotifyController::class, 'index']);
-    
+
     $router->get('/user/dashboard', [DashboardController::class, 'dashboardUser']);
     $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
     // $router->get('/user/check-out', [AttendanceController::class, 'checkOut']);
     $router->get('/user/profile', [ProfileController::class, 'profile']);
     $router->get('/user/update-profile', [ProfileController::class, 'updateProfile']);
-    
+    $router->get('/user/leave-request', [RequestController::class, 'index']);
+    $router->get('/user/leave-request/create', [RequestController::class, 'create']);
+    $router->post('/user/leave-request/store', [RequestController::class, 'store']);
+    $router->get('/user/leave-request/show/{id}', [RequestController::class, 'show']);
+    $router->get('/user/leave-request/delete/{id}', [RequestController::class, 'delete']);
+    $router->post('/user/leave-request/update', [RequestController::class, 'update']);
+
 
 
 

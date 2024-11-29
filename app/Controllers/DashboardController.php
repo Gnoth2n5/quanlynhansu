@@ -33,6 +33,7 @@ class DashboardController extends Controller
         $totalLeaveRequest = LeaveRequests::where('status', 'pending')
                                     ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
                                     ->count();
+                                    
         $totalCheckIn = Attendance::whereMonth('created_at', Carbon::now()->month)
                                     ->whereYear('created_at', Carbon::now()->year)
                                     ->count();

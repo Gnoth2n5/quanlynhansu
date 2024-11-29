@@ -54,10 +54,12 @@ class Users extends Model
     {
         return $this->hasOne(UserShift::class);
     }
-    // public function leave_requests(): HasMany
-    // {
-    //     return $this->hasMany(LeaveRequests::class);
-    // }
+    
+    public function leave_requests(): HasMany
+    {
+        return $this->hasMany(LeaveRequests::class);
+    }
+
     public function offices(): BelongsToMany
     {
         return $this->belongsToMany(Offices::class, 'office_users', 'user_id', 'office_id');
