@@ -30,18 +30,22 @@ class Users extends Model
     protected $hidden = [
         'password',
     ];
+
     public function role(): BelongsTo
     {
         return $this->belongsTo(Roles::class);
     }
+
     public function attendance(): HasMany
     {
         return $this->hasMany(Attendance::class);
     }
+
     public function notifications():HasMany
     {
         return $this->hasMany(Notifications::class);
     }
+    
     // public function salary_adjustments(): HasMany
     // {
     //     return $this->hasMany(Salaryadjustments::class);
@@ -62,5 +66,10 @@ class Users extends Model
     // {
     //     return $this->hasMany(Salaries::class);
     // }
+
+    public function shift(): BelongsToMany
+    {
+        return $this->belongsToMany(Shifts::class, 'user_shift', 'user_id', 'shift_id');
+    }
 
 }

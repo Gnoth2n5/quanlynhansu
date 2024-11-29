@@ -1,6 +1,6 @@
 @extends('layouts.defaultLayout')
 
-@section('title', 'Bảng chấm công')
+@section('title', 'Bảng Đơn từ')
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">
@@ -8,7 +8,7 @@
             <div class="card-body">
 
                 <div class="d-flex justify-content-between">
-                    <h3>Bảng chấm công</h3>
+                    <h3>Bảng Đơn từ</h3>
                 </div>
 
                 @php $i = 1 @endphp

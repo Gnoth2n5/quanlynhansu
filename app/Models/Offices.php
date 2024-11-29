@@ -22,6 +22,7 @@ class Offices extends Model
     {
         return $this->belongsToMany(Users::class, 'office_users', 'office_id', 'user_id');
     }
+    
     public function notifications() :HasMany
     {
         return $this->hasMany(Notifications::class);

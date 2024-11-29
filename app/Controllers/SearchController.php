@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Users;
+use App\Models\Offices;
 
 class SearchController extends Controller
 {
@@ -13,6 +14,23 @@ class SearchController extends Controller
             return [
                 'id' => $user->id,
                 'text' => $user->full_name
+            ];
+        });
+
+        // \dd($jsonData);
+
+        $this->json($jsonData);
+        // \dd($users);
+    }
+
+    public function search_office()
+    {
+        $offices = Offices::select('id', 'name')->get();
+
+        $jsonData = $offices->map(function($office){
+            return [
+                'id' => $office->id,
+                'text' => $office->name
             ];
         });
 

@@ -47,6 +47,7 @@ try {
     $router->get('/admin/user-detail/{uid}-{id}', [UserController::class, 'show']);
     $router->get('/admin/block-user/{uid}-{id}', [UserController::class, 'block']);
     $router->get('/admin/unlock-user/{uid}-{id}', [UserController::class, 'unlock']);
+    $router->post('/admin/update-user', [UserController::class, 'update']);
 
 
 
@@ -61,6 +62,10 @@ try {
     $router->get('/admin/edit-shift/{id}', [ShiftController::class, 'edit']);
     $router->post('/admin/update-shift', [ShiftController::class, 'update']);
     $router->get('/admin/delete-shift/{id}', [ShiftController::class, 'delete']);
+
+    $router->get('/admin/user-shift', [ShiftController::class, 'userShift']);
+    $router->get('/admin/shift-division/{id}', [ShiftController::class, 'show']);
+    $router->post('/admin/assign-shift', [ShiftController::class, 'assign']);
 
     
     // Notify Management
@@ -82,6 +87,7 @@ try {
 
     // search api
     $router->get('/search-user-manager', [SearchController::class, 'search_user_manager']);
+    $router->get('/search-office', [SearchController::class, 'search_office']);
 
 
 

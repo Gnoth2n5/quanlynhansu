@@ -30,7 +30,7 @@ $sidebarItems = [
         'url' => '#shift',
         'subMenu' => [
             ['label' => 'Bảng ca làm việc', 'url' => '/admin/shift-management'],
-            ['label' => 'Phân ca', 'url' => '/admin/shift-assign'],
+            ['label' => 'Phân ca', 'url' => '/admin/user-shift'],
         ],
     ],
     [

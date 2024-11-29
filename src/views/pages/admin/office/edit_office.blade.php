@@ -46,15 +46,6 @@
                                 name="location" placeholder="Nhập vị trí">
                         </div>
 
-                        <div class="mb-3 form-group">
-                            <label for="manager">Trưởng phòng</label>
-                            <select class="form-control select2-manager" id="manager" name="manager">
-                                <option value="{{ $manager->id ?? "0" }}" selected>
-                                    {{ $manager->full_name ?? 'Không có trưởng phòng' }}
-                                </option>
-                            </select>
-                        </div>
-
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
                         <input type="reset" class="btn btn-secondary" value="Khôi phục lại">
                         <a href="{{ $_ENV['APP_URL'] }}/admin/office-management" class="btn btn-info">Quay lại</a>
@@ -123,47 +114,5 @@
             });
         });
     </script>
-    <script>
-        // $(document).ready(function () {
-        //     // select2
-        //     $('#manager').select2({
-        //         placeholder: 'Chọn trưởng phòng',
-        //         ajax: {
-        //             url: '/search-user-manager',
-        //             dataType: 'json',
-        //             delay: 250,
-        //             processResults: function (data) {
-        //                 return {
-        //                     results: data
-        //                 };
-        //             },
-        //             cache: true
-        //         }
-        //     });
-        // });
-
-        // if ($(".select2-manager").length) {
-        //     $(".select2-manager").select2({
-        //         ajax: {
-        //             url: "/search-user-manager",
-        //             type: "get",
-        //             dataType: "json",
-        //             // delay: 250,
-        //             processResults: function(data) {
-        //                 return {
-        //                     results: data,
-        //                 };
-        //             },
-        //             cache: true,
-        //         },
-        //         dropdownParent: $(".mb-3.form-group"),
-        //         placeholder: "Chọn Trưởng Phòng",
-        //         minimumInputLength: 1,
-        //     });
-        // }
-        // In your Javascript (external .js resource or <script> tag)
-        // $(document).ready(function() {
-        //     $('.js-example-basic-single').select2();
-        // });
-    </script>
+    
 @endsection

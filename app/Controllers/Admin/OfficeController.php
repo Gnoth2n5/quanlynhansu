@@ -5,6 +5,8 @@ namespace App\Controllers\Admin;
 use App\Models\Offices;
 use App\Controllers\Controller;
 use App\Helpers\Redirect;
+use App\Models\Roles;
+use App\Models\Users;
 use App\Services\PaginationService;
 
 class OfficeController extends Controller
@@ -122,7 +124,6 @@ class OfficeController extends Controller
         $id = $_POST['id'];
         $name = $_POST['roomName'];
         $location = $_POST['location'];
-        $managerId = $_POST['manager'];
 
         
         // thêm validate nếu manager đã có phòng ban khác thì không thể thêm vào phòng ban này
@@ -145,6 +146,8 @@ class OfficeController extends Controller
         $office->name = $name;
         $office->location = $location;
         $office->save();
+
+        
 
         Redirect::to('/admin/office-management')
             ->message('Cập nhật phòng ban thành công', 'success')

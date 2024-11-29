@@ -23,6 +23,7 @@
                                 <th>ID</th>
                                 <th>Username</th>
                                 <th>Họ tên</th>
+                                <th>Phòng ban</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Hành động</th>
@@ -34,6 +35,7 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->full_name }}</td>
+                                    <td>{{$user->offices[0]->name ?? "Chưa có phòng ban"}}</td>
                                     <td>
                                         <span
                                             class="badge 

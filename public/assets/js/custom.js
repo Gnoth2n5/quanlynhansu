@@ -74,60 +74,60 @@ document.addEventListener("DOMContentLoaded", function () {
 //   }
 // })(jQuery);
 
-(function ($) {
-  "use strict";
+// (function ($) {
+//   "use strict";
 
-  if ($(".select2-manager").length) {
-    // Bước 1: Lấy giá trị mặc định đã được chọn
-    var defaultManagerId = $('#manager').val(); // Giá trị từ option mặc định trong HTML
-    var defaultManagerText = $('#manager option:selected').text(); // Text hiển thị của giá trị mặc định
+//   if ($(".select2-manager").length) {
+//     // Bước 1: Lấy giá trị mặc định đã được chọn
+//     var defaultManagerId = $('#manager').val(); // Giá trị từ option mặc định trong HTML
+//     var defaultManagerText = $('#manager option:selected').text(); // Text hiển thị của giá trị mặc định
 
-    // Bước 2: Gọi API để lấy dữ liệu
-    $.ajax({
-      url: '/search-user-manager', // Đường dẫn API
-      type: 'GET',
-      dataType: 'json',
-      success: function (data) {
-        if (!data || !Array.isArray(data)) {
-          console.error("Dữ liệu API không hợp lệ.");
-          return;
-        }
+//     // Bước 2: Gọi API để lấy dữ liệu
+//     $.ajax({
+//       url: '/search-user-manager', // Đường dẫn API
+//       type: 'GET',
+//       dataType: 'json',
+//       success: function (data) {
+//         if (!data || !Array.isArray(data)) {
+//           console.error("Dữ liệu API không hợp lệ.");
+//           return;
+//         }
 
-        var options = '';
+//         var options = '';
 
-        // Bước 3: Thêm giá trị mặc định nếu chưa có trong dữ liệu API
-        if (defaultManagerId && defaultManagerText) {
-          options += `
-            <option value="${defaultManagerId}" selected>
-              ${defaultManagerText}
-            </option>`;
-        }
+//         // Bước 3: Thêm giá trị mặc định nếu chưa có trong dữ liệu API
+//         if (defaultManagerId && defaultManagerText) {
+//           options += `
+//             <option value="${defaultManagerId}" selected>
+//               ${defaultManagerText}
+//             </option>`;
+//         }
 
-        // Bước 4: Thêm các option từ API
-        $.each(data, function (key, user) {
-          if (user.id != defaultManagerId) { // Tránh thêm lại giá trị mặc định
-            options += `
-              <option value="${user.id}">
-                ${user.text}
-              </option>`;
-          }
-        });
+//         // Bước 4: Thêm các option từ API
+//         $.each(data, function (key, user) {
+//           if (user.id != defaultManagerId) { // Tránh thêm lại giá trị mặc định
+//             options += `
+//               <option value="${user.id}">
+//                 ${user.text}
+//               </option>`;
+//           }
+//         });
 
-        // Bước 5: Gắn các option mới vào select
-        $(".select2-manager").html(options);
+//         // Bước 5: Gắn các option mới vào select
+//         $(".select2-manager").html(options);
 
-        // Bước 6: Khởi tạo hoặc làm mới Select2
-        $(".select2-manager").select2({
-          placeholder: "Chọn Trưởng Phòng",
-          dropdownParent: $(".mb-3.form-group"),
-        });
-      },
-      error: function () {
-        console.error("Lỗi khi tải dữ liệu từ API.");
-      }
-    });
-  }
-})(jQuery);
+//         // Bước 6: Khởi tạo hoặc làm mới Select2
+//         $(".select2-manager").select2({
+//           placeholder: "Chọn Trưởng Phòng",
+//           dropdownParent: $(".mb-3.form-group"),
+//         });
+//       },
+//       error: function () {
+//         console.error("Lỗi khi tải dữ liệu từ API.");
+//       }
+//     });
+//   }
+// })(jQuery);
 
 
 // (function ($) {
