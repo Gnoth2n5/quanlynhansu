@@ -17,6 +17,7 @@ use App\Controllers\Admin\NotifyController;
 use App\Controllers\ChartController;
 use App\Controllers\SearchController;
 use App\Controllers\RequestController;
+use App\Controllers\ExportController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -111,7 +112,8 @@ try {
 
 
 
-
+    // export excel
+    $router->get('/admin/export', [ExportController::class, 'export']);
 
 
 

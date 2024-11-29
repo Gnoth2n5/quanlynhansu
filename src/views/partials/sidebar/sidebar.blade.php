@@ -45,7 +45,7 @@ $sidebarItems = [
     [
         'label' => 'Thống kê',
         'icon' => 'fa-solid fa-chart-pie menu-icon',
-        'url' => '#icons',
+        'url' => '/admin/export',
         'subMenu' => [],
     ],
     [
