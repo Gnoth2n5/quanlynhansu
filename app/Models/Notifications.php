@@ -10,19 +10,20 @@ class Notifications extends Model
     protected $table = 'notifications';
 
     protected $fillable = [
-        'user_id',
         'title',
         'message',
-        'office_id',
     ];
 
     protected $hidden = [];
-    public function User(): BelongsTo
+
+    public function users()
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsToMany(Users::class, 'notify_user', 'notify_id', 'user_id');
     }
-    public function Office() : BelongsTo
+
+    // Quan hệ với bảng office_notify
+    public function offices()
     {
-        return $this->belongsTo(Offices::class);
+        return $this->belongsToMany(Offices::class, 'notify_office', 'notify_id', 'office_id');
     }
 }

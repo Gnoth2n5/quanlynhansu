@@ -2,27 +2,7 @@
 
 @section('title', 'Chỉnh sửa phòng ban')
 
-@section('style')
-    <style>
-        .select2-container {
-            z-index: 1050;
-            /* Đảm bảo dropdown hiển thị trên các thành phần khác */
-        }
 
-        .select2-container--default .select2-selection--single {
-            height: calc(2.25rem + 2px);
-            /* Điều chỉnh chiều cao khớp với Bootstrap input */
-            border: 1px solid #ced4da;
-            /* Giữ viền đồng bộ với input */
-            border-radius: 0.25rem;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            line-height: calc(0.8rem);
-            /* Căn giữa văn bản */
-        }
-    </style>
-@endsection
 
 @section('content')
     <div class="col-lg-12 grid-margin stretch-card">

@@ -131,7 +131,7 @@ class UserController extends Controller
 
         try {
             $user->update([
-                'fullname' => $fullname,
+                'full_name' => $fullname,
                 'email' => $email,
                 'address' => $address,
                 'phone' => $phone,

@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Users extends Model
 {
     protected $table = 'users';
-   
+
 
     protected $fillable = [
         'username',
@@ -41,11 +41,11 @@ class Users extends Model
         return $this->hasMany(Attendance::class);
     }
 
-    public function notifications():HasMany
+    public function notifications()
     {
-        return $this->hasMany(Notifications::class);
+        return $this->belongsToMany(Notifications::class, 'notify_user', 'user_id', 'notify_id');
     }
-    
+
     // public function salary_adjustments(): HasMany
     // {
     //     return $this->hasMany(Salaryadjustments::class);
@@ -54,7 +54,7 @@ class Users extends Model
     {
         return $this->hasOne(UserShift::class);
     }
-    
+
     public function leave_requests(): HasMany
     {
         return $this->hasMany(LeaveRequests::class);
@@ -64,14 +64,14 @@ class Users extends Model
     {
         return $this->belongsToMany(Offices::class, 'office_users', 'user_id', 'office_id');
     }
-    // public function salaries():HasMany
-    // {
-    //     return $this->hasMany(Salaries::class);
-    // }
+    
+    public function salaries(): HasMany
+    {
+        return $this->hasMany(Salaries::class);
+    }
 
     public function shift(): BelongsToMany
     {
         return $this->belongsToMany(Shifts::class, 'user_shift', 'user_id', 'shift_id');
     }
-
 }

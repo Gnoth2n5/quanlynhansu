@@ -14,7 +14,7 @@ use App\Services\PaginationService;
 class AttendanceController extends Controller
 {
     protected $atteSv;
-    
+
     public function __construct()
     {
         $this->atteSv = new AttendanceService();
@@ -26,8 +26,8 @@ class AttendanceController extends Controller
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
         $pagination = PaginationService::paginate(Attendance::where('user_id', $_SESSION['user']->id)->orderBy('updated_at', 'desc'), $perPage, $page);
-      
-        $this->render('pages.admin.shift.shift', [
+
+        $this->render('pages.client.attendance', [
             'data' => $pagination['data'],
             'totalPages' => $pagination['totalPages'],
             'currentPage' => $pagination['currentPage'],
@@ -36,17 +36,15 @@ class AttendanceController extends Controller
 
     public function checkIn()
     {
-        $atten = new Attendance();    
-    
-        \start_session();
-    
+        $atten = new Attendance();
+
         $userId = $_SESSION['user']->id;
-    
+
         $now = Carbon::now()->format('Y-m-d H:i:s');
-        
+
         // true: muộn, false: đúng giờ
         $isLate = $this->atteSv->isLate($now, $userId);
-    
+
         // Lưu thông tin vào database
         $atten->user_id = $userId;
         $atten->check_in = $now;
@@ -54,18 +52,48 @@ class AttendanceController extends Controller
         $atten->check_in_status = $isLate ? "late" : "on_time";
         $atten->check_out_status = null;
         $atten->save();
-    
-       
+
+
         if ($isLate) {
             return Redirect::to('/user/dashboard')
-                            ->message('Bạn đã check-in nhưng muộn giờ làm việc :((', 'error')
-                            ->send();
+                ->message('Bạn đã check-in nhưng muộn giờ làm việc :((', 'error')
+                ->send();
         } else {
             return Redirect::to('/user/dashboard')
-                            ->message('Check-in thành công! Bạn đã đúng giờ.', 'success')
-                            ->send();
+                ->message('Check-in thành công! Bạn đã đúng giờ.', 'success')
+                ->send();
         }
     }
 
-    
+    public function checkOut()
+    {
+        $atten = Attendance::where('user_id', $_SESSION['user']->id)
+            ->where('check_out', null)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($atten) {
+            $atten->check_out = Carbon::now()->format('Y-m-d H:i:s');
+
+            $isEarly = $this->atteSv->isEarly($atten->check_out, $atten->user_id, 30);
+
+            // true: sớm, false: đúng giờ
+            $atten->check_out_status = $isEarly ? "early_exit" : "on_time";
+            $atten->save();
+
+            if ($isEarly) {
+                return Redirect::to('/user/dashboard')
+                    ->message('Bạn đã check-out nhưng sớm giờ làm việc :((', 'error')
+                    ->send();
+            }
+
+            return Redirect::to('/user/dashboard')
+                ->message('Check-out thành công!', 'success')
+                ->send();
+        } else {
+            return Redirect::to('/user/dashboard')
+                ->message('Bạn chưa check-in nên không thể check-out!', 'error')
+                ->send();
+        }
+    }
 }

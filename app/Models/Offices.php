@@ -23,9 +23,9 @@ class Offices extends Model
         return $this->belongsToMany(Users::class, 'office_users', 'office_id', 'user_id');
     }
     
-    public function notifications() :HasMany
+    public function notifications()
     {
-        return $this->hasMany(Notifications::class);
+        return $this->belongsToMany(Notifications::class, 'notify_office', 'office_id', 'notify_id');
     }
     // public function offices_users() :HasMany
     // {

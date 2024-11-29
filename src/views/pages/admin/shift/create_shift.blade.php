@@ -20,13 +20,13 @@
                         <div class="row mb-4">
                             <div class="col-md-6">
                                 <label for="startTime" class="form-label fw-bold">Giờ bắt đầu</label>
-                                <input type="text" class="form-control form-control-lg timepicker" id="startTime" name="startTime"
-                                    required>
+                                <input type="text" class="form-control form-control-lg timepicker" id="startTime"
+                                    name="startTime" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="endTime" class="form-label fw-bold">Giờ kết thúc</label>
-                                <input type="text" class="form-control form-control-lg timepicker" id="endTime" name="endTime"
-                                    required>
+                                <input type="text" class="form-control form-control-lg timepicker" id="endTime"
+                                    name="endTime" required>
                             </div>
                         </div>
 
@@ -59,4 +59,3 @@
         </div>
     </div>
 @endsection
-

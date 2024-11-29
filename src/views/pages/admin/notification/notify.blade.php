@@ -9,7 +9,7 @@
 
                 <div class="d-flex justify-content-between">
                     <h3>Quản lý Thông báo</h3>
-                    <a href="" class="btn btn-primary btn-sm">Tạo thông báo</a>
+                    <a href="{{$_ENV['APP_URL']}}/admin/create-notify" class="btn btn-primary btn-sm">Tạo thông báo</a>
                 </div>
 
                 @php $i = 1 @endphp
@@ -17,9 +17,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Tên phòng</th>
-                            <th>Vị trí</th>
+                            <th>#</th>
+                            <th>Tiêu đề</th>
+                            <th>Thời gian tạo</th>
+                            <th>Đến</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -27,12 +28,15 @@
                         @foreach ($data as $notify)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $notify->name }}</td>
-                                <td>{{ $notify->location }}</td>
+                                <td>{{ $notify->title }}</td>
+                                <td>{{ $notify->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
-                                    <a href=""
+                                    {{ $notify->offices_count }} phòng ban, {{ $notify->users_count }} người
+                                </td>
+                                <td>
+                                    <a href="{{$_ENV['APP_URL']}}/admin/edit-notify/{{$notify->id}}"
                                         class="btn btn-primary btn-sm">Sửa</a>
-                                    <a href=""
+                                    <a href="{{$_ENV['APP_URL']}}/admin/delete-notify/{{$notify->id}}"
                                         class="btn btn-danger btn-sm"
                                         onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
                                 </td>
