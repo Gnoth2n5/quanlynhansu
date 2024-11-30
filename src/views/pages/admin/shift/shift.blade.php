@@ -17,7 +17,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>Tên ca</th>
                             <th>Thời gian bắt đầu</th>
                             <th>Thời gian kết thúc</th>

@@ -17,7 +17,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>Tên phòng</th>
                             <th>Vị trí</th>
                             <th>Trưởng phòng</th>

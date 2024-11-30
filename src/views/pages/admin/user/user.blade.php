@@ -20,7 +20,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>#</th>
                                 <th>Username</th>
                                 <th>Họ tên</th>
                                 <th>Phòng ban</th>
