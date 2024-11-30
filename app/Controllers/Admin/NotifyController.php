@@ -18,7 +18,8 @@ class NotifyController extends Controller
 
 
         if ($_SESSION['role'] == 'admin') {
-            $data = Notifications::withCount(['users', 'offices'])->orderBy('updated_at', 'desc')->get();
+            $data = Notifications::withCount(['users', 'offices'])->orderBy('updated_at', 'desc');
+            $pagination = PaginationService::paginate($data, $perPage, $page);
         } else {
 
             // lấy người dùng
@@ -55,30 +56,31 @@ class NotifyController extends Controller
             usort($data, function ($a, $b) {
                 return strtotime($b['created_at']) - strtotime($a['created_at']); // Sắp xếp theo thời gian
             });
+
+            // Phân trang thủ công
+            $totalRecords = count($data); // Tổng số bản ghi
+            $totalPages = ceil($totalRecords / $perPage); // Tổng số trang
+            $page = max($page, 1); // Đảm bảo page không nhỏ hơn 1
+            $page = min($page, $totalPages); // Đảm bảo page không vượt quá tổng số trang
+
+            // Tính offset để lấy dữ liệu cho trang hiện tại
+            $offset = ($page - 1) * $perPage;
+
+            // Lấy dữ liệu cho trang hiện tại
+            $paginatedData = array_slice($data, $offset, $perPage);
+
+            // Tạo pagination
+            $pagination = [
+                'data' => $paginatedData,
+                'totalPages' => $totalPages,
+                'currentPage' => $page,
+                'totalRecords' => $totalRecords,
+            ];
         }
 
-        // $pagination = PaginationService::paginate($data, $perPage, $page);
 
 
-        // Phân trang thủ công
-        $totalRecords = count($data); // Tổng số bản ghi
-        $totalPages = ceil($totalRecords / $perPage); // Tổng số trang
-        $page = max($page, 1); // Đảm bảo page không nhỏ hơn 1
-        $page = min($page, $totalPages); // Đảm bảo page không vượt quá tổng số trang
 
-        // Tính offset để lấy dữ liệu cho trang hiện tại
-        $offset = ($page - 1) * $perPage;
-
-        // Lấy dữ liệu cho trang hiện tại
-        $paginatedData = array_slice($data, $offset, $perPage);
-
-        // Tạo pagination
-        $pagination = [
-            'data' => $paginatedData,
-            'totalPages' => $totalPages,
-            'currentPage' => $page,
-            'totalRecords' => $totalRecords,
-        ];
 
         // \print_r($pagination['data']);
         // die();

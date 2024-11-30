@@ -83,7 +83,7 @@ class AttendanceController extends Controller
 
             if ($isEarly) {
                 return Redirect::to('/user/dashboard')
-                    ->message('Bạn đã check-out nhưng sớm giờ làm việc :((', 'error')
+                    ->message('Bạn đã check-out nhưng ra sớm giờ làm việc :((', 'error')
                     ->send();
             }
 
