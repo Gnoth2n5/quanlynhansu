@@ -18,9 +18,9 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
-            @foreach ($data as $notify)
-                <div class="card shadow-sm border-light mb-3" style="max-width: 540px;">
+        @foreach ($data as $notify)
+            <div class="col-lg-12 mb-3">
+                <div class="card shadow-sm border-light" style="margin: auto;">
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="status-dot bg-danger"
@@ -37,7 +37,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
 @endsection
