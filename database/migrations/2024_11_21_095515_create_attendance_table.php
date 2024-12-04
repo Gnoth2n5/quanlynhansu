@@ -12,7 +12,7 @@ return new class {
                 $table->dateTime('check_in');
                 $table->dateTime('check_out')->nullable();
                 $table->enum('check_in_status', ['on_time', 'late', 'absent']);
-                $table->enum('check_out_status', ['on_time', 'early_exit'])->nullable();
+                $table->enum('check_out_status', ['on_time', 'early_exit', 'ot'])->nullable();
                 $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 

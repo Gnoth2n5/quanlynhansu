@@ -96,4 +96,16 @@ class AttendanceController extends Controller
                 ->send();
         }
     }
+
+    public function isEarly()
+    {
+        $now = Carbon::now()->format('Y-m-d H:i:s');
+        $userId = $_SESSION['user']->id;
+
+        $isEarly = $this->atteSv->isEarly($now, $userId);
+
+        return $this->json([
+            'isEarly' => $isEarly
+        ]);
+    }
 }

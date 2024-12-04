@@ -8,7 +8,7 @@
             <div class="card-body">
 
                 <div class="d-flex justify-content-between">
-                    <h3>Bảng Đơn từ</h3>
+                    <h3>Đơn xin nghỉ</h3>
                     <a href="{{ $_ENV['APP_URL'] }}/user/leave-request/create" class="btn btn-primary btn-sm">Tạo mới</a>
                 </div>
 

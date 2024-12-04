@@ -36,11 +36,19 @@
                     <h4 class="card-title text-success me-3">
                         <i class="fas fa-check-circle"></i> Bạn đã chấm công hôm nay.
                     </h4>
-                    @if (!$isCheckOut)
-                        <a href="{{ $_ENV['APP_URL'] }}/user/check-out" class="btn btn-danger">
-                            <i class="fas fa-sign-out-alt"></i> Check Out
+                    <div>
+                        <a href="{{ $_ENV['APP_URL'] }}/user/register-ot" class="btn btn-primary"
+                        onclick="SweetAlert(event, 'Bạn có muốn đăng kí OT không?', 'warning', {confirmBtn: true, cancelBtn: true})"
+                        >
+                            Đăng kí OT
                         </a>
-                    @endif
+                        @if (!$isCheckOut)
+                            <a href="{{ $_ENV['APP_URL'] }}/user/check-out" class="btn btn-danger"
+                                onclick="handleCheckOut(event, this)">
+                                <i class="fas fa-sign-out-alt"></i> Check Out
+                            </a>
+                        @endif
+                    </div>
                 </div>
             @endif
         </div>
@@ -68,6 +76,41 @@
             @endcomponent
         </div>
     </div>
+@endsection
 
+@section('script')
+    <script>
+        $(document).ready(function() {
+            handleCheckOut = (event, element) => {
+                event.preventDefault();
 
+                const url = element.getAttribute('href');
+
+                $.ajax({
+                    url: '/user/is-early',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.isEarly) {
+                            SweetAlert(event,
+                                'Chưa hết ca làm việc, bạn có chắc muốn checkout ngay bây giờ không?',
+                                'warning', {
+                                    element: element,
+                                    confirmBtn: true,
+                                    cancelBtn: true
+                                });
+                        } else {
+                            SweetAlert(event,
+                                'Đã hết ca làm việc của bạn, bạn có chắc muốn checkout ngay bây giờ không?',
+                                'warning', {
+                                    element: element,
+                                    confirmBtn: true,
+                                    cancelBtn: true
+                                });
+                        }
+                    }
+                })
+            }
+        });
+    </script>
 @endsection

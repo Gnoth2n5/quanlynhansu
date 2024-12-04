@@ -107,6 +107,7 @@ try {
     $router->get('/user/attendance', [AttendanceController::class, 'index']);
     $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
     $router->get('/user/check-out', [AttendanceController::class, 'checkOut']);
+    $router->get('/user/is-early', [AttendanceController::class, 'isEarly']);
 
 
 

@@ -25,6 +25,32 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+const loading = document.getElementById("loading");
+
+// Add loading spinner for all <a> and <form>
+document.addEventListener("click", function (event) {
+  const target = event.target;
+
+  // Handle links (<a>)
+  if (
+    target.tagName === "A" &&
+    target.getAttribute("href") !== "#" &&
+    target.getAttribute("target") !== "_blank"
+  ) {
+    loading.style.display = "flex";
+  }
+
+  // Handle forms (<form>)
+  if (target.tagName === "FORM" || target.closest("form")) {
+    loading.style.display = "flex";
+  }
+});
+
+// Ensure loading spinner shows during page navigation
+window.onbeforeunload = function () {
+  loading.style.display = "flex";
+};
+
 // // Hàm cập nhật đồng hồ thời gian thực
 // function updateClock() {
 //     const clockElement = document.getElementById('time-badge');
@@ -128,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
 //     });
 //   }
 // })(jQuery);
-
 
 // (function ($) {
 //   "use strict";
