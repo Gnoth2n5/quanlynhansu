@@ -46,3 +46,69 @@
         </div>
     </div>
 @endsection
+@section('script')
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.querySelector('#createOfficeForm');
+            const baseSalary = document.querySelector("input[name='base']");
+            const deductions = document.querySelector("input[name='deductions']");
+            const bonus = document.querySelector("input[name='bonus']");
+
+            // Hàm validate số
+            function validateNumberField(inputElement, minValue, maxValue, errorMessage) {
+                const value = parseFloat(inputElement.value.trim());
+                const parent = inputElement.parentElement;
+
+                // Xóa thông báo lỗi trước khi kiểm tra
+                parent.querySelectorAll(".error-message").forEach(el => el.remove());
+
+                if (isNaN(value) || value < minValue || value > maxValue) {
+                    const errorEl = document.createElement('div');
+                    errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                    errorEl.textContent = errorMessage;
+                    parent.appendChild(errorEl);
+                    return false;
+                }
+                return true;
+            }
+
+            // Kiểm tra khi mất focus (blur)
+            baseSalary.addEventListener('blur', function () {
+                validateNumberField(baseSalary, 1, 99999999.99, "Lương cơ bản phải lớn hơn 0 và nhỏ hơn 99,999,999.99.");
+            });
+
+            deductions.addEventListener('blur', function () {
+                validateNumberField(deductions, 0, 99999999.99, "Khấu trừ phải từ 0 đến 99,999,999.99.");
+            });
+
+            bonus.addEventListener('blur', function () {
+                validateNumberField(bonus, 0, 99999999.99, "Thưởng phải từ 0 đến 99,999,999.99.");
+            });
+
+            // Xử lý gửi form
+            form.addEventListener('submit', function (event) {
+                event.preventDefault(); // Ngăn việc gửi form nếu không hợp lệ
+
+                let isValid = true;
+
+                // Kiểm tra các trường dữ liệu
+                if (!validateNumberField(baseSalary, 1, 99999999.99, "Lương cơ bản phải lớn hơn 0 và nhỏ hơn 99,999,999.99.")) {
+                    isValid = false;
+                }
+
+                if (!validateNumberField(deductions, 0, 99999999.99, "Khấu trừ phải từ 0 đến 99,999,999.99.")) {
+                    isValid = false;
+                }
+
+                if (!validateNumberField(bonus, 0, 99999999.99, "Thưởng phải từ 0 đến 99,999,999.99.")) {
+                    isValid = false;
+                }
+
+                // Nếu hợp lệ, gửi form
+                if (isValid) {
+                    form.submit();
+                }
+            });
+        });
+    </script>
+@endsection

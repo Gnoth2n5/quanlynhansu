@@ -124,5 +124,68 @@
                 });
             }
         });
+        const form = document.querySelector('#createOfficeForm');
+            const userId = document.querySelector("select[name='userId']");
+            const baseSalary = document.querySelector("input[name='base']");
+            const deductions = document.querySelector("input[name='deductions']");
+            const bonus = document.querySelector("input[name='bonus']");
+
+            function validateSelectField(selectElement, errorMessage) {
+                const value = selectElement.value;
+                const parent = selectElement.parentElement;
+
+                parent.querySelectorAll(".error-message").forEach(el => el.remove());
+
+                if (value === "0" || value === "") {
+                    const errorEl = document.createElement('div');
+                    errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                    errorEl.textContent = errorMessage;
+                    parent.appendChild(errorEl);
+                    return false;
+                }
+                return true;
+            }
+
+            function validateNumberField(inputElement, minValue, maxValue, errorMessage) {
+                const value = parseFloat(inputElement.value.trim());
+                const parent = inputElement.parentElement;
+
+                parent.querySelectorAll(".error-message").forEach(el => el.remove());
+
+                if (isNaN(value) || value < minValue || value > maxValue) {
+                    const errorEl = document.createElement('div');
+                    errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                    errorEl.textContent = errorMessage;
+                    parent.appendChild(errorEl);
+                    return false;
+                }
+                return true;
+            }
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                let isValid = true;
+
+                if (!validateSelectField(userId, "Vui lòng chọn Nhân viên.")) {
+                    isValid = false;
+                }
+
+                if (!validateNumberField(baseSalary, 1, 99999999.99, "Lương cơ bản phải lớn hơn 0 và nhỏ hơn 99,999,999.99.")) {
+                    isValid = false;
+                }
+
+                if (!validateNumberField(deductions, 0, 99999999.99, "Khấu trừ phải từ 0 đến 99,999,999.99.")) {
+                    isValid = false;
+                }
+
+                if (!validateNumberField(bonus, 0, 99999999.99, "Thưởng phải từ 0 đến 99,999,999.99.")) {
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    form.submit();
+                }
+            });
     </script>
 @endsection

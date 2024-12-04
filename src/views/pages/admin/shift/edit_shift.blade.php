@@ -63,3 +63,69 @@
         </div>
     </div>
 @endsection
+@section('script')
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector('#shiftForm');
+        const shiftName = document.querySelector("input[name='shiftName']");
+        const startTime = document.querySelector("input[name='startTime']");
+        const endTime = document.querySelector("input[name='endTime']");
+
+        // Function để kiểm tra hợp lệ và hiển thị lỗi
+        function validateField(inputElement, minLength, errorMessage) {
+            const value = inputElement.value.trim();
+            const parent = inputElement.parentElement;
+
+            // Xóa thông báo lỗi trước khi kiểm tra
+            parent.querySelectorAll(".error-message").forEach(el => el.remove());
+
+            if (value === "" || value.length < minLength) {
+                const errorEl = document.createElement('div');
+                errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                errorEl.textContent = errorMessage;
+                parent.appendChild(errorEl);
+                return false;
+            }
+            return true;
+        }
+
+        // Kiểm tra khi mất focus (blur)
+        shiftName.addEventListener('blur', function() {
+            validateField(shiftName, 3, "Tên ca không được để trống và phải chứa ít nhất 3 ký tự.");
+        });
+
+        startTime.addEventListener('blur', function() {
+            validateField(startTime, 5, "Giờ bắt đầu không được để trống và phải hợp lệ (HH:mm).");
+        });
+
+        endTime.addEventListener('blur', function() {
+            validateField(endTime, 5, "Giờ kết thúc không được để trống và phải hợp lệ (HH:mm).");
+        });
+
+        // Xử lý gửi form
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn việc gửi form nếu không hợp lệ
+
+            let isValid = true;
+
+            // Kiểm tra lại tất cả các trường trước khi gửi
+            if (!validateField(shiftName, 3, "Tên ca không được để trống và phải chứa ít nhất 3 ký tự.")) {
+                isValid = false;
+            }
+
+            if (!validateField(startTime, 5, "Giờ bắt đầu không được để trống và phải hợp lệ (HH:mm).")) {
+                isValid = false;
+            }
+
+            if (!validateField(endTime, 5, "Giờ kết thúc không được để trống và phải hợp lệ (HH:mm).")) {
+                isValid = false;
+            }
+
+            // Nếu hợp lệ, gửi form
+            if (isValid) {
+                form.submit();
+            }
+        });
+    });
+</script>
+@endsection
