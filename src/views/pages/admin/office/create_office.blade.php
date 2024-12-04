@@ -32,7 +32,6 @@
         </div>
     </div>
 @endsection
-<<<<<<< Updated upstream
 @section('script')
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -90,11 +89,6 @@
         });
     </script>
 @endsection
-=======
-<<<<<<< Updated upstream
-
-
-=======
 @section('script')
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -151,5 +145,3 @@
     });
 </script>
 @endsection
->>>>>>> Stashed changes
->>>>>>> Stashed changes
