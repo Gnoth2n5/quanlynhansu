@@ -1,25 +1,3 @@
-<?php
-
-
-$data = [
-    ['id' => 1, 'user_id' => 1, 'start_date' => '2024-12-01', 'end_date' => '2024-12-05', 'reason' => 'Vacation', 'status' => 'Approved'],
-    ['id' => 2, 'user_id' => 2, 'start_date' => '2024-12-10', 'end_date' => '2024-12-12', 'reason' => 'Sick Leave', 'status' => 'Pending'],
-    ['id' => 3, 'user_id' => 3, 'start_date' => '2024-12-15', 'end_date' => '2024-12-17', 'reason' => 'Family Emergency', 'status' => 'Denied'],
-    ['id' => 4, 'user_id' => 4, 'start_date' => '2024-12-20', 'end_date' => '2024-12-22', 'reason' => 'Personal Leave', 'status' => 'Approved'],
-    ['id' => 5, 'user_id' => 5, 'start_date' => '2024-12-25', 'end_date' => '2024-12-28', 'reason' => 'Vacation', 'status' => 'Pending'],
-];
-
-
-$columns = [
-    'id' => 'Request ID',
-    'user_id' => 'User ID',
-    'start_date' => 'Start Date',
-    'end_date' => 'End Date',
-    'reason' => 'Reason',
-    'status' => 'Status',
-];
-?>
-
 @extends('layouts.defaultLayout')
 
 @section('title', 'Quản lý Đơn từ')
@@ -28,8 +6,62 @@ $columns = [
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h3>Quản lý Đơn từ</h3>
-                @component('components.table.table_normal', ['columns' => $columns, 'data' => $data])
+                <div class="d-flex justify-content-between">
+                    <h3>Quản lý đơn từ</h3>
+                </div>
+
+                @php $i = 1 @endphp
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Người gửi</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $request)
+                            <tr>
+                                <td>{{ $i++ }}</td>
+                                <td>{{ $request->users->full_name }}</td>
+                                <td>{{ $request->start_date }}</td>
+                                <td>{{ $request->end_date }}</td>
+                                <td>
+                                    @if ($request->status == 'pending')
+                                        <label class="badge badge-warning">Chưa xử lý</label>
+                                    @elseif ($request->status == 'approved')
+                                        <label class="badge badge-success">Đã chấp nhận</label>
+                                    @elseif ($request->status == 'rejected')
+                                        <label class="badge badge-danger">Đã từ chối</label>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-show/{{ $request->id }}"
+                                        class="btn btn-info btn-sm">Xem</a>
+
+                                    @if($request->status == 'pending')
+
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-request/approved/{{ $request->id }}"
+                                        class="btn btn-success btn-sm">Chấp nhận</a>
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-request/rejected/{{ $request->id }}"
+                                        class="btn btn-danger btn-sm">Từ chối</a>
+
+                                    @endif
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                @component('components.pagination.pagination', [
+                    'currentPage' => $currentPage,
+                    'totalPages' => $totalPages,
+                ])
                 @endcomponent
             </div>
         </div>

@@ -9,19 +9,19 @@ $sidebarItems = [
     [
         'label' => 'Bảng chấm công',
         'icon' => 'icon-layout menu-icon',
-        'url' => '#',
+        'url' => '/user/attendance',
         'subMenu' => [],
     ],
     [
         'label' => 'Đơn từ',
         'icon' => 'fa-regular fa-paper-plane menu-icon',
-        'url' => '#',
+        'url' => '/user/leave-request',
         'subMenu' => [],
     ],
     [
         'label' => 'Thông báo',
         'icon' => 'fa-regular fa-bell menu-icon',
-        'url' => '#icons',
+        'url' => '/user/notification',
         'subMenu' => [],
     ],
     [

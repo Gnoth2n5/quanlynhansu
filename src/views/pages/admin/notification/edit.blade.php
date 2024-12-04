@@ -55,7 +55,9 @@
                 <div class="container mt-2">
                     <h2 class="text-center">Sửa Thông Báo</h2>
                     <form action="{{ $_ENV['APP_URL'] }}/admin/update-notify" method="POST" class="mt-4">
+
                         <input type="hidden" value="{{ $notify->id }}" name="id">
+
                         <div class="mb-4">
                             <label for="shiftName" class="form-label fw-bold">Tiêu đề</label>
                             <input type="text" class="form-control form-control-lg" id="title" name="title"
@@ -153,6 +155,7 @@
                 });
             }
         });
+
         const form = document.querySelector('form');
         const title = document.querySelector("input[name='title']");
         const content = document.querySelector("textarea[name='content']");
@@ -181,5 +184,7 @@
                 form.submit();
             }
         });
+
+
     </script>
 @endsection

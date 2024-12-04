@@ -17,7 +17,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>Tên ca</th>
                             <th>Thời gian bắt đầu</th>
                             <th>Thời gian kết thúc</th>
@@ -32,14 +32,14 @@
                                 <td>{{ $shift->shift_name }}</td>
                                 <td>{{ $shift->start_time }}</td>
                                 <td>{{ $shift->end_time }}</td>
-                                <td>{{ $shift->is_overtime }}</td>
+                                <td>{{ $shift->is_overtime == "0" ? "Không" : "Có" }}</td>
                                 <td>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/edit-shift/{{ $shift->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/delete-shift/{{ $shift->id }}"
                                         class="btn btn-danger btn-sm"
-                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true}
-                                    </a>
+                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true}"
+                                    >Xoá</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -56,3 +56,4 @@
         </div>
     </div>
 @endsection
+

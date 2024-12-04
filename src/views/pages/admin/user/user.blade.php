@@ -20,9 +20,10 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>#</th>
                                 <th>Username</th>
                                 <th>Họ tên</th>
+                                <th>Phòng ban</th>
                                 <th>Role</th>
                                 <th>Status</th>
                                 <th>Hành động</th>
@@ -34,6 +35,7 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->full_name }}</td>
+                                    <td>{{$user->offices[0]->name ?? "Chưa có phòng ban"}}</td>
                                     <td>
                                         <span
                                             class="badge 
@@ -63,8 +65,16 @@
                                     <td>
                                         <a href="{{ $_ENV['APP_URL'] }}/admin/user-detail/{{ $user->UID }}-{{ $user->id }}"
                                             class="btn btn-info btn-sm">Xem</a>
-                                        <a href="{{ $_ENV['APP_URL'] }}/admin/lock-user/{{ $user->UID }}-{{ $user->id }}"
-                                            class="btn btn-danger btn-sm" onclick="check(event)">Khoá</a>
+                                        @if ($user->status == 'active')
+                                            <a href="{{ $_ENV['APP_URL'] }}/admin/block-user/{{ $user->UID }}-{{ $user->id }}"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="SweetAlert(event, 'Bạn có chắc muốn khoá người dùng này không?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Khoá</a>
+                                        @else
+                                            <a href="{{ $_ENV['APP_URL'] }}/admin/unlock-user/{{ $user->UID }}-{{ $user->id }}"
+                                                class="btn btn-success btn-sm"
+                                                onclick="SweetAlert(event, 'Bạn có chắc muốn mở khoá người dùng này không?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Mở
+                                                khoá</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -80,16 +90,4 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('script')
-    <script>
-        function check(event) {
-            event.preventDefault();
-            SweetAlert('Bạn có chắc chắn muốn khoá người dùng này?', 'warning', {
-                confirmBtn: true,
-                cancelBtn: true,
-            });
-        }
-    </script>
 @endsection

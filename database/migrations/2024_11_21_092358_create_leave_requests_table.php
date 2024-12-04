@@ -9,10 +9,10 @@ return new class {
             Capsule::schema()->create('leave_requests', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('user_id');
-                $table->dateTime('start_date');
-                $table->dateTime('end_date');
+                $table->date('start_date');
+                $table->date('end_date');
                 $table->text('reason');
-                $table->unsignedBigInteger('approved_by');
+                $table->unsignedBigInteger('approved_by')->nullable();
                 $table->enum('status',['pending', 'approved', 'rejected']);
                 $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));

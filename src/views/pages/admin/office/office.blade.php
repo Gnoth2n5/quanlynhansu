@@ -17,9 +17,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>Tên phòng</th>
                             <th>Vị trí</th>
+                            <th>Trưởng phòng</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -30,11 +31,18 @@
                                 <td>{{ $office->name }}</td>
                                 <td>{{ $office->location }}</td>
                                 <td>
+                                    @if ($office->manager->isNotEmpty())
+                                        {{ $office->manager->first()->full_name ?? 'Không có trưởng phòng' }}
+                                    @else
+                                        Không có trưởng phòng
+                                    @endif
+                                </td>
+                                <td>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/edit-office/{{ $office->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/delete-office/{{ $office->id }}"
                                         class="btn btn-danger btn-sm"
-                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
+                                        onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'warning', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>
                                 </td>
                             </tr>
                         @endforeach

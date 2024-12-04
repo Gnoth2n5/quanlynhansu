@@ -6,7 +6,6 @@
 <script src="/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
 <script src="/assets/js/dataTables.select.min.js"></script>
 {{-- custom.js --}}
-<script src="/assets/js/custom.js"></script>
 <!-- End plugin js for this page -->
 <!-- inject:js -->
 <script src="/assets/js/off-canvas.js"></script>
@@ -14,6 +13,10 @@
 <script src="/assets/js/template.js"></script>
 <script src="/assets/js/settings.js"></script>
 <script src="/assets/js/todolist.js"></script>
+{{-- <script src="/assets/js/select2.js"></script> --}}
+<script src="/assets/vendors/select2/select2.min.js"></script>
+
+{{-- <script src="/assets/js/select2-bootstrap.min.js"></script> --}}
 <!-- endinject -->
 <!-- Custom js for this page-->
 <script src="/assets/js/dashboard.js"></script>
@@ -23,15 +26,33 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.5/dist/sweetalert2.min.js"></script>
- 
+<script src="/assets/js/custom.js"></script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Cấu hình thông báo
+        toastr.options = {
+            "closeButton": true, // Hiển thị nút đóng
+            "debug": false, // Tắt chế độ debug
+            "newestOnTop": true, // Đặt thông báo mới nhất lên trên
+            "progressBar": true, // Hiển thị thanh tiến trình
+            "positionClass": "toast-top-right", // Vị trí thông báo
+            "preventDuplicates": true, // Ngăn chặn thông báo trùng lặp
+            "onclick": null, // Hành động khi click vào thông báo
+            "showDuration": "300", // Thời gian hiển thị hiệu ứng (ms)
+            "hideDuration": "1000", // Thời gian ẩn hiệu ứng (ms)
+            "timeOut": "3000", // Thời gian thông báo tự động ẩn (ms)
+            "extendedTimeOut": "1000", // Thời gian chờ sau khi hover (ms)
+            "showEasing": "swing", // Hiệu ứng khi hiển thị
+            "hideEasing": "linear", // Hiệu ứng khi ẩn
+            "showMethod": "fadeIn", // Phương thức hiển thị
+            "hideMethod": "fadeOut" // Phương thức ẩn
+        };
         // Lấy tham số từ URL
         const urlParams = new URLSearchParams(window.location.search);
         let message = urlParams.get('msg');
         const type = urlParams.get('status');
-
         // Kiểm tra và hiển thị thông báo
         if (message && type && typeof toastr[type] === 'function') {
             // Thay thế dấu cộng bằng khoảng trắng và giải mã
@@ -57,9 +78,21 @@
     setInterval(updateClock, 1000);
 
     // Gọi hàm cập nhật đồng hồ ngay khi trang được tải
-    updateClock();
+    document.addEventListener('DOMContentLoaded', function() {
+        updateClock();
+    });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        flatpickr(".timepicker", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i", // Định dạng giờ: phút (24 giờ)
+            time_24hr: true // Hiển thị dạng 24 giờ
+        });
+    });
+</script>
 
 <script>
     const SweetAlert = (event, msg, status, {

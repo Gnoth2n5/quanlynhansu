@@ -7,7 +7,7 @@ $sidebarItems = [
         'subMenu' => [],
     ],
     [
-        'label' => 'Quản lý Phòng',
+        'label' => 'Quản lý Phòng ban',
         'icon' => 'icon-layout menu-icon',
         'url' => '/admin/office-management',
         'subMenu' => [],
@@ -26,9 +26,9 @@ $sidebarItems = [
     ],
     [
         'label' => 'Quản lý Ca làm việc',
-        'icon' => 'fa-regular fa-envelope menu-icon',
-        'url' => '/admin/shift-management',
-        'subMenu' => [],
+        'icon' => 'fa-regular fa-clock menu-icon',
+        'url' => '#shift',
+        'subMenu' => [['label' => 'Bảng ca làm việc', 'url' => '/admin/shift-management'], ['label' => 'Phân ca', 'url' => '/admin/user-shift']],
     ],
     [
         'label' => 'Quản lý Lương',
@@ -39,20 +39,20 @@ $sidebarItems = [
     [
         'label' => 'Quản lý thông báo',
         'icon' => 'fa-regular fa-bell menu-icon',
-        'url' => '#icons',
+        'url' => '/admin/notify-management',
         'subMenu' => [],
     ],
     [
         'label' => 'Thống kê',
         'icon' => 'fa-solid fa-chart-pie menu-icon',
-        'url' => '#icons',
+        'url' => '/admin/export',
         'subMenu' => [],
     ],
     [
         'label' => 'Cài đặt',
         'icon' => 'fa-solid fa-gears menu-icon',
-        'url' => '#auth',
-        'subMenu' => [],
+        'url' => '#setting',
+        'subMenu' => [['label' => 'Thông tin tài khoản', 'url' => '#'], ['label' => 'Đổi mật khẩu', 'url' => '#']],
     ],
     // [
     //     'label' => 'Error pages',
@@ -73,11 +73,10 @@ $sidebarItems = [
 <nav class="sidebar sidebar-offcanvas" id="sidebar">
     <div class="text-center mb-4 profile-section mt-4">
         <!-- Avatar -->
-        <img src="/assets/images/faces/face1.jpg" 
-             class="img-fluid border profile-avatar" 
-             alt="User Avatar">
+        <img src="{{ isset($_SESSION['user']->avatar) ? '/uploads/avatar/' . $_SESSION['user']->avatar : '/assets/images/faces/face1.jpg' }}"
+            class="img-fluid border profile-avatar" alt="User Avatar">
         <!-- Tên người dùng -->
-        <h5 class="mt-2 profile-name">{{$_SESSION['user']['full_name']}}</h5>
+        <h5 class="mt-2 profile-name">{{ $_SESSION['user']['full_name'] }}</h5>
     </div>
     <ul class="nav">
         @foreach ($sidebarItems as $item)

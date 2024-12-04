@@ -40,8 +40,7 @@
             margin-right: 5px;
             /* Thêm khoảng cách nút xóa */
         }
-
-        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        .select2-container--default .select2-selection--multiple .select2-selection__choice{
             font-size: 1rem;
         }
     </style>
@@ -140,6 +139,7 @@
                 });
             }
         });
+
         const form = document.querySelector('form');
         const title = document.querySelector("input[name='title']");
         const content = document.querySelector("textarea[name='content']");
@@ -205,5 +205,6 @@
                 form.submit();
             }
         });
+
     </script>
 @endsection

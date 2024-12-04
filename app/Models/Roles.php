@@ -15,6 +15,7 @@ class Roles extends Model
     ];
 
     protected $hidden = [];
+    
     public function users(): HasMany
     {
         return $this->hasMany(Users::class);

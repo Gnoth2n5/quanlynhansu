@@ -15,7 +15,8 @@
         "symfony/console": "^7.1",
         "laravel/serializable-closure": "^2.0",
         "fakerphp/faker": "^1.24",
-        "voku/portable-ascii": "^2.0"
+        "voku/portable-ascii": "^2.0",
+        "phpoffice/phpspreadsheet": "^3.5"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.1",

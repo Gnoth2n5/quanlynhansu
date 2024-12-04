@@ -43,20 +43,20 @@
 
                         <div class="mb-3">
                             <label for="base" class="form-label">Lương cơ bản</label>
-                            <input type="number" step="0.01" max="99999999.99" min="1" class="form-control"
-                                id="base" name="base" placeholder="Nhập lương cơ bản">
+                            <input type="number" step="0.01" max="99999999.99" min="1" class="form-control" id="base" name="base"
+                                placeholder="Nhập lương cơ bản">
                         </div>
 
                         <div class="mb-3">
                             <label for="deductions" class="form-label">Khấu trừ</label>
-                            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control"
-                                id="deductions" name="deductions" placeholder="Nhập khấu trừ">
+                            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" id="deductions" name="deductions"
+                                placeholder="Nhập khấu trừ">
                         </div>
 
                         <div class="mb-3">
                             <label for="bonus" class="form-label">Thưởng thêm</label>
-                            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control"
-                                id="bonus" name="bonus" placeholder="Nhập thưởng">
+                            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" id="bonus" name="bonus"
+                                placeholder="Nhập thưởng">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Tạo bảng lương</button>

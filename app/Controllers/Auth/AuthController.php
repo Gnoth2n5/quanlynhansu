@@ -26,8 +26,6 @@ class AuthController extends Controller
         
         $user = Users::where('email', $email)->first();
 
-        \start_session();
-
         if ($user && password_verify($password, $user->password)) {
             $_SESSION['user'] = $user;
             $_SESSION['role'] = $user->role->name;
@@ -42,11 +40,17 @@ class AuthController extends Controller
                     ->message('Đăng nhập thành công!', 'success')
                     ->send();
             }
+
+            if($user->status == 'inactive') {
+                Redirect::to('/')
+                    ->message('Tài khoản của bạn đã bị khóa!', 'warning')
+                    ->send();
+            }
             
         }
 
         Redirect::to('/')
-            ->message('Tài khoản hoặc mật khẩu không chính xác!', 'danger')
+            ->message('Tài khoản hoặc mật khẩu không chính xác!', 'error')
             ->send();
     }
 

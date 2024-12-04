@@ -13,16 +13,15 @@ class Salaries extends Model
     protected $fillable = [
         'user_id',
         'base_salary',
-        'total_salary',
         'total_deductions',
         'net_salary',
-        'pay_date',
     ];
 
     protected $hidden = [];
-    public function users():BelongsTo
+
+    public function users(): BelongsTo
     {
-        return $this->belongsTo(Users::class);
+        return $this->belongsTo(Users::class, 'user_id', 'id');
     }
     public function salary_adjustments(): HasMany
     {

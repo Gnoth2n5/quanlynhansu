@@ -15,8 +15,14 @@ class OfficeUsers extends Model
     ];
 
     protected $hidden = [];
+
     public function offices() :BelongsTo
     {
         return $this->belongsTo(Offices::class);
+    }
+
+    public function users() :BelongsTo
+    {
+        return $this->belongsTo(Users::class);
     }
 }

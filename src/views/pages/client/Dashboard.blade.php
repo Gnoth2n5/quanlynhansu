@@ -21,7 +21,7 @@
 
     <div class="card border-primary mb-3">
         <div class="card-body d-flex justify-content-between align-items-center">
-            @if (!$isAttended)
+            @if (!$isCheckIn)
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <h4 class="card-title text-danger me-3">
                         <i class="fas fa-exclamation-triangle"></i> Bạn chưa chấm công hôm nay.
@@ -36,9 +36,11 @@
                     <h4 class="card-title text-success me-3">
                         <i class="fas fa-check-circle"></i> Bạn đã chấm công hôm nay.
                     </h4>
-                    <a href="" class="btn btn-danger">
-                        <i class="fas fa-sign-out-alt"></i> Check Out
-                    </a>
+                    @if (!$isCheckOut)
+                        <a href="{{ $_ENV['APP_URL'] }}/user/check-out" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt"></i> Check Out
+                        </a>
+                    @endif
                 </div>
             @endif
         </div>

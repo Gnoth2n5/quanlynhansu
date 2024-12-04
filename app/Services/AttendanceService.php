@@ -39,18 +39,38 @@ class AttendanceService extends Service
         return !($checkInTime <= $gracePeriodEnd && $checkInTime <= $shiftEndTime);
     }
 
-    // public function isEarly($checkOut, $shift, $gracePeriod = 15): bool
-    // {
-    //     $checkOutTime = strtotime($checkOut);
-    //     $shiftTime = strtotime($shift);
-    //     return $checkOutTime >= ($shiftTime - $gracePeriod*60);
-    // }
+    public function isEarly($checkOut, $userId, $gracePeriod = 15): bool
+    {
+        // Lấy giờ kết thúc ca làm việc
+        $shiftEndTime = UserShift::where('user_id', $userId)
+                   ->first()
+                   ->shift
+                   ->end_time;
+
+        // Chuyển đổi thời gian check-out và thời gian ca làm việc thành timestamp
+        $checkOutTime = strtotime($checkOut);
+        $shiftEndTime = strtotime($shiftEndTime);
+
+        // Tính toán thời gian ân hạn (trừ đi giờ kết thúc ca làm việc)
+        $gracePeriodEnd = $shiftEndTime - ($gracePeriod * 60);
+
+        // Kiểm tra xem check-out có sớm không
+        return !($checkOutTime >= $gracePeriodEnd && $checkOutTime >= $shiftEndTime);
+    }
 
     public function hasCheckIn($userId): bool
     {
         return Attendance::where('user_id', $userId)
                         ->whereNotNull('check_in')
-                        ->whereDate('check_in', '!=', Carbon::today())
+                        ->whereDate('check_in', Carbon::today())
+                        ->exists();
+    }
+
+    public function hasCheckOut($userId): bool
+    {
+        return Attendance::where('user_id', $userId)
+                        ->whereNotNull('check_out')
+                        ->whereDate('check_out', Carbon::today())
                         ->exists();
     }
 }

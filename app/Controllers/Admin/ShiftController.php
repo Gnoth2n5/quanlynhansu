@@ -6,6 +6,8 @@ use App\Models\Shifts;
 use App\Controllers\Controller;
 use App\Helpers\Redirect;
 use App\Services\PaginationService;
+use App\Models\Users;
+use App\Models\UserShift;
 
 class ShiftController extends Controller
 {
@@ -15,8 +17,68 @@ class ShiftController extends Controller
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
         $pagination = PaginationService::paginate(Shifts::query()->orderBy('updated_at', 'desc'), $perPage, $page);
-      
+
         $this->render('pages.admin.shift.shift', [
+            'data' => $pagination['data'],
+            'totalPages' => $pagination['totalPages'],
+            'currentPage' => $pagination['currentPage'],
+        ]);
+    }
+
+    public function show($id)
+    {
+        $user = Users::with('shift')->find($id);
+        $shifts = Shifts::all();
+
+        
+
+        if (!$user) {
+            Redirect::to('/admin/shift-management')
+                ->message('Người dùng không tồn tại', 'error')
+                ->send();
+        }
+        
+
+        $this->render('pages.admin.shift.shift_assign', [
+            'user' => $user,
+            'shifts' => $shifts,
+        ]);
+    }
+
+    public function assign()
+    {
+        $userId = $_POST['id'];
+        $shiftId = $_POST['shift'];
+
+        $user = UserShift::where('user_id', $userId)->first();
+        $shift = Shifts::find($shiftId);
+
+        if (!$user || !$shift) {
+            Redirect::to('/admin/user-shift')
+                ->message('Người dùng hoặc ca làm việc không tồn tại', 'error')
+                ->send();
+        }
+
+        $user->update([
+            'shift_id' => $shiftId,
+        ]);
+
+        Redirect::to('/admin/user-shift')
+            ->message('Phân công ca làm việc thành công', 'success')
+            ->send();
+    }
+
+    public function userShift()
+    {
+        $userShift = Users::with('shift');
+
+        $perPage = 10;
+        $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+
+        $pagination = PaginationService::paginate($userShift, $perPage, $page);
+
+
+        $this->render('pages.admin.shift.user_shift', [
             'data' => $pagination['data'],
             'totalPages' => $pagination['totalPages'],
             'currentPage' => $pagination['currentPage'],
@@ -63,7 +125,7 @@ class ShiftController extends Controller
         $shiftName = $_POST['shiftName'];
         $startTime = $_POST['startTime'];
         $endTime = $_POST['endTime'];
-        $isOvertime = isset($_POST['isOvertime']) ? 1 : 0;
+        $isOvertime = $_POST['isOvertime'] ?? 0;
 
         if (empty($shiftName) || empty($startTime) || empty($endTime)) {
             Redirect::to('/admin/create-shift')
@@ -103,7 +165,7 @@ class ShiftController extends Controller
         $shiftName = $_POST['shiftName'];
         $startTime = $_POST['startTime'];
         $endTime = $_POST['endTime'];
-        $isOvertime = isset($_POST['isOvertime']) ? 1 : 0;
+        $isOvertime = $_POST['isOvertime'] ?? 0;
 
         if (empty($shiftName) || empty($startTime) || empty($endTime)) {
             Redirect::to('/admin/edit-shift/' . $id)

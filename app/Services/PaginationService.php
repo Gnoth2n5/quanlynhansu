@@ -15,6 +15,7 @@ class PaginationService
         $offset = ($page - 1) * $perPage;
 
         $data = $query->skip($offset)->take($perPage)->get();
+        // $data = $query->forPage($page, $perPage)->get();
 
         return [
             'data' => $data,

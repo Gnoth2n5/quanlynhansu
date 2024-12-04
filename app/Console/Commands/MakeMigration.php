@@ -7,15 +7,14 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-
-class MakeTable extends Command
+class MakeMigration extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('make:table')
-            ->setDescription('Create a new table')
-            ->addArgument('name', InputArgument::REQUIRED, 'The name of the table');
+            ->setName('make:migration')
+            ->setDescription('Create a new migration file')
+            ->addArgument('name', InputArgument::REQUIRED, 'The name of the migration file');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -61,7 +60,8 @@ return new class {
         if(!Capsule::schema()->hasTable('{{tableName}}')){
             Capsule::schema()->create('{{tableName}}', function (Blueprint \$table) {
                 \$table->id();
-                \$table->timestamps();
+                \$table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
+                \$table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
             });
         }
     }
