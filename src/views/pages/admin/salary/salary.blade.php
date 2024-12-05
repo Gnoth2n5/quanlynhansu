@@ -8,7 +8,8 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <h3>Quản lý Lương</h3>
-                    <a href="{{ $_ENV['APP_URL'] }}/admin/create-salary" class="btn btn-primary btn-sm">Tạo bảng lương mới</a>
+                    <a href="{{ $_ENV['APP_URL'] }}/admin/create-salary" class="btn btn-primary btn-sm">Tạo bảng lương
+                        mới</a>
                 </div>
 
                 @php $i = 1 @endphp
@@ -19,10 +20,8 @@
                             <th>#</th>
                             <th>Họ tên</th>
                             <th>Lương cơ bản</th>
-                            <th>Khấu trừ</th>
-                            <th>Thưởng thêm</th>
                             <th>Nhận được</th>
-                            <th>Ngày tạo</th>
+                            <th>Ngày tính</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -38,11 +37,12 @@
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $salary->users->full_name }}</td>
                                 <td>{{ number_format($salary->base_salary, 0, ',', '.') }} VNĐ</td>
-                                <td>{{ number_format($salary->total_deductions, 0, ',', '.') }} VNĐ</td>
-                                <td>{{ number_format($salary->total_bonus, 0, ',', '.') }} VNĐ</td>
                                 <td>{{ number_format($salary->net_salary, 0, ',', '.') }} VNĐ</td>
-                                <td>{{ $salary->updated_at }}</td>
+                                <td>{{ $salary->caculation_date }}</td>
                                 <td>
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/show/{{ $salary->id }}" class="btn btn-info btn-sm">
+                                        Xem chi tiết
+                                    </a>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/edit-salary/{{ $salary->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/delete-salary/{{ $salary->id }}"

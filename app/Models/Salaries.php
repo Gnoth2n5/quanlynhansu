@@ -13,8 +13,8 @@ class Salaries extends Model
     protected $fillable = [
         'user_id',
         'base_salary',
-        'total_deductions',
         'net_salary',
+        'caculation_date',
     ];
 
     protected $hidden = [];

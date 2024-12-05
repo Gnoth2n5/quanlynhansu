@@ -12,6 +12,10 @@ class LeaveSeeder
         $userIds = Capsule::table('users')->pluck('id')->toArray();
 
         foreach ($userIds as $userId) {
+            // Bỏ qua nếu người dùng là quản trị viên
+            if ($userId === 1) {
+                continue;
+            }
             Capsule::table('leave_requests')->insert([
                 'user_id'    => $userId,
                 'start_date' => Carbon::now(),

@@ -12,6 +12,10 @@ class AttendanceSeeder
         $userIds = Capsule::table('users')->pluck('id')->toArray();
 
         foreach ($userIds as $userId) {
+            // Bỏ qua nếu người dùng là quản trị viên
+            if ($userId === 1) {
+                continue;
+            }
             // Lặp qua 30 ngày
             for ($i = 0; $i < 30; $i++) {
                 // Tạo ngày hiện tại, trừ đi số ngày lùi lại

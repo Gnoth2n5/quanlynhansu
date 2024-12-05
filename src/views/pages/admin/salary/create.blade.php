@@ -36,27 +36,47 @@
 
                         <div class="mb-3 select">
                             <label for="nameUser" class="form-label">Tên Nhân viên</label>
-                            <select name="userId" class="form-control form-select-lg user-select2" id="">
+                            <select name="userId" class="form-control form-select-lg user-select2">
                                 <option value="0" selected>Chọn Nhân viên</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
                             <label for="base" class="form-label">Lương cơ bản</label>
-                            <input type="number" step="0.01" max="99999999.99" min="1" class="form-control" id="base" name="base"
-                                placeholder="Nhập lương cơ bản">
+                            <input type="number" step="0.01" max="99999999.99" min="1" class="form-control"
+                                id="base" name="base" placeholder="Nhập lương cơ bản">
                         </div>
 
+                        <!-- Khấu trừ -->
                         <div class="mb-3">
-                            <label for="deductions" class="form-label">Khấu trừ</label>
-                            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" id="deductions" name="deductions"
-                                placeholder="Nhập khấu trừ">
+                            <label class="form-label">Khấu trừ</label>
+                            <div id="deductions-container">
+                                <div class="input-group mb-2">
+                                    <input type="number" step="0.01" max="99999999.99" min="0"
+                                        class="form-control" name="deductions[amount][]" placeholder="Số tiền">
+                                    <input type="text" class="form-control" name="deductions[description][]"
+                                        placeholder="Mô tả">
+                                    <button type="button" class="btn btn-primary btn-rounded btn-icon add-deduction">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
+                        <!-- Thưởng -->
                         <div class="mb-3">
-                            <label for="bonus" class="form-label">Thưởng thêm</label>
-                            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" id="bonus" name="bonus"
-                                placeholder="Nhập thưởng">
+                            <label class="form-label">Thưởng thêm</label>
+                            <div id="bonus-container">
+                                <div class="input-group mb-2">
+                                    <input type="number" step="0.01" max="99999999.99" min="0"
+                                        class="form-control" name="bonus[amount][]" placeholder="Số tiền">
+                                    <input type="text" class="form-control" name="bonus[description][]"
+                                        placeholder="Mô tả">
+                                    <button type="button" class="btn btn-primary btn-rounded btn-icon add-bonus">
+                                        <i class="fa-solid fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Tạo bảng lương</button>
@@ -70,6 +90,47 @@
 
 @section('script')
     <script>
+        // Thêm khấu trừ
+        document.querySelector('.add-deduction').addEventListener('click', function() {
+            const container = document.getElementById('deductions-container');
+            const newInput = document.createElement('div');
+            newInput.className = 'input-group mb-2';
+            newInput.innerHTML = `
+            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" name="deductions[amount][]" placeholder="Số tiền">
+            <input type="text" class="form-control" name="deductions[description][]" placeholder="Mô tả">
+            <button type="button" class="btn btn-secondary btn-rounded btn-icon remove-deduction">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+        `;
+            container.appendChild(newInput);
+
+            newInput.querySelector('.remove-deduction').addEventListener('click', function() {
+                container.removeChild(newInput);
+            });
+        });
+
+        // Thêm thưởng
+        document.querySelector('.add-bonus').addEventListener('click', function() {
+            const container = document.getElementById('bonus-container');
+            const newInput = document.createElement('div');
+            newInput.className = 'input-group mb-2';
+            newInput.innerHTML = `
+            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" name="bonus[amount][]" placeholder="Số tiền">
+            <input type="text" class="form-control" name="bonus[description][]" placeholder="Mô tả">
+            <button type="button" class="btn btn-secondary btn-rounded btn-icon remove-bonus">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+        `;
+            container.appendChild(newInput);
+
+            newInput.querySelector('.remove-bonus').addEventListener('click', function() {
+                container.removeChild(newInput);
+            });
+        });
+
+
+
+
         $(document).ready(function() {
             if ($(".user-select2").length) {
                 // Bước 1: Lấy giá trị mặc định đã được chọn
@@ -124,68 +185,70 @@
                 });
             }
         });
-        const form = document.querySelector('#createOfficeForm');
-            const userId = document.querySelector("select[name='userId']");
-            const baseSalary = document.querySelector("input[name='base']");
-            const deductions = document.querySelector("input[name='deductions']");
-            const bonus = document.querySelector("input[name='bonus']");
 
-            function validateSelectField(selectElement, errorMessage) {
-                const value = selectElement.value;
-                const parent = selectElement.parentElement;
+        // const form = document.querySelector('#createOfficeForm');
+        // const userId = document.querySelector("select[name='userId']");
+        // const baseSalary = document.querySelector("input[name='base']");
+        // const deductions = document.querySelector("input[name='deductions']");
+        // const bonus = document.querySelector("input[name='bonus']");
 
-                parent.querySelectorAll(".error-message").forEach(el => el.remove());
+        // function validateSelectField(selectElement, errorMessage) {
+        //     const value = selectElement.value;
+        //     const parent = selectElement.parentElement;
 
-                if (value === "0" || value === "") {
-                    const errorEl = document.createElement('div');
-                    errorEl.classList.add('error-message', 'text-danger', 'mt-1');
-                    errorEl.textContent = errorMessage;
-                    parent.appendChild(errorEl);
-                    return false;
-                }
-                return true;
-            }
+        //     parent.querySelectorAll(".error-message").forEach(el => el.remove());
 
-            function validateNumberField(inputElement, minValue, maxValue, errorMessage) {
-                const value = parseFloat(inputElement.value.trim());
-                const parent = inputElement.parentElement;
+        //     if (value === "0" || value === "") {
+        //         const errorEl = document.createElement('div');
+        //         errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+        //         errorEl.textContent = errorMessage;
+        //         parent.appendChild(errorEl);
+        //         return false;
+        //     }
+        //     return true;
+        // }
 
-                parent.querySelectorAll(".error-message").forEach(el => el.remove());
+        // function validateNumberField(inputElement, minValue, maxValue, errorMessage) {
+        //     const value = parseFloat(inputElement.value.trim());
+        //     const parent = inputElement.parentElement;
 
-                if (isNaN(value) || value < minValue || value > maxValue) {
-                    const errorEl = document.createElement('div');
-                    errorEl.classList.add('error-message', 'text-danger', 'mt-1');
-                    errorEl.textContent = errorMessage;
-                    parent.appendChild(errorEl);
-                    return false;
-                }
-                return true;
-            }
+        //     parent.querySelectorAll(".error-message").forEach(el => el.remove());
 
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
+        //     if (isNaN(value) || value < minValue || value > maxValue) {
+        //         const errorEl = document.createElement('div');
+        //         errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+        //         errorEl.textContent = errorMessage;
+        //         parent.appendChild(errorEl);
+        //         return false;
+        //     }
+        //     return true;
+        // }
 
-                let isValid = true;
+        // form.addEventListener('submit', function(event) {
+        //     event.preventDefault();
 
-                if (!validateSelectField(userId, "Vui lòng chọn Nhân viên.")) {
-                    isValid = false;
-                }
+        //     let isValid = true;
 
-                if (!validateNumberField(baseSalary, 1, 99999999.99, "Lương cơ bản phải lớn hơn 0 và nhỏ hơn 99,999,999.99.")) {
-                    isValid = false;
-                }
+        //     if (!validateSelectField(userId, "Vui lòng chọn Nhân viên.")) {
+        //         isValid = false;
+        //     }
 
-                if (!validateNumberField(deductions, 0, 99999999.99, "Khấu trừ phải từ 0 đến 99,999,999.99.")) {
-                    isValid = false;
-                }
+        //     if (!validateNumberField(baseSalary, 1, 99999999.99,
+        //             "Lương cơ bản phải lớn hơn 0 và nhỏ hơn 99,999,999.99.")) {
+        //         isValid = false;
+        //     }
 
-                if (!validateNumberField(bonus, 0, 99999999.99, "Thưởng phải từ 0 đến 99,999,999.99.")) {
-                    isValid = false;
-                }
+        //     if (!validateNumberField(deductions, 0, 99999999.99, "Khấu trừ phải từ 0 đến 99,999,999.99.")) {
+        //         isValid = false;
+        //     }
 
-                if (isValid) {
-                    form.submit();
-                }
-            });
+        //     if (!validateNumberField(bonus, 0, 99999999.99, "Thưởng phải từ 0 đến 99,999,999.99.")) {
+        //         isValid = false;
+        //     }
+
+        //     if (isValid) {
+        //         form.submit();
+        //     }
+        // });
     </script>
 @endsection

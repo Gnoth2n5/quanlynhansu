@@ -12,6 +12,10 @@ class SalarySeeder
         $userIds = Capsule::table('users')->pluck('id')->toArray();
 
         foreach ($userIds as $userId) {
+            // Bỏ qua nếu người dùng là quản trị viên
+            if ($userId === 1) {
+                continue;
+            }
             Capsule::table('salaries')->insert([
                 'user_id'          => $userId,
                 'base_salary'      => 10000000.00,

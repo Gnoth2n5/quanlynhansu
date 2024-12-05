@@ -8,8 +8,6 @@ class OfficeUserSeeder
 {
     public function run()
     {
-        // Lấy danh sách user IDs và office IDs
-        $userIds = Capsule::table('users')->pluck('id')->toArray();
         $officeIds = Capsule::table('offices')->pluck('id')->toArray();
 
         // Phân loại user IDs theo vai trò

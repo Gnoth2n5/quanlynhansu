@@ -11,6 +11,10 @@ class SalaryAdjustmentSeeder
     {
         $userIds = Capsule::table('users')->pluck('id')->toArray();
         $salaryIds = Capsule::table('salaries')->pluck('id')->toArray();
+        // Bỏ qua nếu người dùng là quản trị viên
+        $userIds = array_filter($userIds, function ($userId) {
+            return $userId !== 1;
+        });
         // Giả sử mỗi user có 1 lần điều chỉnh lương trong năm
         foreach ($userIds as $userId) {
             Capsule::table('salary_adjustments')->insert([

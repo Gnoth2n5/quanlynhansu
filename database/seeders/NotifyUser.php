@@ -9,6 +9,10 @@ class NotifyUser
     public function run()
     {
         $userIds = Capsule::table('users')->pluck('id')->toArray();
+        // Bỏ qua nếu người dùng là quản trị viên
+        $userIds = array_filter($userIds, function ($userId) {
+            return $userId !== 1;
+        });
         $notifyIds = Capsule::table('notifications')->pluck('id')->toArray();
         // Thêm logic fake data vào đây
         foreach ($notifyIds as $notify) {

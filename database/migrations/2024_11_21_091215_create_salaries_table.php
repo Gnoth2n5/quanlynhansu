@@ -11,10 +11,8 @@ return new class {
                 $table->id();
                 $table->unsignedBigInteger('user_id');
                 $table->decimal('base_salary', 10, 2);
-                $table->decimal('total_bonus', 10, 2)->nullable();
-                $table->decimal('total_deductions', 10, 2)->nullable();
-                $table->decimal('total_allowances', 10, 2)->nullable();
                 $table->decimal('net_salary', 10, 2);
+                $table->date('calculation_date')->nullable();
                 $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
 
