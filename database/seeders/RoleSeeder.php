@@ -10,9 +10,9 @@ class RoleSeeder
     {
         // Thêm logic fake data vào đây
         Capsule::table('roles')->insert([
-            ['name' => 'user'],
-            ['name' => 'manager'],
             ['name' => 'admin'],
+            ['name' => 'manager'],
+            ['name' => 'user'],
         ]);
     }
 }

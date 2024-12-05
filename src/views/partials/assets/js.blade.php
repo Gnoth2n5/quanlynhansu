@@ -53,12 +53,12 @@
         const urlParams = new URLSearchParams(window.location.search);
         let message = urlParams.get('msg');
         const type = urlParams.get('status');
+        history.replaceState(null, '', window.location.pathname);
         // Kiểm tra và hiển thị thông báo
         if (message && type && typeof toastr[type] === 'function') {
             // Thay thế dấu cộng bằng khoảng trắng và giải mã
             message = decodeURIComponent(message.replace(/\+/g, ' '));
             toastr[type](message); // toastr.success/toastr.error
-            history.replaceState(null, '', window.location.pathname);
         }
     });
 </script>

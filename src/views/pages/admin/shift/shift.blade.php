@@ -26,6 +26,13 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @if (count($data) == 0)
+                            <tr>
+                                <td colspan="6" class="text-center">Không có dữ liệu</td>
+                            </tr>
+                        @endif
+
                         @foreach ($data as $shift)
                             <tr>
                                 <td>{{ $i++ }}</td>

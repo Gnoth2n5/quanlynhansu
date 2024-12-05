@@ -30,4 +30,9 @@ class Shifts extends Model
         return $this->belongsToMany(Users::class, 'user_shift', 'shift_id', 'user_id');
     }
 
+    public function ot()
+    {
+        return $this->hasMany(OT::class);
+    }
+
 }

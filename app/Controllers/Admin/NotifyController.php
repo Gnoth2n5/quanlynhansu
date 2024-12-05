@@ -142,17 +142,24 @@ class NotifyController extends Controller
 
     public function show($id)
     {
-        $notify = Notifications::with(['users', 'offices'])->find($id);
+        if ($_SESSION['role'] == 'admin') {
+            $notify = Notifications::with(['users', 'offices'])->find($id);
 
-        if (!$notify) {
-            Redirect::to('/admin/notify-management')
-                ->message('Thông báo không tồn tại', 'error')
-                ->send();
+            if (!$notify) {
+                Redirect::to('/admin/notify-management')
+                    ->message('Thông báo không tồn tại', 'error')
+                    ->send();
+            }
+
+            $this->render('pages.admin.notification.edit', [
+                'notify' => $notify
+            ]);
+        } else {
+            $notify = Notifications::find($id);
+            $this->render('pages.client.show_notify', [
+                'notify' => $notify
+            ]);
         }
-
-        $this->render('pages.admin.notification.edit', [
-            'notify' => $notify
-        ]);
     }
 
     public function update()

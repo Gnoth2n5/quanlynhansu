@@ -108,4 +108,26 @@ class AttendanceController extends Controller
             'isEarly' => $isEarly
         ]);
     }
+
+    public function checkOutOT()
+    {
+        $atten = Attendance::where('user_id', $_SESSION['user']->id)
+            ->where('check_out', '!=', null)
+            ->first();
+
+        if ($atten) {
+            $atten->check_out = Carbon::now()->format('Y-m-d H:i:s');
+
+            $atten->check_out_status = 'ot';
+            $atten->save();
+
+            return Redirect::to('/user/dashboard')
+                ->message('Check-out OT thành công!', 'success')
+                ->send();
+        } else {
+            return Redirect::to('/user/dashboard')
+                ->message('Bạn chưa check-out nên không thể check-out OT!', 'error')
+                ->send();
+        }
+    }
 }

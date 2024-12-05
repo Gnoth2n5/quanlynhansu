@@ -27,12 +27,19 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            @if (count($data) == 0)
+                                <tr>
+                                    <td colspan="5" class="text-center">Không có dữ liệu</td>
+                                </tr>
+                            @endif
+
                             @foreach ($data as $user)
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->full_name }}</td>
-                                    <td>{{$user->shift[0]->shift_name ?? "Chưa có ca làm việc"}}</td>                                   
+                                    <td>{{ $user->shift[0]->shift_name ?? 'Chưa có ca làm việc' }}</td>
                                     <td>
                                         <a href="{{ $_ENV['APP_URL'] }}/admin/shift-division/{{ $user->id }}"
                                             class="btn btn-info btn-sm">Phân ca</a>

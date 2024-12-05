@@ -7,7 +7,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="d-flex justify-content-between">
-                    <h3>Quản lý đơn từ</h3>
+                    <h3>Quản lý đơn xin OT</h3>
                 </div>
 
                 @php $i = 1 @endphp
@@ -17,8 +17,9 @@
                         <tr>
                             <th>#</th>
                             <th>Người gửi</th>
-                            <th>Ngày bắt đầu</th>
-                            <th>Ngày kết thúc</th>
+                            <th>Ca</th>
+                            <th>Phòng ban</th>
+                            <th>Thời gian OT đề xuất</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
@@ -27,16 +28,16 @@
 
                         @if (count($data) == 0)
                             <tr>
-                                <td colspan="6" class="text-center">Không có dữ liệu</td>
+                                <td colspan="7" class="text-center">Không có dữ liệu</td>
                             </tr>
                         @endif
-
                         @foreach ($data as $request)
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $request->users->full_name }}</td>
-                                <td>{{ $request->start_date }}</td>
-                                <td>{{ $request->end_date }}</td>
+                                <td>{{ $request->user->full_name }}</td>
+                                <td>{{ $request->shift->shift_name }}</td>
+                                <td>{{ $request->user->offices->pluck('name')->join(', ') }}</td>
+                                <td>{{ $request->requested_hours }}</td>
                                 <td>
                                     @if ($request->status == 'pending')
                                         <label class="badge badge-warning">Chưa xử lý</label>
@@ -47,16 +48,14 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-show/{{ $request->id }}"
-                                        class="btn btn-info btn-sm">Xem</a>
+                                    {{-- <a href="{{ $_ENV['APP_URL'] }}/admin/leave-show/{{ $request->id }}"
+                                        class="btn btn-info btn-sm">Xem</a> --}}
 
-                                    @if($request->status == 'pending')
-
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-request/approved/{{ $request->id }}"
-                                        class="btn btn-success btn-sm">Chấp nhận</a>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/leave-request/rejected/{{ $request->id }}"
-                                        class="btn btn-danger btn-sm">Từ chối</a>
-
+                                    @if ($request->status == 'pending')
+                                        <a href="{{ $_ENV['APP_URL'] }}/admin/ot-request/approved/{{ $request->id }}"
+                                            class="btn btn-success btn-sm">Chấp nhận</a>
+                                        <a href="{{ $_ENV['APP_URL'] }}/admin/ot-request/rejected/{{ $request->id }}"
+                                            class="btn btn-danger btn-sm">Từ chối</a>
                                     @endif
 
                                 </td>

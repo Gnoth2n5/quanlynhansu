@@ -25,6 +25,12 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @if (count($data) == 0)
+                            <tr>
+                                <td colspan="5" class="text-center">Không có dữ liệu</td>
+                            </tr>
+                        @endif
                         @foreach ($data as $notify)
                             <tr>
                                 <td>{{ $i++ }}</td>

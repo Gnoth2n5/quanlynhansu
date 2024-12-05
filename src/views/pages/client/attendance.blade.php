@@ -39,10 +39,12 @@
                                 </td>
                                 <td>{{ $attendance->check_out }}</td>
                                 <td class="text-light">
-                                    @if ($attendance->check_out_status === 'on_time')
+                                    @if ($attendance->check_out_status == 'on_time')
                                         <span class="badge bg-success">Đúng giờ</span>
-                                    @elseif ($attendance->check_out_status === 'early_exit')
+                                    @elseif ($attendance->check_out_status == 'early_exit')
                                         <span class="badge bg-warning text-dark">Ra sớm</span>
+                                    @elseif ($attendance->check_out_status == 'ot')
+                                        <span class="badge bg-primary">Đã OT</span>
                                     @endif
                                 </td>
                             </tr>

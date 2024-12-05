@@ -8,6 +8,7 @@ use App\Models\Attendance;
 use App\Models\LeaveRequests;
 use App\Models\Notifications;
 use App\Models\Users;
+use App\Models\OT;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -74,11 +75,17 @@ class DashboardController extends Controller
             ->whereMonth('created_at', date('m'))
             ->count();
 
+        $hasOT = OT::where('user_id', $userId)
+            ->whereDate('created_at', Carbon::today())
+            ->where('status', '!=', 'pending')
+            ->first();
+
         $this->render('pages.client.dashboard', [
             'isCheckIn' => $isCheckIn,
             'isCheckOut' => $ischeckOut,
             'atteMonth' => $atteMonth,
-            'atteLate' => $atteLate
+            'atteLate' => $atteLate,
+            'hasOT' => $hasOT
         ]);
     }
 }

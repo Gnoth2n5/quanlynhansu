@@ -18,6 +18,7 @@ use App\Controllers\ChartController;
 use App\Controllers\SearchController;
 use App\Controllers\RequestController;
 use App\Controllers\ExportController;
+use App\Controllers\OTController;
 
 $url = $_GET['url'] ?? '/';
 
@@ -84,7 +85,9 @@ try {
     $router->get('/admin/delete-notify/{id}', [NotifyController::class, 'delete']);
     $router->get('/admin/edit-notify/{id}', [NotifyController::class, 'show']);
     $router->post('/admin/update-notify', [NotifyController::class, 'update']);
-
+    // OT Management
+    $router->get('/admin/ot-management', [OTController::class, 'index']);
+    $router->get('/admin/ot-request/{type}/{id}', [OTController::class, 'confirm']);
 
 
 
@@ -103,13 +106,20 @@ try {
     $router->post('/user/leave-request/update', [RequestController::class, 'update']);
 
     $router->get('/user/notification', [NotifyController::class, 'index']);
+    $router->get('/user/notification/show/{id}', [NotifyController::class, 'show']);
 
     $router->get('/user/attendance', [AttendanceController::class, 'index']);
     $router->get('/user/check-in', [AttendanceController::class, 'checkIn']);
     $router->get('/user/check-out', [AttendanceController::class, 'checkOut']);
     $router->get('/user/is-early', [AttendanceController::class, 'isEarly']);
+    $router->get('/user/check-out-ot', [AttendanceController::class, 'checkOutOT']);
 
-
+    $router->get('/user/ot-request', [OTController::class, 'index']);
+    $router->get('/user/ot-request/create', [OTController::class, 'create']);
+    $router->post('/user/ot-request/store', [OTController::class, 'store']);
+    $router->get('/user/ot-request/delete/{id}', [OTController::class, 'delete']);
+    $router->post('/user/ot-request/update', [OTController::class, 'update']);
+    $router->get('/user/ot-request/show/{id}', [OTController::class, 'show']);
 
 
 

@@ -14,11 +14,11 @@ class SalarySeeder
         foreach ($userIds as $userId) {
             Capsule::table('salaries')->insert([
                 'user_id'          => $userId,
-                'base_salary'      => 5000.00,
-                'total_salary'     => 6000.00,
-                'total_deductions' => 1000.00,
-                'net_salary'       => 5000.00,
-                'pay_date'         => Carbon::now()->format('Y-m-d'),
+                'base_salary'      => 10000000.00,
+                'total_bonus'     => 3000000.00,
+                'total_deductions' => 1000000.00,
+                'total_allowances' => 100000.00,
+                'net_salary'       => 12000000.00,
             ]);
         }
     }

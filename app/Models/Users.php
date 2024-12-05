@@ -74,4 +74,9 @@ class Users extends Model
     {
         return $this->belongsToMany(Shifts::class, 'user_shift', 'user_id', 'shift_id');
     }
+
+    public function ot_requests(): HasMany
+    {
+        return $this->hasMany(OT::class);
+    }
 }

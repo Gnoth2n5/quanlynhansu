@@ -13,7 +13,6 @@ return new class {
                 $table->enum('type',['bonus','deduction','raise']);
                 $table->decimal('amount', 10, 2);
                 $table->string('description');
-                $table->date('adjustment_date');
                 $table->timestamp('created_at')->default(Capsule::raw('CURRENT_TIMESTAMP'));
                 $table->timestamp('updated_at')->default(Capsule::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
                 

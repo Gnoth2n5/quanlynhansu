@@ -26,6 +26,12 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @if (count($data) == 0)
+                            <tr>
+                                <td colspan="7" class="text-center">Không có dữ liệu</td>
+                            </tr>
+                        @endif
                         @foreach ($data as $salary)
                             <tr>
                                 <td>{{ $i++ }}</td>

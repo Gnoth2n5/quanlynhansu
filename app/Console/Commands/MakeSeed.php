@@ -53,9 +53,19 @@ class MakeSeed extends Command
 namespace Database\Seeders;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Faker\Factory as Faker;
+
 
 class {{seedName}}
 {
+    
+    protected \$faker;
+
+    public function __construct()
+    {
+        \$this->faker = Faker::create();
+    }
+
     public function run()
     {
         // Thêm logic fake data vào đây

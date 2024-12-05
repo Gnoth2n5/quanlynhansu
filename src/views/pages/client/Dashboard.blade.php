@@ -37,15 +37,21 @@
                         <i class="fas fa-check-circle"></i> Bạn đã chấm công hôm nay.
                     </h4>
                     <div>
-                        <a href="{{ $_ENV['APP_URL'] }}/user/register-ot" class="btn btn-primary"
-                        onclick="SweetAlert(event, 'Bạn có muốn đăng kí OT không?', 'warning', {confirmBtn: true, cancelBtn: true})"
-                        >
-                            Đăng kí OT
-                        </a>
+                        @if (!$hasOT)
+                            <a href="{{ $_ENV['APP_URL'] }}/user/ot-request/create" class="btn btn-primary"
+                                onclick="SweetAlert(event, 'Bạn có muốn đăng kí OT không?', 'warning', {element:this, confirmBtn: true, cancelBtn: true})">
+                                Đăng kí OT
+                            </a>
+                        @endif  
                         @if (!$isCheckOut)
                             <a href="{{ $_ENV['APP_URL'] }}/user/check-out" class="btn btn-danger"
                                 onclick="handleCheckOut(event, this)">
                                 <i class="fas fa-sign-out-alt"></i> Check Out
+                            </a>
+                        @endif
+                        @if ($hasOT && $isCheckOut)
+                            <a href="{{ $_ENV['APP_URL'] }}/user/check-out-ot" class="btn btn-warning">
+                                <i class="fas fa-edit"></i> Check Out OT
                             </a>
                         @endif
                     </div>

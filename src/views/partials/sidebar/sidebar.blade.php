@@ -21,8 +21,11 @@ $sidebarItems = [
     [
         'label' => 'Quản lý Đơn từ',
         'icon' => 'fa-regular fa-envelope menu-icon',
-        'url' => '/admin/leave-management',
-        'subMenu' => [],
+        'url' => '#request',
+        'subMenu' => [
+            ['label' => 'Đơn xin nghỉ phép', 'url' => '/admin/leave-management'],
+            ['label' => 'Đơn xin OT', 'url' => '/admin/ot-management'],
+        ],
     ],
     [
         'label' => 'Quản lý Ca làm việc',

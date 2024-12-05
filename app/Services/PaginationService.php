@@ -6,6 +6,15 @@ class PaginationService
 {
     public static function paginate($query, $perPage, $page)
     {
+        // if (!$query) {
+        //     return [
+        //         'data' => [],
+        //         'totalPages' => 0,
+        //         'currentPage' => 1,
+        //         'totalRecords' => 0,
+        //     ];
+        // }
+
         $page = max($page, 1); 
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);

@@ -10,17 +10,25 @@ class NotificationSeeder
     {
         Capsule::table('notifications')->insert([
             [
-                'title'   => 'Notification 1',
-                'message'   => 'This is notification 1',
+                'title'   => 'Thông báo thử nghiệm 1',
+                'message'   => 'Đây là nội dung thông báo thử nghiệm 1',
             ],
             [
-                'title'   => 'Notification 2',
-                'message'   => 'This is notification 2',
+                'title'   => 'Thông báo thử nghiệm 2',
+                'message'   => 'Đây là nội dung thông báo thử nghiệm 2',
             ],
             [
-                'title'   => 'Notification 3',
-                'message'   => 'This is notification 3',
+                'title'   => 'Thông báo thử nghiệm 3',
+                'message'   => 'Đây là nội dung thông báo thử nghiệm 3',
             ],
+            [
+                'title'   => 'Thông báo thử nghiệm 4',
+                'message'   => 'Đây là nội dung thông báo thử nghiệm 4',
+            ],
+            [
+                'title'   => 'Thông báo thử nghiệm 5',
+                'message'   => 'Đây là nội dung thông báo thử nghiệm 5',
+            ]
         ]);
     }
 }

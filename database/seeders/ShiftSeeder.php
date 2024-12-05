@@ -13,19 +13,13 @@ class ShiftSeeder
             [
                 'shift_name'  => 'Sáng',
                 'start_time'  => '08:00:00',
-                'end_time'    => '12:00:00',
-                'is_overtime' => 0,
-            ],
-            [
-                'shift_name'  => 'Chiều',
-                'start_time'  => '14:00:00',
-                'end_time'    => '18:00:00',
+                'end_time'    => '17:00:00',
                 'is_overtime' => 0,
             ],
             [
                 'shift_name'  => 'Tối',
-                'start_time'  => '20:00:00',
-                'end_time'    => '24:00:00',
+                'start_time'  => '18:00:00',
+                'end_time'    => '23:00:00',
                 'is_overtime' => 0,
             ],
         ]);

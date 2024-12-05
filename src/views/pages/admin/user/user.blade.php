@@ -30,12 +30,19 @@
                             </tr>
                         </thead>
                         <tbody>
+
+                            @if (count($data) == 0)
+                                <tr>
+                                    <td colspan="7" class="text-center">Không có dữ liệu</td>
+                                </tr>
+                            @endif  
+
                             @foreach ($data as $user)
                                 <tr>
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->full_name }}</td>
-                                    <td>{{$user->offices[0]->name ?? "Chưa có phòng ban"}}</td>
+                                    <td>{{ $user->offices[0]->name ?? 'Chưa có phòng ban' }}</td>
                                     <td>
                                         <span
                                             class="badge 

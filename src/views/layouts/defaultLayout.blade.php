@@ -13,9 +13,9 @@
 
 <body>
     <div class="container-scroller">
-        <div id="loading">
+        {{-- <div id="loading">
             <div class="loader"></div>
-        </div>
+        </div> --}}
         {{-- header --}}
         <header>
             @include('partials.header.navbar')

@@ -19,7 +19,6 @@ class SalaryAdjustmentSeeder
                 'type' => 'bonus',
                 'amount' => rand(100, 500),
                 'description' => 'Thưởng thành tích tốt',
-                'adjustment_date' => Carbon::now()->subDays(rand(1, 365))->format('Y-m-d')
             ]);
         }
     }
