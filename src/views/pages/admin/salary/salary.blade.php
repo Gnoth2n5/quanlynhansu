@@ -22,6 +22,7 @@
                             <th>Khấu trừ</th>
                             <th>Thưởng thêm</th>
                             <th>Nhận được</th>
+                            <th>Ngày tạo</th>
                             <th>Hành động</th>
                         </tr>
                     </thead>
@@ -36,10 +37,11 @@
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $salary->users->full_name }}</td>
-                                <td>{{ $salary->base_salary }} VNĐ</td>
-                                <td>{{ $salary->total_deductions }} VNĐ</td>
-                                <td>{{ $salary->total_bonus }} VNĐ</td>
-                                <td>{{ $salary->net_salary }} VNĐ</td>
+                                <td>{{ number_format($salary->base_salary, 0, ',', '.') }} VNĐ</td>
+                                <td>{{ number_format($salary->total_deductions, 0, ',', '.') }} VNĐ</td>
+                                <td>{{ number_format($salary->total_bonus, 0, ',', '.') }} VNĐ</td>
+                                <td>{{ number_format($salary->net_salary, 0, ',', '.') }} VNĐ</td>
+                                <td>{{ $salary->updated_at }}</td>
                                 <td>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/edit-salary/{{ $salary->id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
