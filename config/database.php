@@ -21,6 +21,10 @@ $capsule->addConnection([
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
+    'options'   => [
+        PDO::ATTR_TIMEOUT => 5, // Thời gian timeout
+        PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8mb4', // Khởi động bộ mã
+    ],
 ]);
 
 $capsule->setAsGlobal();
