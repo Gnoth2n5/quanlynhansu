@@ -131,12 +131,25 @@ class SalaryController extends Controller
 
 
 
-    public function edit($id)
+    public function edit($id, $userId)
     {
-        $salary = Salaries::find($id);
+        $salary = Salaries::with('users')->find($id);
+
+        if (!$salary) {
+            Redirect::to('/admin/salary-management')
+                ->message('Không tìm thấy bảng lương', 'error')
+                ->send();
+        }
+
+        $adjusment = (new SalaryService($userId, $salary->base_salary))->getAdjusments(null, $id);
+
+        // foreach ($adjusment as $item){
+        //     echo $item->amount;
+        // }
 
         $this->render('pages.admin.salary.edit', [
-            'salary' => $salary
+            'salary' => $salary,
+            'adjusment'  => $adjusment,
         ]);
     }
 

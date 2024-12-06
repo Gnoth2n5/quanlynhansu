@@ -38,12 +38,12 @@
                                 <td>{{ $salary->users->full_name }}</td>
                                 <td>{{ number_format($salary->base_salary, 0, ',', '.') }} VNĐ</td>
                                 <td>{{ number_format($salary->net_salary, 0, ',', '.') }} VNĐ</td>
-                                <td>{{ $salary->caculation_date }}</td>
+                                <td>{{ $salary->updated_at }}</td>
                                 <td>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/show/{{ $salary->id }}" class="btn btn-info btn-sm">
                                         Xem chi tiết
                                     </a>
-                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-salary/{{ $salary->id }}"
+                                    <a href="{{ $_ENV['APP_URL'] }}/admin/edit-salary/{{ $salary->id }}/{{ $salary->user_id }}"
                                         class="btn btn-primary btn-sm">Sửa</a>
                                     <a href="{{ $_ENV['APP_URL'] }}/admin/delete-salary/{{ $salary->id }}"
                                         class="btn btn-danger btn-sm"

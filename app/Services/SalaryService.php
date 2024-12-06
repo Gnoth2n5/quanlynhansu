@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Salaryadjustments;
 use App\Models\Salaries;
+use Carbon\Carbon;
 
 class SalaryService extends Service
 {
@@ -12,14 +13,12 @@ class SalaryService extends Service
     private $deductionsSalary = 0;
     private $bonusSalary = 0;
     private $netSalary = 0;
-    private $calculationDate;
     private $otSalary = 0;
 
-    public function __construct($userId, $baseSalary, $calculationDate)
+    public function __construct($userId, $baseSalary)
     {
         $this->userId = $userId;
         $this->baseSalary = $baseSalary;
-        $this->calculationDate = $calculationDate;
     }
 
     public function addBonus($money, $description)
@@ -76,7 +75,6 @@ class SalaryService extends Service
             'user_id' => $this->userId,
             'base_salary' => $this->baseSalary,
             'net_salary' => $this->netSalary,
-            'calculation_date' => $this->calculationDate,
         ]);
 
         // Lấy salary_id từ bảng lương vừa tạo
@@ -84,25 +82,20 @@ class SalaryService extends Service
 
         // Cập nhật salary_id trong bảng salary_adjustments
         Salaryadjustments::where('user_id', $this->userId)
-            ->whereDate('created_at', $this->calculationDate)
+            ->where('salary_id', null)
             ->update(['salary_id' => $salaryId]);
     }
 
 
-    public function getAdjusments($type = null)
+    public function getAdjusments($type = null, $salaryId = null)
     {
         $query =  Salaryadjustments::where('user_id', $this->userId)
-            ->where('calculation_date', $this->calculationDate);
+            ->where('salary_id', $salaryId);
         if ($type) {
             $query->where('type', $type);
         }
 
         return $query->get();
-    }
-
-    public function getCalculateDay()
-    {
-        return $this->calculationDate;
     }
 
     public function updateAdjusment($id, $newAmount, $newDescription)

@@ -62,7 +62,7 @@ try {
     $router->get('/admin/salary-management', [SalaryController::class, 'index']);
     $router->get('/admin/create-salary', [SalaryController::class, 'create']);
     $router->post('/admin/store-salary', [SalaryController::class, 'store']);
-    $router->get('/admin/edit-salary/{id}', [SalaryController::class, 'edit']);
+    $router->get('/admin/edit-salary/{id}/{userId}', [SalaryController::class, 'edit']);
     $router->post('/admin/update-salary', [SalaryController::class, 'update']);
     $router->get('/admin/delete-salary/{id}', [SalaryController::class, 'delete']);
     // Shift Management
