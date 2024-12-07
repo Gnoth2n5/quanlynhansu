@@ -10,6 +10,7 @@ use App\Services\PaginationService;
 use App\Services\SalaryService;
 use Carbon\Carbon;
 use App\Models\OT;
+use App\Models\Salaryadjustments;
 use App\Models\Users;
 
 class SalaryController extends Controller
@@ -49,7 +50,17 @@ class SalaryController extends Controller
                 ->send();
         }
 
-        $salaryService = new SalaryService($userId, $baseSalary, Carbon::now()->format('Y-m-d'));
+        $salary = Salaries::where('user_id', $userId)
+            ->whereMonth('created_at', Carbon::now()->month)
+            ->first();
+
+        if ($salary) {
+            Redirect::to('/admin/salary-management')
+                ->message('Bảng lương của nhân viên đã được tạo', 'error')
+                ->send();
+        }
+
+        $salaryService = new SalaryService($userId, $baseSalary);
 
         // Xử lý deductions: bỏ qua nếu giá trị rỗng
         if (!empty($deductions) && isset($deductions['amount'])) {
@@ -70,10 +81,11 @@ class SalaryController extends Controller
         }
 
         $work_ot_hour = $this->calculateOTHour($userId);
+        if ($work_ot_hour !== null && $work_ot_hour > 0) {
+            $otRate = 20000;
+            $salaryService->caculateOT($work_ot_hour, $otRate, 'Làm thêm giờ');
+        }
 
-        $otRate = 20000; // 20.000 VND/hour
-
-        $salaryService->caculateOT($work_ot_hour, $otRate, 'Làm thêm giờ');
 
         $salaryService->caculateNetSalary();
 
@@ -143,10 +155,6 @@ class SalaryController extends Controller
 
         $adjusment = (new SalaryService($userId, $salary->base_salary))->getAdjusments(null, $id);
 
-        // foreach ($adjusment as $item){
-        //     echo $item->amount;
-        // }
-
         $this->render('pages.admin.salary.edit', [
             'salary' => $salary,
             'adjusment'  => $adjusment,
@@ -155,25 +163,69 @@ class SalaryController extends Controller
 
     public function update()
     {
-        $id = $_POST['id'];
+        $salary_id = $_POST['salary_id'];
+        $userId = $_POST['user_id'];
         $baseSalary = $_POST['base'];
-        $deductionsSalary = $_POST['deductions'] ?? 0;
-        $bonusSalary = $_POST['bonus'] ?? 0;
 
-        if ($baseSalary == '') {
-            Redirect::to('/admin/edit-salary/' . $id)
+        $deductionsSalary = $_POST['deductions'] ?? [];
+        $bonusSalary = $_POST['bonus'] ?? [];
+
+        $delete_ids = $_POST['deleted_ids'] ?? null;
+
+
+        if ($userId == '' || $userId == 0 || $baseSalary == '') {
+            Redirect::to('/admin/salary-management')
                 ->message('Vui lòng nhập đầy đủ thông tin', 'error')
                 ->send();
         }
 
-        $netSalary = $baseSalary + $bonusSalary - $deductionsSalary;
+        $salary_service = new SalaryService($userId, $baseSalary);
 
-        $salary = Salaries::find($id);
-        $salary->base_salary = $baseSalary;
-        $salary->total_deductions = $deductionsSalary;
-        $salary->total_bonus = $bonusSalary;
-        $salary->net_salary = $netSalary;
-        $salary->save();
+        // xoá các khoản điều chỉnh đã được check
+        if (isset($delete_ids) && !empty($delete_ids)) {
+            $deletedIds = explode(',', $delete_ids);
+            foreach ($deletedIds as $delete_id) {
+                $salary_service->deleteAdjusment((int)$delete_id);
+            }
+        }
+
+        foreach ($deductionsSalary as $deduction) {
+            if (!empty($deduction['id'])) {
+                // Cập nhật
+                // echo "Cập nhật ID: {$deduction['id']} - Amount: {$deduction['amount']} - Description: {$deduction['description']}<br>";
+                $salary_service->updateAdjusment($deduction['id'], $deduction['amount'], $deduction['description']);
+            } elseif (!empty($deduction['amount']) || !empty($deduction['description'])) {
+                // Thêm mới
+                // echo "Thêm mới - Amount: {$deduction['amount']} - Description: {$deduction['description']}<br>";
+                $salary_service->addDeductions($deduction['amount'], $deduction['description']);
+            }
+        }
+
+
+        foreach ($bonusSalary as $bonus) {
+            if (!empty($bonus['id'])) {
+                // Cập nhật
+                // echo "Cập nhật ID: {$bonus['id']} - Amount: {$bonus['amount']} - Description: {$bonus['description']}<br>";
+                $salary_service->updateAdjusment($bonus['id'], $bonus['amount'], $bonus['description']);
+            } elseif (!empty($bonus['amount']) || !empty($bonus['description'])) {
+                // Thêm mới
+                // echo "Thêm mới - Amount: {$bonus['amount']} - Description: {$bonus['description']}<br>";
+                $salary_service->addBonus($bonus['amount'], $bonus['description']);
+            }
+        }
+
+        // die;
+
+        $work_ot_hour = $this->calculateOTHour($userId);
+        if ($work_ot_hour !== null && $work_ot_hour > 0) {
+            $otRate = 20000;
+            $salary_service->caculateOT($work_ot_hour, $otRate, 'Làm thêm giờ');
+        }
+
+        // Tính toán lương net
+        $salary_service->caculateNetSalary();
+
+        $salary_service->save($salary_id);
 
         Redirect::to('/admin/salary-management')
             ->message('Cập nhật bảng lương thành công', 'success')

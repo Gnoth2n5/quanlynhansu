@@ -12,6 +12,11 @@
                     <form id="createOfficeForm" action="{{ $_ENV['APP_URL'] }}/admin/update-salary" method="POST"
                         class="mt-4">
 
+                        <input type="text" id="deleted_ids" name="deleted_ids" value="">
+                        <input type="text" name="salary_id" value="{{ $salary->id }}">
+                        <input type="text" name="user_id" value="{{ $salary->users->id }}">
+
+
                         <div class="mb-3 select">
                             <label for="nameUser" class="form-label">Tên Nhân viên</label>
                             <input type="text" class="form-control" value="{{ $salary->users->full_name }}" readonly>
@@ -29,24 +34,27 @@
                             <label class="form-label">Khấu trừ</label>
                             <div id="deductions-container">
                                 <div class="input-group mb-2">
+                                    <input type="hidden" name="deductions[0][id]" value="">
                                     <input type="number" step="0.01" max="99999999.99" min="0"
-                                        class="form-control" name="deductions[amount][]" placeholder="Số tiền">
-                                    <input type="text" class="form-control" name="deductions[description][]"
+                                        class="form-control" name="deductions[0][amount]" placeholder="Số tiền">
+                                    <input type="text" class="form-control" name="deductions[0][description]"
                                         placeholder="Mô tả">
                                     <button type="button" class="btn btn-primary btn-rounded btn-icon add-deduction">
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
                                 </div>
 
-                                @foreach ($adjusment as $item)
+                                @foreach ($adjusment as $i => $item)
                                     @if ($item->type == 'deduction')
                                         <div class="input-group mb-2">
-                                            <input type="hidden" name="deduction[id][]" value="{{$item->id}}">
+                                            <input type="hidden" name="deductions[{{ $i }}][id]"
+                                                value="{{ $item->id }}">
                                             <input type="number" step="0.01" max="99999999.99" min="0"
-                                                class="form-control" name="bonus[amount][]" placeholder="Số tiền"
-                                                value="{{ $item->amount }}">
-                                            <input type="text" class="form-control" name="bonus[description][]"
-                                                placeholder="Mô tả" value="{{ $item->description }}">
+                                                class="form-control" name="deductions[{{ $i }}][amount]"
+                                                placeholder="Số tiền" value="{{ $item->amount }}">
+                                            <input type="text" class="form-control"
+                                                name="deductions[{{ $i }}][description]" placeholder="Mô tả"
+                                                value="{{ $item->description }}">
                                             <button type="button"
                                                 class="btn btn-danger btn-rounded btn-icon remove-deduction">
                                                 <i class="fa-solid fa-minus"></i>
@@ -59,36 +67,43 @@
 
                         <!-- Thưởng -->
                         <div class="mb-3">
-                            <label class="form-label">Thưởng thêm</label>
+                            <label class="form-label">Thưởng thêm</label>
                             <div id="bonus-container">
+                                <!-- Input mới (không có ID) -->
                                 <div class="input-group mb-2">
+                                    <input type="hidden" name="bonus[0][id]" value="">
+                                    <!-- Trống nếu là bản ghi mới -->
                                     <input type="number" step="0.01" max="99999999.99" min="0"
-                                        class="form-control" name="bonus[amount][]" placeholder="Số tiền">
-                                    <input type="text" class="form-control" name="bonus[description][]"
+                                        class="form-control" name="bonus[0][amount]" placeholder="Số tiền">
+                                    <input type="text" class="form-control" name="bonus[0][description]"
                                         placeholder="Mô tả">
                                     <button type="button" class="btn btn-primary btn-rounded btn-icon add-bonus">
                                         <i class="fa-solid fa-plus"></i>
                                     </button>
                                 </div>
 
-                                @foreach ($adjusment as $item)
+                                <!-- Input đã tồn tại (có ID) -->
+                                @foreach ($adjusment as $i => $item)
                                     @if ($item->type == 'bonus')
                                         <div class="input-group mb-2">
-                                            <input type="hidden" name="bonus[id][]" value="{{$item->id}}">
+                                            <input type="hidden" name="bonus[{{ $i }}][id]"
+                                                value="{{ $item->id }}">
                                             <input type="number" step="0.01" max="99999999.99" min="0"
-                                                class="form-control" name="bonus[amount][]" placeholder="Số tiền"
-                                                value="{{ $item->amount }}">
-                                            <input type="text" class="form-control" name="bonus[description][]"
-                                                placeholder="Mô tả" value="{{ $item->description }}">
-                                            <button type="button" class="btn btn-danger btn-rounded btn-icon remove-bonus">
+                                                class="form-control" name="bonus[{{ $i }}][amount]"
+                                                value="{{ $item->amount }}" placeholder="Số tiền">
+                                            <input type="text" class="form-control"
+                                                name="bonus[{{ $i }}][description]"
+                                                value="{{ $item->description }}" placeholder="Mô tả">
+                                            <button type="button"
+                                                class="btn btn-danger btn-rounded btn-icon remove-bonus">
                                                 <i class="fa-solid fa-minus"></i>
                                             </button>
                                         </div>
                                     @endif
                                 @endforeach
-
                             </div>
                         </div>
+
                         @foreach ($adjusment as $item)
                             @if ($item->type == 'ot')
                                 <div class="mb-3">
@@ -111,26 +126,31 @@
 @section('script')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Thêm khấu trừ
+            let deductionIndex = 0; // Index cho deductions
+            let bonusIndex = 0; // Index cho bonus
+
+            // Thêm khấu trừ
             document.querySelector('.add-deduction').addEventListener('click', function() {
                 const container = document.getElementById('deductions-container');
                 const newInput = document.createElement('div');
                 newInput.className = 'input-group mb-2';
                 newInput.innerHTML = `
-            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" name="deductions[amount][]" placeholder="Số tiền">
-            <input type="text" class="form-control" name="deductions[description][]" placeholder="Mô tả">
+            <input type="hidden" name="deductions[${deductionIndex}][id]" value="">
+            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" name="deductions[${deductionIndex}][amount]" placeholder="Số tiền">
+            <input type="text" class="form-control" name="deductions[${deductionIndex}][description]" placeholder="Mô tả">
             <button type="button" class="btn btn-secondary btn-rounded btn-icon remove-deduction">
                 <i class="fa-solid fa-minus"></i>
             </button>
         `;
                 container.appendChild(newInput);
+                deductionIndex++; // Tăng index để không trùng
             });
 
-            // Remove khấu trừ
+            // Xóa khấu trừ
             document.getElementById('deductions-container').addEventListener('click', function(e) {
                 if (e.target.closest('.remove-deduction')) {
                     Swal.fire({
-                        text: "Bạn có chắc chắn muốn xóa mục khấu trừ này không?",
+                        text: "Bạn có chắc chắn muốn xóa mục khấu trừ này không?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -140,32 +160,43 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             const deductionItem = e.target.closest('.input-group');
+                            const idInput = deductionItem.querySelector(
+                                'input[name^="deductions"][name$="[id]"]');
+                            if (idInput && idInput.value) {
+                                const deletedIds = document.getElementById('deleted_ids');
+                                const idsArray = deletedIds.value ? deletedIds.value.split(',') :
+                            [];
+                                idsArray.push(idInput.value);
+                                deletedIds.value = idsArray.join(',');
+                            }
                             deductionItem.remove();
                         }
                     });
                 }
             });
 
-            // Thêm thưởng
+            // Thêm thưởng
             document.querySelector('.add-bonus').addEventListener('click', function() {
                 const container = document.getElementById('bonus-container');
                 const newInput = document.createElement('div');
                 newInput.className = 'input-group mb-2';
                 newInput.innerHTML = `
-            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" name="bonus[amount][]" placeholder="Số tiền">
-            <input type="text" class="form-control" name="bonus[description][]" placeholder="Mô tả">
+            <input type="hidden" name="bonus[${bonusIndex}][id]" value="">
+            <input type="number" step="0.01" max="99999999.99" min="0" class="form-control" name="bonus[${bonusIndex}][amount]" placeholder="Số tiền">
+            <input type="text" class="form-control" name="bonus[${bonusIndex}][description]" placeholder="Mô tả">
             <button type="button" class="btn btn-secondary btn-rounded btn-icon remove-bonus">
                 <i class="fa-solid fa-minus"></i>
             </button>
         `;
                 container.appendChild(newInput);
+                bonusIndex++; // Tăng index để không trùng
             });
 
-            // Remove thưởng
+            // Xóa thưởng
             document.getElementById('bonus-container').addEventListener('click', function(e) {
                 if (e.target.closest('.remove-bonus')) {
                     Swal.fire({
-                        text: "Bạn có chắc chắn muốn xóa mục bonus này không?",
+                        text: "Bạn có chắc chắn muốn xóa mục thưởng này không?",
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
@@ -175,6 +206,15 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             const bonusItem = e.target.closest('.input-group');
+                            const idInput = bonusItem.querySelector(
+                                'input[name^="bonus"][name$="[id]"]');
+                            if (idInput && idInput.value) {
+                                const deletedIds = document.getElementById('deleted_ids');
+                                const idsArray = deletedIds.value ? deletedIds.value.split(',') :
+                            [];
+                                idsArray.push(idInput.value);
+                                deletedIds.value = idsArray.join(',');
+                            }
                             bonusItem.remove();
                         }
                     });
@@ -182,7 +222,6 @@
             });
         });
     </script>
-
     {{-- <script>
         document.addEventListener("DOMContentLoaded", function () {
             const form = document.querySelector('#createOfficeForm');
