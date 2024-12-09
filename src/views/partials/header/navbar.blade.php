@@ -19,10 +19,10 @@
         </ul>
         <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
-                <button class="btn btn-outline-info btn-icon-text btn-sm ">
+                <a href="{{$_ENV['APP_URL']}}/user/notification" class="btn btn-outline-info btn-icon-text btn-sm ">
                     <i class="fa-regular fa-bell fa-lg btn-icon-append mr-2"></i>
-                    0
-                </button>
+                    <span id="notify-count">0 thông báo mới</span>
+                </a>
             </li>
             <li class="nav-item">
                 <a class="btn btn-primary btn-sm" href="<?= $_ENV['APP_URL'] ?>/logout">

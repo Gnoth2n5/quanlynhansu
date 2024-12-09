@@ -4,9 +4,17 @@ namespace App\Controllers;
 
 use App\Models\Users;
 use App\Models\Offices;
+use App\Services\NotifyService;
 
 class SearchController extends Controller
 {
+    protected $notifyService;
+
+    public function __construct()
+    {
+        $this->notifyService = new NotifyService();
+    }
+
     public function search_user_manager()
     {
         $users = Users::whereHas('role', function ($q) {
@@ -43,7 +51,14 @@ class SearchController extends Controller
         // \dd($users);
     }
 
-    
+    public function countUnreadNotify()
+    {
+        $userId = $_SESSION['user']->id;
+
+        $count = $this->notifyService->countUnreadNotifications($userId);
+
+        $this->json(['count' => $count]);
+    }
 
 
 

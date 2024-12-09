@@ -51,6 +51,27 @@ window.onbeforeunload = function () {
   loading.style.display = "flex";
 };
 
+(function ($) {
+  "use strice";
+
+  // Hiển thị đếm thông báo
+  function fetchCount(){
+    $.ajax({
+      url: '/count-notify',
+      type: 'GET',
+      success: function (response) {
+        $('#notify-count').text(`${response.count} thông báo mới`);
+      },
+    })
+  }
+
+  fetchCount();
+
+})(jQuery);
+
+
+
+
 // // Hàm cập nhật đồng hồ thời gian thực
 // function updateClock() {
 //     const clockElement = document.getElementById('time-badge');

@@ -131,12 +131,13 @@ try {
     // search api
     $router->get('/search-user-manager', [SearchController::class, 'search_user_manager']);
     $router->get('/search-office', [SearchController::class, 'search_office']);
+    $router->get('/count-notify', [SearchController::class, 'countUnreadNotify']);
 
 
 
 
     // Route test data
-    $router->get('/test', [SearchController::class, 'search_user_manager']);
+    // $router->get('/test', [SearchController::class, 'search_user_manager']);
 
 
     $dispatcher = new Dispatcher($router->getData());

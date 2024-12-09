@@ -32,8 +32,6 @@ class NotifyService extends Service
         return true;
     }
 
-    public function countUnread($userId) {}
-
     /**
      * Lấy tất cả thông báo (cá nhân và theo phòng ban) kèm trạng thái isRead.
      */
@@ -102,5 +100,35 @@ class NotifyService extends Service
             'currentPage' => $page,
             'totalRecords' => count($mergedData),
         ];
+    }
+
+    public function countUnreadNotifications($userId)
+    {
+        // Redis key lưu trữ thông báo đã đọc
+        $redisKey = "notifications:{$userId}:read";
+
+        // Lấy tổng số thông báo cá nhân và thông báo theo phòng ban
+        $personalNotificationsCount = Notifications::join('notify_user', 'notifications.id', '=', 'notify_user.notify_id')
+            ->where('notify_user.user_id', $userId)
+            ->count();
+
+        $officeNotificationsCount = Notifications::join('notify_office', 'notifications.id', '=', 'notify_office.notify_id')
+            ->join('office_users', 'notify_office.office_id', '=', 'office_users.office_id')
+            ->where('office_users.user_id', $userId)
+            ->count();
+
+        // Tổng số thông báo
+        $totalNotifications = $personalNotificationsCount + $officeNotificationsCount;
+
+        // Lấy danh sách tất cả thông báo đã đọc từ Redis
+        $readNotifications = $this->redis->hGetAll($redisKey); // Trả về tất cả các field và value (thông báo đã đọc)
+
+        // Số thông báo đã đọc là số lượng các keys trong hash
+        $readNotificationsCount = count($readNotifications);
+
+        // Số thông báo chưa đọc
+        $unreadNotificationsCount = $totalNotifications - $readNotificationsCount;
+
+        return $unreadNotificationsCount;
     }
 }
