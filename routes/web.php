@@ -14,6 +14,7 @@ use App\Controllers\AttendanceController;
 use App\Controllers\ProfileController;
 use App\Controllers\Admin\ShiftController;
 use App\Controllers\Admin\NotifyController;
+use App\Controllers\Admin\StatisticController;
 use App\Controllers\ChartController;
 use App\Controllers\SearchController;
 use App\Controllers\RequestController;
@@ -88,6 +89,9 @@ try {
     // OT Management
     $router->get('/admin/ot-management', [OTController::class, 'index']);
     $router->get('/admin/ot-request/{type}/{id}', [OTController::class, 'confirm']);
+    // Statistic
+    $router->get('/admin/statistic', [StatisticController::class, 'index']);
+    $router->post('/admin/statistic/create', [StatisticController::class, 'create']);
 
 
 
@@ -130,6 +134,7 @@ try {
 
     // search api
     $router->get('/search-user-manager', [SearchController::class, 'search_user_manager']);
+    $router->get('/search-user-salary', [SearchController::class, 'search_user_salary']);
     $router->get('/search-office', [SearchController::class, 'search_office']);
     $router->get('/count-notify', [SearchController::class, 'countUnreadNotify']);
 

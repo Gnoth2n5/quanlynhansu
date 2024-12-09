@@ -35,6 +35,7 @@ document.addEventListener("click", function (event) {
   if (
     target.tagName === "A" &&
     target.getAttribute("href") !== "#" &&
+    !target.getAttribute("href").startsWith("#") && // Bỏ qua href bắt đầu bằng #
     target.getAttribute("target") !== "_blank"
   ) {
     loading.style.display = "flex";
@@ -55,22 +56,18 @@ window.onbeforeunload = function () {
   "use strice";
 
   // Hiển thị đếm thông báo
-  function fetchCount(){
+  function fetchCount() {
     $.ajax({
-      url: '/count-notify',
-      type: 'GET',
+      url: "/count-notify",
+      type: "GET",
       success: function (response) {
-        $('#notify-count').text(`${response.count} thông báo mới`);
+        $("#notify-count").text(`${response.count} thông báo mới`);
       },
-    })
+    });
   }
 
   fetchCount();
-
 })(jQuery);
-
-
-
 
 // // Hàm cập nhật đồng hồ thời gian thực
 // function updateClock() {
