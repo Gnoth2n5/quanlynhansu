@@ -42,4 +42,9 @@ class SearchController extends Controller
         $this->json($jsonData);
         // \dd($users);
     }
+
+    
+
+
+
 }

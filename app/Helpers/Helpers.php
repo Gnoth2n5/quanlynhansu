@@ -57,3 +57,8 @@ function createUID($full_name, $dob)
 function now(){
     return Carbon\Carbon::now();
 }
+
+function formattedDate($date, $format = 'd/m/Y H:i:s')
+{
+    return date($format, strtotime($date));
+}
