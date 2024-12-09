@@ -9,12 +9,12 @@
 
                 <div class="container mt-3">
                     <h2 class="text-center">Cập nhật Bảng lương</h2>
-                    <form id="createOfficeForm" action="{{ $_ENV['APP_URL'] }}/admin/update-salary" method="POST"
+                    <form id="formSalary" action="{{ $_ENV['APP_URL'] }}/admin/update-salary" method="POST"
                         class="mt-4">
 
-                        <input type="text" id="deleted_ids" name="deleted_ids" value="">
-                        <input type="text" name="salary_id" value="{{ $salary->id }}">
-                        <input type="text" name="user_id" value="{{ $salary->users->id }}">
+                        <input type="hidden" id="deleted_ids" name="deleted_ids" value="">
+                        <input type="hidden" name="salary_id" value="{{ $salary->id }}">
+                        <input type="hidden" name="user_id" value="{{ $salary->users->id }}">
 
 
                         <div class="mb-3 select">
@@ -220,6 +220,30 @@
                     });
                 }
             });
+
+
+            // Xử lý gửi form
+
+            const form = document.getElementById('formSalary');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+
+                Swal.fire({
+                    text: "Bạn có chắc chắn muốn cập nhật bảng lương này không?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Cập nhật',
+                    cancelButtonText: 'Hủy'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+
+            })
         });
     </script>
     {{-- <script>

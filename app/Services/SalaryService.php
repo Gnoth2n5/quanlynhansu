@@ -16,13 +16,13 @@ class SalaryService extends Service
 
     public function __construct($userId, $baseSalary)
     {
-        $this->userId = $userId;
-        $this->baseSalary = $baseSalary;
+        $this->userId = (int) $userId;
+        $this->baseSalary = (int) $baseSalary;
     }
 
     public function addBonus($money, $description)
     {
-        $this->bonusSalary += (float) $money; // Đảm bảo kiểu float
+        $this->bonusSalary += (int) $money; // Đảm bảo kiểu int
         Salaryadjustments::create([
             'user_id' => $this->userId,
             'salary_id' => null,
@@ -35,7 +35,7 @@ class SalaryService extends Service
 
     public function addDeductions($money, $description)
     {
-        $this->deductionsSalary += (float) $money; // Đảm bảo kiểu float
+        $this->deductionsSalary += (int) $money; // Đảm bảo kiểu float
         Salaryadjustments::create([
             'user_id' => $this->userId,
             'salary_id' => null,
@@ -79,7 +79,7 @@ class SalaryService extends Service
 
     public function caculateNetSalary()
     {
-        $this->netSalary = $this->baseSalary + $this->bonusSalary - $this->deductionsSalary + $this->otSalary;
+        (int) $this->netSalary = $this->baseSalary + $this->bonusSalary - $this->deductionsSalary + $this->otSalary;
 
         return $this;
     }
@@ -97,14 +97,6 @@ class SalaryService extends Service
                     'base_salary' => $this->baseSalary,
                     'net_salary' => $this->netSalary,
                 ]);
-
-                // \dd([
-                //     'base_salary' => $this->baseSalary,
-                //     'net_salary' => $this->netSalary,
-                // ]);
-
-
-                // die;
             }
 
             // lấy salary_id từ bảng salary
@@ -119,17 +111,17 @@ class SalaryService extends Service
 
             // Lấy salary_id từ bản ghi vừa tạo
             $salaryId = $salary->id;
-
-            // \dd([
-            //     'user_id' => $this->userId,
-            //     'base_salary' => $this->baseSalary,
-            //     'net_salary' => $this->netSalary,
-            // ]);
         }
         // Cập nhật salary_id trong bảng salary_adjustments
         Salaryadjustments::where('user_id', $this->userId)
             ->where('salary_id', null)
             ->update(['salary_id' => $salaryId]);
+        // echo $this->bonusSalary.'<br>';
+        // echo $this->deductionsSalary.'<br>';
+        // echo $this->otSalary.'<br>';
+        // echo $this->baseSalary.'<br>';
+        // echo $this->netSalary.'<br>';
+        // die;
     }
 
 
@@ -152,8 +144,21 @@ class SalaryService extends Service
             throw new \Exception('Khoản điều chỉnh không tồn tại nên không thể cập nhật');
         }
 
-        $oldAmount = (float) $adjustment->amount;
-        $newAmount = (float) $newAmount;
+        $oldAmount = (int) $adjustment->amount;
+        $newAmount = (int) $newAmount;
+
+        if($oldAmount == $newAmount && $adjustment->description == $newDescription) {
+
+            if ($adjustment->type == 'bonus') {
+                $this->bonusSalary += $oldAmount;
+            } elseif ($adjustment->type == 'deduction') {
+                $this->deductionsSalary += $oldAmount;
+            } elseif ($adjustment->type == 'ot') {
+                $this->otSalary += $oldAmount;
+            }
+
+            return $this;
+        }
 
         if ($adjustment->type == 'bonus') {
             $this->bonusSalary += $newAmount - $oldAmount;
@@ -169,6 +174,24 @@ class SalaryService extends Service
         ]);
 
         return $this;
+        // echo 'old '.$oldAmount.'<br>';
+        // echo 'new '.$newAmount.'<br>';
+        // echo 'base '.$this->baseSalary.'<br>';
+        // echo $this->bonusSalary.'<br>';
+        // echo $this->deductionsSalary.'<br>';
+        // echo $this->otSalary.'<br>';
+
+        // echo $this->baseSalary + $this->bonusSalary - $this->deductionsSalary + $this->otSalary . '<br>';
+
+        
+
+        // \dd([
+        //     'oldAmount' => $oldAmount,
+        //     'newAmount' => $newAmount,
+        //     'bonusSalary' => $this->bonusSalary,
+        //     'deductionsSalary' => $this->deductionsSalary,
+        //     'otSalary' => $this->otSalary,
+        // ]);
     }
 
 

@@ -41,7 +41,7 @@
                                 </td>
                                 <td>
                                     <a href="{{$_ENV['APP_URL']}}/admin/edit-notify/{{$notify->id}}"
-                                        class="btn btn-primary btn-sm">Sửa</a>
+                                        class="btn btn-primary btn-sm">Xem & Sửa</a>
                                     <a href="{{$_ENV['APP_URL']}}/admin/delete-notify/{{$notify->id}}"
                                         class="btn btn-danger btn-sm"
                                         onclick="SweetAlert(event, 'Bạn có chắc muốn xoá?', 'error', {element: this, confirmBtn: true, cancelBtn: true})">Xóa</a>

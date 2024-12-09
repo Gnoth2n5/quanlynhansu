@@ -191,28 +191,38 @@ class SalaryController extends Controller
 
         foreach ($deductionsSalary as $deduction) {
             if (!empty($deduction['id'])) {
-                // Cập nhật
-                // echo "Cập nhật ID: {$deduction['id']} - Amount: {$deduction['amount']} - Description: {$deduction['description']}<br>";
-                $salary_service->updateAdjusment($deduction['id'], $deduction['amount'], $deduction['description']);
-            } elseif (!empty($deduction['amount']) || !empty($deduction['description'])) {
-                // Thêm mới
-                // echo "Thêm mới - Amount: {$deduction['amount']} - Description: {$deduction['description']}<br>";
-                $salary_service->addDeductions($deduction['amount'], $deduction['description']);
+                // Nếu ID tồn tại, cập nhật bản ghi đã có
+                $salary_service->updateAdjusment(
+                    $deduction['id'],
+                    $deduction['amount'],
+                    $deduction['description']
+                );
+            } elseif (!empty($deduction['amount']) && !empty($deduction['description'])) {
+                // Nếu ID không tồn tại và có giá trị, thêm mới
+                $salary_service->addDeductions(
+                    $deduction['amount'],
+                    $deduction['description']
+                );
             }
         }
-
 
         foreach ($bonusSalary as $bonus) {
             if (!empty($bonus['id'])) {
-                // Cập nhật
-                // echo "Cập nhật ID: {$bonus['id']} - Amount: {$bonus['amount']} - Description: {$bonus['description']}<br>";
-                $salary_service->updateAdjusment($bonus['id'], $bonus['amount'], $bonus['description']);
-            } elseif (!empty($bonus['amount']) || !empty($bonus['description'])) {
-                // Thêm mới
-                // echo "Thêm mới - Amount: {$bonus['amount']} - Description: {$bonus['description']}<br>";
-                $salary_service->addBonus($bonus['amount'], $bonus['description']);
+                // Nếu ID tồn tại, cập nhật bản ghi đã có
+                $salary_service->updateAdjusment(
+                    $bonus['id'],
+                    $bonus['amount'],
+                    $bonus['description']
+                );
+            } elseif (!empty($bonus['amount']) && !empty($bonus['description'])) {
+                // Nếu ID không tồn tại và có giá trị, thêm mới
+                $salary_service->addBonus(
+                    $bonus['amount'],
+                    $bonus['description']
+                );
             }
         }
+
 
         // die;
 
