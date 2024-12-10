@@ -86,6 +86,8 @@ class SalaryService extends Service
 
     public function save($salaryId = null)
     {
+        $this->validateSalaries();
+
         // Kiểm tra xem đã tồn tại bản ghi lương của user này hay chưa
         $existingSalary = Salaries::where('user_id', $this->userId)
             ->where('id', $salaryId)
@@ -141,25 +143,20 @@ class SalaryService extends Service
         $adjustment = Salaryadjustments::find($id);
 
         if (!$adjustment) {
-            throw new \Exception('Khoản điều chỉnh không tồn tại nên không thể cập nhật');
+            throw new \Exception('Khoản điều chỉnh không tồn tại nên không thể cập nhật');
         }
+
+        // Nạp lại dữ liệu cũ vào class
+        $this->loadAdjustments();
 
         $oldAmount = (int) $adjustment->amount;
         $newAmount = (int) $newAmount;
 
-        if($oldAmount == $newAmount && $adjustment->description == $newDescription) {
-
-            if ($adjustment->type == 'bonus') {
-                $this->bonusSalary += $oldAmount;
-            } elseif ($adjustment->type == 'deduction') {
-                $this->deductionsSalary += $oldAmount;
-            } elseif ($adjustment->type == 'ot') {
-                $this->otSalary += $oldAmount;
-            }
-
+        if ($oldAmount == $newAmount && $adjustment->description == $newDescription) {
             return $this;
         }
 
+        // Cập nhật logic tính toán lương
         if ($adjustment->type == 'bonus') {
             $this->bonusSalary += $newAmount - $oldAmount;
         } elseif ($adjustment->type == 'deduction') {
@@ -168,22 +165,24 @@ class SalaryService extends Service
             $this->otSalary += $newAmount - $oldAmount;
         }
 
+        // Cập nhật bản ghi trong cơ sở dữ liệu
         $adjustment->update([
             'amount' => $newAmount,
             'description' => $newDescription,
         ]);
 
         return $this;
-        // echo 'old '.$oldAmount.'<br>';
-        // echo 'new '.$newAmount.'<br>';
-        // echo 'base '.$this->baseSalary.'<br>';
-        // echo $this->bonusSalary.'<br>';
-        // echo $this->deductionsSalary.'<br>';
-        // echo $this->otSalary.'<br>';
+        // echo 'old ' . $oldAmount . '<br>';
+        // echo 'new ' . $newAmount . '<br>';
+        // echo 'base ' . $this->baseSalary . '<br>';
+        // echo $this->bonusSalary . '<br>';
+        // echo $this->deductionsSalary . '<br>';
+        // echo $this->otSalary . '<br>';
 
         // echo $this->baseSalary + $this->bonusSalary - $this->deductionsSalary + $this->otSalary . '<br>';
 
-        
+        // die;
+
 
         // \dd([
         //     'oldAmount' => $oldAmount,
@@ -201,14 +200,16 @@ class SalaryService extends Service
         $adjustment = Salaryadjustments::find($id);
 
         if (!$adjustment) {
-            throw new \Exception('Khoản điều chỉnh không tồn tại nên không thể xóa');
+            throw new \Exception('Khoản điều chỉnh không tồn tại nên không thể xóa');
         }
 
+        // Nạp lại dữ liệu cũ vào class
+        $this->loadAdjustments();
 
-        // cập nhật lại lương trong class
+        // Cập nhật lương trong class
         if ($adjustment->type == 'bonus') {
             $this->bonusSalary -= $adjustment->amount;
-        } elseif ($adjustment->type == 'deductions') {
+        } elseif ($adjustment->type == 'deduction') {
             $this->deductionsSalary -= $adjustment->amount;
         } elseif ($adjustment->type == 'ot') {
             $this->otSalary -= $adjustment->amount;
@@ -216,7 +217,25 @@ class SalaryService extends Service
 
         $adjustment->delete();
 
-
         return $this;
+    }
+
+
+    private function validateSalaries()
+    {
+        $calculatedNetSalary = $this->baseSalary + $this->bonusSalary - $this->deductionsSalary + $this->otSalary;
+
+        if ($this->netSalary != $calculatedNetSalary) {
+            throw new \Exception('Dữ liệu không đồng bộ giữa class và cơ sở dữ liệu');
+        }
+    }
+
+    private function loadAdjustments()
+    {
+        $adjustments = Salaryadjustments::where('user_id', $this->userId)->get();
+
+        $this->bonusSalary = $adjustments->where('type', 'bonus')->sum('amount');
+        $this->deductionsSalary = $adjustments->where('type', 'deduction')->sum('amount');
+        $this->otSalary = $adjustments->where('type', 'ot')->sum('amount');
     }
 }

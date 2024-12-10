@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers\Auth;
+
 use App\Controllers\Controller;
 use App\Models\Users;
 use App\Helpers\Redirect;
@@ -23,30 +24,29 @@ class AuthController extends Controller
     {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        
+
         $user = Users::where('email', $email)->first();
 
         if ($user && password_verify($password, $user->password)) {
             $_SESSION['user'] = $user;
             $_SESSION['role'] = $user->role->name;
-            
-            if($user->role->name == 'admin') {
+
+            if ($user->role->name == 'admin') {
                 Redirect::to('/admin/dashboard')
                     ->message('Đăng nhập thành công!', 'success')
                     ->send();
             }
-            if($user->role->name == 'user' || $user->role->name == 'manager') {
-                Redirect::to('/user/dashboard')
-                    ->message('Đăng nhập thành công!', 'success')
-                    ->send();
+            if ($user->role->name == 'user' || $user->role->name == 'manager') {
+                if ($user->status == 'inactive') {
+                    Redirect::to('/')
+                        ->message('Tài khoản của bạn đã bị khóa!', 'warning')
+                        ->send();
+                } else {
+                    Redirect::to('/user/dashboard')
+                        ->message('Đăng nhập thành công!', 'success')
+                        ->send();
+                }
             }
-
-            if($user->status == 'inactive') {
-                Redirect::to('/')
-                    ->message('Tài khoản của bạn đã bị khóa!', 'warning')
-                    ->send();
-            }
-            
         }
 
         Redirect::to('/')
@@ -65,7 +65,7 @@ class AuthController extends Controller
 
         // \dd($data);
 
-        if(!$username || !$email || !$password || !$fullname || !$birthday || !$gender) {
+        if (!$username || !$email || !$password || !$fullname || !$birthday || !$gender) {
             Redirect::to('/signup')
                 ->message('Vui lòng nhập đầy đủ thông tin', 'danger')
                 ->send();
@@ -91,12 +91,12 @@ class AuthController extends Controller
             'shift_id' => $shift_morning->id
         ]);
 
-        if(!$userShift) {
+        if (!$userShift) {
             Redirect::to('/')
                 ->message('Đăng kí thất bại! Không thể phân ca', 'danger')
                 ->send();
         }
-        
+
 
         Redirect::to('/')
             ->message('Đăng kí thành công', 'success')
