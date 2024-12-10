@@ -9,6 +9,8 @@ use App\Models\Roles;
 use App\Models\Users;
 use App\Services\PaginationService;
 
+use function PHPSTORM_META\map;
+
 class OfficeController extends Controller
 {
     public function index()
@@ -27,7 +29,7 @@ class OfficeController extends Controller
         // foreach ($offices as $office) {
         //     echo "Phòng ban: " . $office->name . "<br>";
         //     echo "Vị trí: " . $office->location . "<br>";
-        
+
         //     foreach ($office->users as $user) {
         //         echo "Trưởng phòng: " . $user->full_name . "<br>";
         //     }
@@ -68,7 +70,7 @@ class OfficeController extends Controller
 
     public function edit($id)
     {
-        $office = Offices::with('manager')->find($id);
+        $office = Offices::with('manager', 'users')->find($id);
 
         if (!$office) {
             Redirect::to('/admin/office-management')
@@ -79,6 +81,7 @@ class OfficeController extends Controller
         $this->render('pages.admin.office.edit_office', [
             'office' => $office,
             'manager' => $office->manager->first(),
+            'employees' => $office->users,
         ]);
     }
 
@@ -121,35 +124,60 @@ class OfficeController extends Controller
 
     public function update()
     {
+        // Lấy dữ liệu từ POST và kiểm tra
         $id = $_POST['id'];
         $name = $_POST['roomName'];
         $location = $_POST['location'];
+        $managerId = $_POST['managerId'];
 
-        
-        // thêm validate nếu manager đã có phòng ban khác thì không thể thêm vào phòng ban này
+        // \dd($_POST);
 
-
-        if (empty($name) || empty($location)) {
-            Redirect::to('/admin/edit-office/' . $id)
+        if (!$id || empty($name) || empty($location)) {
+            return Redirect::to('/admin/edit-office/' . $id)
                 ->message('Vui lòng nhập đầy đủ thông tin', 'error')
                 ->send();
         }
 
-        $office = Offices::find($id);
-
+        // Tìm phòng ban kèm thông tin trưởng phòng
+        $office = Offices::with('manager')->find($id);
         if (!$office) {
-            Redirect::to('/admin/office-management')
+            return Redirect::to('/admin/office-management')
                 ->message('Lỗi không tìm thấy phòng ban', 'error')
                 ->send();
         }
 
-        $office->name = $name;
-        $office->location = $location;
-        $office->save();
+        // Tìm nhân viên trưởng phòng mới
+        $newManager = Users::find($managerId);
+        if (!$newManager) {
+            return Redirect::to('/admin/edit-office/' . $id)
+                ->message('Nhân viên không tồn tại', 'error')
+                ->send();
+        }
+
 
         
+        $oldManager = optional($office->manager)->first();
+        $managerRole = Roles::where('name', 'manager')->first();
+        $employeeRole = Roles::where('name', 'user')->first();
 
-        Redirect::to('/admin/office-management')
+        if ($oldManager && $oldManager->id !== $managerId) {
+            $oldManager->role_id = $employeeRole->id;
+            $oldManager->save();
+        }
+
+        if (!$oldManager || $oldManager->id !== $managerId) {
+            $newManager->role_id = $managerRole->id;
+            $newManager->save();
+        }
+
+        // Cập nhật dữ liệu
+        $office->name = $name;
+        $office->location = $location;
+
+        $office->save();
+
+        // Chuyển hướng thành công
+        return Redirect::to('/admin/office-management')
             ->message('Cập nhật phòng ban thành công', 'success')
             ->send();
     }

@@ -33,8 +33,8 @@
                     <div class="row align-items-center">
                         <!-- Avatar -->
                         <div class="col-auto">
-                            <img src="{{isset($user->avatar) ? '/uploads/avatar/' . $user->avatar : '/assets/images/faces/face1.jpg'}}" alt="User Avatar" class="profile-avatar rounded-circle"
-                                style="width: 80px; height: 80px;">
+                            <img src="{{ isset($user->avatar) ? '/uploads/avatar/' . $user->avatar : '/assets/images/faces/face1.jpg' }}"
+                                alt="User Avatar" class="profile-avatar rounded-circle" style="width: 80px; height: 80px;">
                         </div>
                         <!-- Name and Role -->
                         <div class="col">
@@ -146,14 +146,7 @@
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Chức vụ</label>
                             <div class="col-lg-9">
-                                <select class="form-control" name="role">
-                                    @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}"
-                                            {{ $user->role->id == $role->id ? 'selected' : '' }}>
-                                            {{ $role->name == 'admin' ? 'Quản trị viên' : ($role->name == 'manager' ? 'Trưởng phòng' : 'Nhân viên') }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" value="{{ $user->role->name == 'user' ? 'Nhân viên' : 'Trưởng phòng' }}" readonly name="role">
                             </div>
                         </div>
 

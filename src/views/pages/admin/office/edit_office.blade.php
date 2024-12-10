@@ -26,6 +26,23 @@
                                 name="location" placeholder="Nhập vị trí">
                         </div>
 
+                        <div class="mb-3">
+                            <label for="manager" class="form-label">Trưởng phòng</label>
+                            <select name="managerId" id="manager" class="form-control">
+                                @if ($employees->isEmpty())
+                                    <option value="">Không có nhân viên nào</option>
+                                @else
+                                    @foreach ($employees as $employee)
+                                        <option value="{{ $employee->id }}"
+                                            {{ $employee->id == optional($manager)->id ? 'selected' : '' }}>
+                                            {{ $employee->full_name }}
+                                        </option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+
+
                         <button type="submit" class="btn btn-primary">Cập nhật</button>
                         <input type="reset" class="btn btn-secondary" value="Khôi phục lại">
                         <a href="{{ $_ENV['APP_URL'] }}/admin/office-management" class="btn btn-info">Quay lại</a>
@@ -94,5 +111,5 @@
             });
         });
     </script>
-    
+
 @endsection
