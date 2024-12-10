@@ -161,6 +161,42 @@
         const content = document.querySelector("textarea[name='content']");
         const officeSelect = document.querySelector(".office-select2");
 
+        // Hàm kiểm tra trường văn bản
+        function validateTextField(field, errorMessage) {
+            const value = field.value.trim();
+            const parent = field.parentElement;
+
+            // Xóa lỗi cũ
+            parent.querySelectorAll(".error-message").forEach(el => el.remove());
+
+            if (value === "") {
+                const errorEl = document.createElement('div');
+                errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                errorEl.textContent = errorMessage;
+                parent.appendChild(errorEl);
+                return false;
+            }
+            return true;
+        }
+
+        // Hàm kiểm tra Select2
+        function validateSelectField(selectElement, errorMessage) {
+            const values = $(selectElement).val();
+            const parent = selectElement.parentElement;
+
+            // Xóa lỗi cũ
+            parent.querySelectorAll(".error-message").forEach(el => el.remove());
+
+            if (!values || values.length === 0) {
+                const errorEl = document.createElement('div');
+                errorEl.classList.add('error-message', 'text-danger', 'mt-1');
+                errorEl.textContent = errorMessage;
+                parent.appendChild(errorEl);
+                return false;
+            }
+            return true;
+        }
+
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
