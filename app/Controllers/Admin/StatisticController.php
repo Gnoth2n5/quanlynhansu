@@ -38,6 +38,12 @@ class StatisticController extends Controller
                 ->send();
         }
 
+        if($from > $to) {
+            Redirect::to('/admin/statistic')
+                ->message('Thời gian không hợp lệ! Thời gian từ không được lớn hơn thời gian đến!', 'error')
+                ->send();
+        }
+
         // check box được chọn
         if ($selectAll === 'all') {
             $employee = Salaries::pluck('user_id')->toArray();
