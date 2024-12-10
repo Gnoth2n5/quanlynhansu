@@ -52,10 +52,24 @@ class NotifyController extends Controller
 
     public function store()
     {
-        $title = $_POST['title'];
-        $content = $_POST['content'];
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
 
-        $toOffice = $_POST['office'];
+        $toOffice = $_POST['office'] ?? [];
+        $toUser = $_POST['user'] ?? [];
+
+
+        if (empty($title) || empty($content)) {
+            Redirect::to('/admin/notify-management/create')
+                ->message('Vui lòng nhập đầy đủ thông tin', 'error')
+                ->send();
+        }
+
+        if (empty($toOffice) && empty($toUser)) {
+            Redirect::to('/admin/notify-management/create')
+                ->message('Vui lòng chọn người nhận hoặc phòng ban nhận thông báo', 'error')
+                ->send();
+        }
 
 
         $notify = new Notifications();
@@ -63,12 +77,9 @@ class NotifyController extends Controller
         $notify->message = $content;
         $notify->save();
 
-        foreach ($toOffice as $office) {
-            $officeNotify = new OfficeNotify();
-            $officeNotify->office_id = $office;
-            $officeNotify->notify_id = $notify->id;
-            $officeNotify->save();
-        }
+        // Gắn mối quan hệ với văn phòng và người dùng
+        $notify->offices()->attach($toOffice);
+        $notify->users()->attach($toUser);
 
         Redirect::to('/admin/notify-management')
             ->message('Tạo thông báo thành công', 'success')
@@ -121,25 +132,43 @@ class NotifyController extends Controller
 
     public function update()
     {
-        $id = $_POST['id'];
-        $title = $_POST['title'];
-        $content = $_POST['content'];
+        $id = $_POST['id'] ?? '';
+        $title = $_POST['title'] ?? '';
+        $content = $_POST['content'] ?? '';
 
-        $toOffice = $_POST['office'];
+        $toOffice = $_POST['office'] ?? [];
+        $toUser = $_POST['user'] ?? [];
+
+
+        if (empty($title) || empty($content)) {
+            Redirect::to('/admin/notify-management')
+                ->message('Vui lòng nhập đầy đủ thông tin', 'error')
+                ->send();
+        }
+
+        if (empty($toOffice) && empty($toUser)) {
+            Redirect::to('/admin/notify-management')
+                ->message('Vui lòng chọn người nhận hoặc phòng ban nhận thông báo', 'error')
+                ->send();
+        }
 
         $notify = Notifications::find($id);
+
+        if (!$notify) {
+            Redirect::to('/admin/notify-management')
+                ->message('Thông báo không tồn tại', 'error')
+                ->send();
+        }
+
         $notify->title = $title;
         $notify->message = $content;
         $notify->save();
 
-        OfficeNotify::where('notify_id', $id)->delete();
+        // Đồng bộ hóa các bảng phụ liên quan
+        $notify->offices()->sync($toOffice);
+        $notify->users()->sync($toUser);
 
-        foreach ($toOffice as $office) {
-            $officeNotify = new OfficeNotify();
-            $officeNotify->office_id = $office;
-            $officeNotify->notify_id = $notify->id;
-            $officeNotify->save();
-        }
+
 
         Redirect::to('/admin/notify-management')
             ->message('Cập nhật thông báo thành công', 'success')

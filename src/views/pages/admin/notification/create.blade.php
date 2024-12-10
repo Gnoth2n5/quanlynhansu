@@ -40,7 +40,8 @@
             margin-right: 5px;
             /* Thêm khoảng cách nút xóa */
         }
-        .select2-container--default .select2-selection--multiple .select2-selection__choice{
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
             font-size: 1rem;
         }
     </style>
@@ -70,6 +71,12 @@
                         <div class="mb-4 select form-group">
                             <label for="toUser" class="form-label fw-bold">Đến phòng ban</label>
                             <select class="form-control office-select2" name="office[]" id="office-select" multiple>
+                            </select>
+                        </div>
+
+                        <div class="mb-4 select3 form-group">
+                            <label for="toUser" class="form-label fw-bold">Đến nhân viên</label>
+                            <select class="form-control user-select2" name="user[]" id="user-select" multiple>
                             </select>
                         </div>
 
@@ -131,6 +138,59 @@
                         $(".office-select2").select2({
                             placeholder: "Chọn Phòng Ban",
                             dropdownParent: $(".select"),
+                        });
+                    },
+                    error: function() {
+                        console.error("Lỗi khi tải dữ liệu từ API.");
+                    }
+                });
+            }
+
+            if ($(".user-select2").length) {
+                // Bước 1: Lấy giá trị mặc định đã được chọn
+                var defaultManagerId = $('.user-select2').val(); // Giá trị từ option mặc định trong HTML
+                var defaultManagerText = $('.user-select2 option:selected')
+                    .text(); // Text hiển thị của giá trị mặc định
+    
+                // Bước 2: Gọi API để lấy dữ liệu
+                $.ajax({
+                    url: '/search-user-manager', // Đường dẫn API
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (!data || !Array.isArray(data)) {
+                            console.error("Dữ liệu API không hợp lệ.");
+                            return;
+                        }
+    
+                        var options = '';
+    
+                        // Bước 3: Thêm giá trị mặc định nếu chưa có trong dữ liệu API
+                        if (defaultManagerId && defaultManagerText) {
+                            options += `
+                <option value="${defaultManagerId}" selected>
+                  ${defaultManagerText}
+                </option>`;
+                        }
+    
+                        // Bước 4: Thêm các option từ API
+                        $.each(data, function(key, user) {
+                            if (user.id !=
+                                defaultManagerId) { // Tránh thêm lại giá trị mặc định
+                                options += `
+                  <option value="${user.id}">
+                    ${user.text}
+                  </option>`;
+                            }
+                        });
+    
+                        // Bước 5: Gắn các option mới vào select
+                        $(".user-select2").html(options);
+    
+                        // Bước 6: Khởi tạo hoặc làm mới Select2
+                        $(".user-select2").select2({
+                            placeholder: "Chọn Nhân Viên",
+                            dropdownParent: $(".select3"),
                         });
                     },
                     error: function() {
@@ -205,6 +265,5 @@
                 form.submit();
             }
         });
-
     </script>
 @endsection
