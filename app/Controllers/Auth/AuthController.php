@@ -5,6 +5,7 @@ namespace App\Controllers\Auth;
 use App\Controllers\Controller;
 use App\Models\Users;
 use App\Helpers\Redirect;
+use App\Models\Roles;
 use App\Models\Shifts;
 use App\Models\UserShift;
 
@@ -76,7 +77,7 @@ class AuthController extends Controller
         $user->username = $username;
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_ARGON2ID);
-        $user->role_id = 3;
+        $user->role_id = Roles::where('name', 'user')->first()->id;
         $user->full_name = $fullname;
         $user->birthday = $birthday;
         $user->gender = $gender;

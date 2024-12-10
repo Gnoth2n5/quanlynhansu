@@ -1,4 +1,5 @@
 <?php
+
 use voku\helper\ASCII;
 
 function dd($data)
@@ -19,7 +20,8 @@ function set_timezone()
     date_default_timezone_set($_ENV['TIMEZONE'] ?: 'UTC');
 }
 
-function asset($path) {
+function asset($path)
+{
     global $baseUrl;
     return $baseUrl . ltrim($path, '/');
 }
@@ -31,30 +33,46 @@ function start_session()
     }
 }
 
-function createUID($full_name, $dob)
+function createUID($full_name, $dob, $existingUIDs = [])
 {
-    // xoá dấu
-    $fullName = ASCII::to_ascii($full_name);
-    
-    // tách họ và tên và lưu vào mảng
-    $nameParts = explode(' ', $fullName);
-    
-    // lấy tên chính
-    $lastName = array_pop($nameParts);
+    // Xóa dấu tiếng Việt và chuyển tên thành ASCII
+    $fullName = iconv('UTF-8', 'ASCII//TRANSLIT', $full_name);
 
+    // Tách họ và tên, lấy phần tên chính
+    $nameParts = explode(' ', $fullName);
+    $lastName = strtolower(array_pop($nameParts)); // Tên chính (viết thường)
+
+    // Lấy ký tự đầu của các phần còn lại
     $initials = '';
     foreach ($nameParts as $part) {
-        $initials .= substr($part, 0, 1); // Lấy ký tự đầu
+        $initials .= strtolower(substr($part, 0, 1));
     }
 
-    // chuyển ngày sinh thành chuỗi
-    $dobParts = date('dmY', strtotime($dob));
-    
-    // trả về mã nhân viên VD: nguyenvh20031990
-    return strtolower($lastName . $initials .  $dobParts);
+    // Chuyển ngày sinh thành năm
+    $dobYear = date('Y', strtotime($dob));
+
+    // Tạo chuỗi cơ bản
+    $baseUID = $lastName . $initials . $dobYear;
+
+    // Tạo chuỗi duy nhất bổ sung
+    $uniquePart = substr(uniqid(), -4); // Lấy 4 ký tự cuối của chuỗi ngẫu nhiên
+
+    // Gắn chuỗi duy nhất vào UID
+    $uid = $baseUID . $uniquePart;
+
+    // Đảm bảo không trùng với UID đã tồn tại
+    while (!empty($existingUIDs) && in_array($uid, $existingUIDs)) {
+        $uniquePart = substr(uniqid(), -4); // Tạo lại chuỗi duy nhất
+        $uid = $baseUID . $uniquePart;
+    }
+
+    return $uid;
 }
 
-function now(){
+
+
+function now()
+{
     return Carbon\Carbon::now();
 }
 
