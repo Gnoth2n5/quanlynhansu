@@ -3,6 +3,67 @@
 @section('title', 'Bảng chấm công')
 
 @section('content')
+    <div class="grid-margin stretch-card col-lg-12 mb-3">
+        <div class="card shadow-sm" style="padding-left: 2rem;">
+            <div class="card-body">
+                <h5 class="card-title">Lọc</h5>
+                <form method="GET" action="{{ $_ENV['APP_URL'] }}/user/attendance">
+                    <div class="row g-3">
+                        <!-- From Date -->
+                        <div class="col-md-3">
+                            <label for="from-date" class="form-label">Từ:</label>
+                            <div class="input-group">
+                                <input type="date" id="from-date" name="from" class="form-control"
+                                    placeholder="Select date" value="{{ get('from', '') }}">
+                            </div>
+                        </div>
+
+                        <!-- To Date -->
+                        <div class="col-md-3">
+                            <label for="to-date" class="form-label">Đến:</label>
+                            <div class="input-group">
+                                <input type="date" id="to-date" name="to" class="form-control"
+                                    placeholder="Select date" value="{{ get('to', '') }}">
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-2">
+                            <label for="status" class="form-label">Trạng thái CheckIn</label>
+                            <select id="status" class="form-select form-control" name="check_in_status">
+                                <option value="all" {{ get('check_in_status') == 'all' ? 'selected' : '' }}>Tất cả
+                                </option>
+                                <option value="on_time" {{ get('check_in_status') == 'on_time' ? 'selected' : '' }}>Đúng
+                                    giờ</option>
+                                <option value="late" {{ get('check_in_status') == 'late' ? 'selected' : '' }}>Muộn
+                                </option>
+                                <option value="absent" {{ get('check_in_status') == 'absent' ? 'selected' : '' }}>Vắng
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-2">
+                            <label for="status" class="form-label">Trạng thái CheckOut</label>
+                            <select id="status" class="form-select form-control" name="check_out_status">
+                                <option value="all" {{ get('check_out_status') == 'all' ? 'selected' : '' }}>Tất cả</option>
+                                <option value="on_time" {{ get('check_out_status') == 'on_time' ? 'selected' : '' }}>Đúng giờ</option>
+                                <option value="early_exit" {{ get('check_out_status') == 'early_exit' ? 'selected' : '' }}>Ra sớm</option>
+                                <option value="ot" {{ get('check_out_status') == 'ot' ? 'selected' : '' }}>Tăng ca</option>
+                            </select>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary">Lọc</button>
+                            <a href="{{ $_ENV['APP_URL'] }}/user/attendance" class="btn btn-danger">Xóa bộ lọc</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -24,6 +85,13 @@
                         </tr>
                     </thead>
                     <tbody>
+
+                        @if (count($data) === 0)
+                            <tr>
+                                <td colspan="5" class="text-center">Không có dữ liệu</td>
+                            </tr>
+                        @endif
+
                         @foreach ($data as $attendance)
                             <tr>
                                 <td>{{ $i++ }}</td>

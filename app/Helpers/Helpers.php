@@ -62,3 +62,8 @@ function formattedDate($date, $format = 'd/m/Y H:i:s')
 {
     return date($format, strtotime($date));
 }
+
+function get($key, $default = null)
+{
+    return $_GET[$key] ?? $default;
+}

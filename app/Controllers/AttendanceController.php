@@ -25,7 +25,22 @@ class AttendanceController extends Controller
         $perPage = 10;
         $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 
-        $pagination = PaginationService::paginate(Attendance::where('user_id', $_SESSION['user']->id)->orderBy('updated_at', 'desc'), $perPage, $page);
+        $from = isset($_GET['from']) ? $_GET['from'] : null;
+        $to = isset($_GET['to']) ? $_GET['to'] : null;
+        $checkInStatus = isset($_GET['check_in_status']) ? $_GET['check_in_status'] : null;
+        $checkOutStatus = isset($_GET['check_out_status']) ? $_GET['check_out_status'] : null;
+
+        $data = Attendance::filter([
+            'user_id' => $_SESSION['user']->id,
+            'from' => $from,
+            'to' => $to,
+            'check_in_status' => $checkInStatus,
+            'check_out_status' => $checkOutStatus,
+        ])->orderBy('updated_at', 'desc');
+
+        $pagination = PaginationService::paginate($data, $perPage, $page);
+
+        // \dd($pagination);    
 
         $this->render('pages.client.attendance', [
             'data' => $pagination['data'],
