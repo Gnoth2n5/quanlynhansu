@@ -55,6 +55,19 @@ class AttendanceController extends Controller
 
         $userId = $_SESSION['user']->id;
 
+        // Kiểm tra xem IP có trùng với IP mạng nội bộ công ty không
+
+        $userIp = $_SERVER['REMOTE_ADDR'];
+
+        $result = $this->atteSv->checkIp($userIp);
+
+        if (!$result) {
+            return Redirect::to('/user/dashboard')
+                ->message('Bạn không thể check-in ngoài công ty!', 'warning')
+                ->send();
+        }
+
+
         $now = Carbon::now()->format('Y-m-d H:i:s');
 
         // true: muộn, false: đúng giờ

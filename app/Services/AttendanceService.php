@@ -4,6 +4,7 @@ namespace App\Services;
 use App\Models\UserShift;
 use App\Models\Shifts;
 use App\Models\Attendance;
+use App\Models\Setting;
 use Carbon\Carbon;
 
 class AttendanceService extends Service
@@ -73,4 +74,23 @@ class AttendanceService extends Service
                         ->whereDate('check_out', Carbon::today())
                         ->exists();
     }
+
+
+    public function checkIp($ip){
+
+        $allowedIps = Setting::where('setting_key', 'ip_range_company')->pluck('setting_value')->toArray();
+
+        // \dd($allowedIps);
+
+        foreach ($allowedIps as $allowedIp) {
+            $isAllowed = isIpInRange($ip, $allowedIp);
+            if ($isAllowed) {
+                return;
+            }
+        }
+
+        $isAllowed = false;
+    }
+
+
 }

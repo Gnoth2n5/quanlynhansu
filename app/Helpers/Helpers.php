@@ -69,8 +69,6 @@ function createUID($full_name, $dob, $existingUIDs = [])
     return $uid;
 }
 
-
-
 function now()
 {
     return Carbon\Carbon::now();
@@ -84,4 +82,13 @@ function formattedDate($date, $format = 'd/m/Y H:i:s')
 function get($key, $default = null)
 {
     return $_GET[$key] ?? $default;
+}
+
+function isIpInRange($ip, $range)
+{
+    list($subnet, $bits) = explode('/', $range);
+    $ip = ip2long($ip);
+    $subnet = ip2long($subnet);
+    $bits = ~((1 << (32 - $bits)) - 1);
+    return ($ip & $bits) == ($subnet & $bits);
 }
