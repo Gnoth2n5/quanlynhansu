@@ -36,6 +36,31 @@ class RequestController extends Controller
         $data['user_id'] = $_SESSION['user']->id;
         $data['status'] = 'pending';
 
+        if($data['start_date'] == '' || $data['end_date'] == '') {
+            Redirect::to('/user/leave-request/create')
+                ->message('Vui lòng chọn ngày bắt đầu và ngày kết thúc')
+                ->send();
+        }
+
+        if($data['reason'] == '') {
+            Redirect::to('/user/leave-request/create')
+                ->message('Vui lòng nhập lý do nghỉ phép')
+                ->send();
+        }
+
+        if($data['start_date'] == $data['end_date']) {
+            Redirect::to('/user/leave-request/create')
+                ->message('Ngày bắt đầu không thể bằng ngày kết thúc')
+                ->send();
+        }
+
+        if($data['start_date'] > $data['end_date']) {
+            Redirect::to('/user/leave-request/create')
+                ->message('Ngày bắt đầu không thể lớn hơn ngày kết thúc')
+                ->send();
+        }
+
+
         LeaveRequests::create($data);
 
         Redirect::to('/user/leave-request')

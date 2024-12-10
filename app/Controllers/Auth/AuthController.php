@@ -76,7 +76,7 @@ class AuthController extends Controller
         $user->username = $username;
         $user->email = $email;
         $user->password = password_hash($password, PASSWORD_ARGON2ID);
-        $user->role_id = 1;
+        $user->role_id = 3;
         $user->full_name = $fullname;
         $user->birthday = $birthday;
         $user->gender = $gender;
