@@ -81,6 +81,20 @@
             ])
             @endcomponent
         </div>
+
+        @if(session('role') == 'manager')
+            <div class="col-md-12 mb-4 stretch-card transparent">
+                @component('components.datastats.datastats', [
+                    'cardClass' => 'card-light-success',
+                    'title' => 'Tổng số nhân viên thuộc phòng ban',
+                    'value' => $totalEmployee,
+                    'percentage' => '0%',
+                    'period' => '30 ngày',
+                ])
+                @endcomponent
+            </div>
+        @endif
+
     </div>
 @endsection
 

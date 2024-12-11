@@ -11,6 +11,7 @@ use App\Services\SalaryService;
 use Carbon\Carbon;
 use App\Models\OT;
 use App\Models\Salaryadjustments;
+use App\Models\Setting;
 use App\Models\Users;
 
 class SalaryController extends Controller
@@ -81,8 +82,11 @@ class SalaryController extends Controller
         }
 
         $work_ot_hour = $this->calculateOTHour($userId);
+
+        $percentOT = Setting::where('setting_key', 'ot')->pluck('setting_value')->first();
+
         if ($work_ot_hour !== null && $work_ot_hour > 0) {
-            $otRate = 20000;
+            $otRate = $baseSalary * $percentOT / 100;
             $salaryService->caculateOT($work_ot_hour, $otRate, 'Làm thêm giờ');
         }
 
@@ -227,8 +231,11 @@ class SalaryController extends Controller
         // die;
 
         $work_ot_hour = $this->calculateOTHour($userId);
+
+        $percentOT = Setting::where('setting_key', 'ot')->pluck('setting_value')->first();
+
         if ($work_ot_hour !== null && $work_ot_hour > 0) {
-            $otRate = 20000;
+            $otRate = $baseSalary * $percentOT / 100;
             $salary_service->caculateOT($work_ot_hour, $otRate, 'Làm thêm giờ');
         }
 

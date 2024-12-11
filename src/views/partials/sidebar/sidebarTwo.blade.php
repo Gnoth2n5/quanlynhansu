@@ -21,13 +21,20 @@ $sidebarItems = [
         'subMenu' => [['label' => 'Đơn xin nghỉ', 'url' => '/user/leave-request'], ['label' => 'Đơn xin OT', 'url' => '/user/ot-request']],
         'roles' => ['user', 'manager'],
     ],
-    [
-        'label' => 'Quản lý phòng ban',
-        'icon' => 'fa-regular fa-building menu-icon',
-        'url' => '/manager/department',
-        'subMenu' => [],
-        'roles' => ['manager'], // Chỉ hiển thị cho manager
-    ],
+    // [
+    //     'label' => 'Quản lý nhân viên',
+    //     'icon' => 'fa-solid fa-users menu-icon',
+    //     'url' => '/manager/department',
+    //     'subMenu' => [],
+    //     'roles' => ['manager'], // Chỉ hiển thị cho manager
+    // ],
+    // [
+    //     'label' => 'Quản lý đơn xin nghỉ',
+    //     'icon' => 'fa-solid fa-envelopes-bulk menu-icon',
+    //     'url' => '/manager/department',
+    //     'subMenu' => [],
+    //     'roles' => ['manager'], // Chỉ hiển thị cho manager
+    // ],
     [
         'label' => 'Thông báo',
         'icon' => 'fa-regular fa-bell menu-icon',
@@ -53,6 +60,8 @@ $sidebarItems = [
             class="img-fluid border profile-avatar" alt="User Avatar">
         <!-- Tên người dùng -->
         <h5 class="mt-2 profile-name">{{ $_SESSION['user']['full_name'] }}</h5>
+        <!-- Vai trò -->
+        <p class="text-muted">{{ $_SESSION['role'] == 'user' ? 'Nhân viên' : 'Trưởng phòng' }}</p>
     </div>
     <ul class="nav">
         @foreach ($sidebarItems as $item)

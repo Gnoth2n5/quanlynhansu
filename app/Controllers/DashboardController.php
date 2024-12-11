@@ -9,6 +9,7 @@ use App\Models\LeaveRequests;
 use App\Models\Notifications;
 use App\Models\Users;
 use App\Models\OT;
+use App\Models\Offices;
 use Carbon\Carbon;
 
 class DashboardController extends Controller
@@ -79,13 +80,24 @@ class DashboardController extends Controller
             ->whereDate('created_at', Carbon::today())
             ->where('status', '!=', 'pending')
             ->first();
+        
+        if(\session('role') == 'manager'){
+            
+            $officeId = session('user')->offices->first()->id;
+
+            $totalEmployee = Offices::find($officeId)->users()->count();
+
+        }
+
+        
 
         $this->render('pages.client.dashboard', [
             'isCheckIn' => $isCheckIn,
             'isCheckOut' => $ischeckOut,
             'atteMonth' => $atteMonth,
             'atteLate' => $atteLate,
-            'hasOT' => $hasOT
+            'hasOT' => $hasOT,
+            'totalEmployee' => $totalEmployee ?? 0
         ]);
     }
 }

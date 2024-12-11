@@ -13,7 +13,7 @@
 
                 <div class="d-flex justify-content-between">
                     <h3>Quản lý Người dùng</h3>
-                    <a href="#" class="btn btn-primary btn-sm">Thêm mới</a>
+                    {{-- <a href="#" class="btn btn-primary btn-sm">Thêm mới</a> --}}
                 </div>
 
                 <div class="table-responsive mb-2">

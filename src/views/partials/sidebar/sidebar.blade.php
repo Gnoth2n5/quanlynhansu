@@ -52,7 +52,7 @@ $sidebarItems = [
         'label' => 'Cài đặt',
         'icon' => 'fa-solid fa-gears menu-icon',
         'url' => '#setting',
-        'subMenu' => [['label' => 'Thông tin tài khoản', 'url' => '#'], ['label' => 'Đổi mật khẩu', 'url' => '#']],
+        'subMenu' => [['label' => 'Hệ thống', 'url' => '/admin/system-setting']],
     ],
     // [
     //     'label' => 'Error pages',

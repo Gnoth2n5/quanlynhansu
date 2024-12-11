@@ -92,3 +92,13 @@ function isIpInRange($ip, $range)
     $bits = ~((1 << (32 - $bits)) - 1);
     return ($ip & $bits) == ($subnet & $bits);
 }
+
+function session($key, $default = null)
+{
+    return $_SESSION[$key] ?? $default;
+}
+
+function post($key, $default = null)
+{
+    return $_POST[$key] ?? $default;
+}
