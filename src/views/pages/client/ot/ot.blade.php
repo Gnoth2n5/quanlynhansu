@@ -20,7 +20,6 @@
                             <th>#</th>
                             <th>Ca</th>
                             <th>Thời gian OT đề xuất</th>
-                            <th>Thời gian OT được chấp thuận</th>
                             <th>Trạng thái</th>
                             <th>Hành động</th>
                         </tr>
@@ -37,7 +36,6 @@
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $request->shift->shift_name ?? '' }}</td>
                                 <td>{{ $request->requested_hours }} giờ</td>
-                                <td>{{ $request->approved_hours }}</td>
                                 <td>
                                     @if ($request->status == 'pending')
                                         <label class="badge badge-warning">Chưa xử lý</label>
